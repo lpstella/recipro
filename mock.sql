@@ -24,7 +24,7 @@ CREATE TABLE Recipes
   directions TEXT NOT NULL,
   recipe_id INT NOT NULL AUTO_INCREMENT,
   date_posted DATE NOT NULL,
-  prep_time TIME NOT NULL,
+  prep_time INT NOT NULL,
   user_id INT NOT NULL,
   PRIMARY KEY (recipe_id),
   FOREIGN KEY (user_id) REFERENCES Users(user_id)
@@ -55,10 +55,10 @@ CREATE TABLE Comments
 
 CREATE TABLE Contains
 (
-  amount VARCHAR NOT NULL,
+  amount VARCHAR(18) NOT NULL,
   recipe_id INT NOT NULL,
   ingredient_id INT NOT NULL,
-  modifier VARCHAR,
+  modifier VARCHAR(18),
   PRIMARY KEY (recipe_id, ingredient_id),
   FOREIGN KEY (recipe_id) REFERENCES Recipes(recipe_id),
   FOREIGN KEY (ingredient_id) REFERENCES Ingredients(ingredient_id)
@@ -109,16 +109,16 @@ INSERT INTO Recipe_Lists (list_name, privacy_status, user_id) VALUES
 ("Test Recipes 8", 0, (SELECT user_id FROM Users WHERE display_name="Admin"));
 
 INSERT INTO Recipes (recipe_name, directions, recipe_id, date_posted, prep_time, user_id) VALUES
-("Test Recipe #1", "This is a test recipe", NULL, "2020-05-06", "1:00:00", (SELECT user_id FROM Users WHERE display_name="Admin")), 
-("Test Recipe #2", "This is a test recipe", NULL, "2020-05-06", "1:00:00", (SELECT user_id FROM Users WHERE display_name="Admin")), 
-("Test Recipe #3", "This is a test recipe", NULL, "2020-05-06", "1:00:00", (SELECT user_id FROM Users WHERE display_name="Admin")), 
-("Test Recipe #4", "This is a test recipe", NULL, "2020-05-06", "1:00:00", (SELECT user_id FROM Users WHERE display_name="Admin")), 
-("Test Recipe #5", "This is a test recipe", NULL, "2020-05-06", "1:00:00", (SELECT user_id FROM Users WHERE display_name="Admin")), 
-("Test Recipe #6", "This is a test recipe", NULL, "2020-05-06", "1:00:00", (SELECT user_id FROM Users WHERE display_name="Admin")), 
-("Test Recipe #7", "This is a test recipe", NULL, "2020-05-06", "1:00:00", (SELECT user_id FROM Users WHERE display_name="Admin")), 
-("Test Recipe #8", "This is a test recipe", NULL, "2020-05-06", "1:00:00", (SELECT user_id FROM Users WHERE display_name="Admin")), 
-("Test Recipe #9", "This is a test recipe", NULL, "2020-05-06", "1:00:00", (SELECT user_id FROM Users WHERE display_name="Admin")), 
-("Test Recipe #10", "This is a test recipe", NULL, "2020-05-06", "1:00:00", (SELECT user_id FROM Users WHERE display_name="Admin"));
+("Test Recipe #1", "This is a test recipe", NULL, "2020-05-06", 60, (SELECT user_id FROM Users WHERE display_name="Admin")), 
+("Test Recipe #2", "This is a test recipe", NULL, "2020-05-06", 60, (SELECT user_id FROM Users WHERE display_name="Admin")), 
+("Test Recipe #3", "This is a test recipe", NULL, "2020-05-06", 60, (SELECT user_id FROM Users WHERE display_name="Admin")), 
+("Test Recipe #4", "This is a test recipe", NULL, "2020-05-06", 60, (SELECT user_id FROM Users WHERE display_name="Admin")), 
+("Test Recipe #5", "This is a test recipe", NULL, "2020-05-06", 60, (SELECT user_id FROM Users WHERE display_name="Admin")), 
+("Test Recipe #6", "This is a test recipe", NULL, "2020-05-06", 60, (SELECT user_id FROM Users WHERE display_name="Admin")), 
+("Test Recipe #7", "This is a test recipe", NULL, "2020-05-06", 60, (SELECT user_id FROM Users WHERE display_name="Admin")), 
+("Test Recipe #8", "This is a test recipe", NULL, "2020-05-06", 60, (SELECT user_id FROM Users WHERE display_name="Admin")), 
+("Test Recipe #9", "This is a test recipe", NULL, "2020-05-06", 60, (SELECT user_id FROM Users WHERE display_name="Admin")), 
+("Test Recipe #10", "This is a test recipe", NULL, "2020-05-06", 60, (SELECT user_id FROM Users WHERE display_name="Admin"));
 
 INSERT INTO Ingredients (ingredient_name, recipe_id) VALUES
 ("A", (SELECT recipe_id FROM Recipes WHERE recipe_name="Test Recipe #1")),
@@ -134,16 +134,16 @@ INSERT INTO Ingredients (ingredient_name, recipe_id) VALUES
 ("K", NULL);
 
 INSERT INTO Comments (comment_body, recipe_rating, recipe_difficulty, post_date, recipe_id, user_id) VALUES
-("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="")),
-("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="")),
-("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="")),
-("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="")),
-("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="")),
-("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="")),
-("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="")),
-("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="")),
-("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="")),
-("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name=""));
+("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="Test Recipe #1"), (SELECT user_id FROM Users WHERE display_name="Admin")),
+("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="Test Recipe #1"), (SELECT user_id FROM Users WHERE display_name="Admin")),
+("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="Test Recipe #1"), (SELECT user_id FROM Users WHERE display_name="Admin")),
+("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="Test Recipe #1"), (SELECT user_id FROM Users WHERE display_name="Admin")),
+("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="Test Recipe #1"), (SELECT user_id FROM Users WHERE display_name="Admin")),
+("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="Test Recipe #1"), (SELECT user_id FROM Users WHERE display_name="Admin")),
+("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="Test Recipe #1"), (SELECT user_id FROM Users WHERE display_name="Admin")),
+("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="Test Recipe #1"), (SELECT user_id FROM Users WHERE display_name="Admin")),
+("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="Test Recipe #1"), (SELECT user_id FROM Users WHERE display_name="Admin")),
+("This was a hard recipe :c", 2, 5, "2020-05-06", (SELECT recipe_id FROM Recipes WHERE recipe_name="Test Recipe #1"), (SELECT user_id FROM Users WHERE display_name="Admin"));
 
 INSERT INTO Contains (amount, recipe_id, ingredient_id) VALUES 
 ("1 Unit", 1, 1),
@@ -165,24 +165,21 @@ INSERT INTO Contains (amount, recipe_id, ingredient_id) VALUES
 ("1 Unit", 7, 2),
 ("1 Unit", 8, 2),
 ("1 Unit", 9, 2),
-("1 Unit", 10, 2),
+("1 Unit", 10, 2);
 
 INSERT INTO Has_recipes (list_id, recipe_id) VALUES 
-(0,0),
-(0,1),
-(0,2),
-(0,3),
-(0,4),
-(0,5),
-(0,6),
-(0,7),
-(0,8),
-(0,9),
-(0,10),
-(5,1),
-(8,3),
-(8,3),
 (1,1),
+(1,2),
+(1,3),
+(1,4),
+(1,5),
+(1,6),
+(1,7),
+(1,8),
+(1,9),
+(1,10),
+(5,1),
+(8,3);
 
 INSERT INTO Has_ingredient (amount, ingredient_id, user_id) VALUES 
 ("1 Cup", 1, 10),
@@ -194,4 +191,4 @@ INSERT INTO Has_ingredient (amount, ingredient_id, user_id) VALUES
 ("1 Cup", 7, 6),
 ("1 Cup", 8, 3),
 ("1 Cup", 9, 10),
-("1 Cup", 10, 10),
+("1 Cup", 10, 10);
