@@ -35,3 +35,7 @@
     border: 1px solid black;
     border-radius: 4px;
 }
+
+#login-wrapper > div > *{
+    display: inline;
+}
