@@ -1,10 +1,22 @@
 
+body{
+    all: unset;
+    font-family: 'Fira Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #header{
     display: flex;
+    position: fixed;
     align-items: center;
     white-space: nowrap;
     justify-content: space-between;
     width: 100%;
+    background-color: white;
+    border-bottom: 1px solid black;
+    padding-bottom: 15px;
 }
 
 #logo{
@@ -30,12 +42,39 @@
 }
 
 #login-wrapper{
-    width: 80%;
-    height: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: left;
+    width: min-content;
     border: 1px solid black;
     border-radius: 4px;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 5%;
 }
 
-#login-wrapper > div > *{
+#login-wrapper > div{
+    white-space: nowrap;
+}
+
+#login-wrapper > input{
     display: inline;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    margin-top: 10%;
+    height: 2em;
+    font-size: 1em;
+}
+
+.centered-wrapper{
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
 }
