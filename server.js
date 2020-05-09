@@ -82,8 +82,12 @@ app.post('/logout', redirectLogin, function (req, res) {
     });
 });
 
+app.get('/home', (req, res, next) => {
+    res.render('home');
+});
+
 app.get('/', (req, res, next) => {
-    res.redirect('/login');
+    res.redirect('home');
 });
 
 app.listen(3000);

@@ -111,3 +111,11 @@ body{
     align-content: center;
     align-items: center;
 }
+
+.horizontal-center{
+    align-content: center;
+}
+
+#rotd-image{
+    width: 100%;
+}
