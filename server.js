@@ -49,10 +49,6 @@ app.get('/login', redirectHome, function (req, res) {
     res.render('login');
 });
 
-app.post('/register', function (req, res) {
-    
-});
-
 app.post('/login', function (req, res) {
     const { username, password } = req.body;
     if( username && password) {
@@ -66,6 +62,16 @@ app.post('/login', function (req, res) {
     }
     res.redirect('/login');
 });
+
+app.get('/register', redirectHome, function (req, res) {
+    res.render('register');
+});
+
+app.post('/register', function (req, res) {
+    
+});
+
+
 
 app.post('/logout', redirectLogin, function (req, res) {
     req.session.destroy(err => {
