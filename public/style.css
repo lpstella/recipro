@@ -1,17 +1,23 @@
 
+body{
+    all: unset;
+    font-family: 'Fira Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #header{
     display: flex;
+    position: fixed;
     align-items: center;
     white-space: nowrap;
     justify-content: space-between;
     width: 100%;
-<<<<<<< Updated upstream:style.css
-=======
     background-color: white;
     border-bottom: 1px solid black;
     margin: 5px;
     padding-bottom: 15px;
->>>>>>> Stashed changes:public/style.css
 }
 
 #logo{
@@ -41,12 +47,6 @@
 }
 
 #login-wrapper{
-<<<<<<< Updated upstream:style.css
-    width: 80%;
-    height: 60%;
-    border: 1px solid black;
-    border-radius: 4px;
-=======
     display: flex;
     flex-direction: column;
     justify-items: center;
@@ -96,5 +96,4 @@
     justify-items: center;
     align-content: center;
     align-items: center;
->>>>>>> Stashed changes:public/style.css
 }
