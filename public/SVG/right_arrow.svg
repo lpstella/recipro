@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="153.32834" height="255.33333" viewBox="0 0 153.32834 255.33333">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f15a24;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: 4px;
+      }
+    </style>
+  </defs>
+  <title>Asset 4</title>
+  <g id="Layer_2" data-name="Layer 2">
+    <g id="Layer_2-2" data-name="Layer 2">
+      <rect class="cls-1" width="153.32834" height="255.33333"/>
+      <polyline class="cls-2" points="65.664 106.721 87.664 128.721 66.06 148.612"/>
+    </g>
+  </g>
+</svg>

@@ -20,6 +20,10 @@ body{
     padding-bottom: 15px;
 }
 
+.header-padding{
+    margin-top: 12vh;
+}
+
 #logo{
     width: 240px;
 }
@@ -114,8 +118,53 @@ body{
 
 .horizontal-center{
     align-content: center;
+    width: 100%;
+    padding-left: 5%;
 }
 
-#rotd-image{
-    width: 100%;
+.recipe-carousel{
+    display: flex;
+    width: 95%;
+    height: 35vh;
+}
+
+.recipe-carousel > div{
+    user-select: none;
+    overflow: hidden;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: transparent;
+    font-size: 2em;
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.recipe-carousel > div.browse-item{
+    color: white;
+    background-color: #F15923;
+    text-align: center;
+}
+
+.recipe-carousel > div:hover:not(.browse-item){
+    color: black;
+}
+
+.recipe-carousel > div > img{
+    height: 100%;
+    transition: all 0.20s ease-in-out;
+}
+
+.recipe-carousel > div:hover > img{
+    filter: blur(4px);
+    transform: translateZ(10.1px);
+}
+
+.recipe-carousel > div > a{
+    position: absolute;
+    z-index: 10;
+    transition: color 0.25s ease-in-out;
 }

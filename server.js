@@ -71,8 +71,6 @@ app.post('/register', function (req, res) {
     
 });
 
-
-
 app.post('/logout', redirectLogin, function (req, res) {
     req.session.destroy(err => {
         if(err) {
