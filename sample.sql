@@ -17,3 +17,12 @@ WHERE list_id=:id;
 
 -- Delete all comments for a user with user_id id
 DELETE FROM Comments WHERE user_id=:id;
+
+-- Get ingredient created from recipe of id
+SELECT ingredient_name FROM Ingredients WHERE recipe_id=:id;
+
+-- Get all recipes from list_id id
+SELECT recipe_name FROM Recipe R, has_recipes HR WHERE R.recipe_id=HR.recipe_id AND HR.lisit_id=:id
+
+-- Get recipe_id's that contain ingredient of id
+SELECT recipe_id FROM contains WHERE ingredient_id=:id
