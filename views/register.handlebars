@@ -1,11 +1,10 @@
 <div class="centered-wrapper">
-    <div id="login-wrapper">
+    <form id="login-wrapper" method="POST" action="">
         <div><h1>Create Account</h1></div>
-        
-        <input placeholder="Email" type="email" />
-        <input placeholder="Display Name" type="text" />
-        <input placeholder="Password" type="password" />
-        <input placeholder="Repeat Password" type="password" />
-        <button>Register</button>
-    </div>
+        <input placeholder="Email" name="email" type="email" />
+        <input placeholder="Display Name" name="displayName" type="text" />
+        <input placeholder="Password" name="password" type="password" />
+        <input placeholder="Repeat Password" name="confirmPassword" type="password" />
+        <input type="submit" value="Register"/>
+    </form>
 </div>

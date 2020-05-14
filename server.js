@@ -13,7 +13,7 @@ app.set('view engine', 'handlebars');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({
     extended: true
-}))
+}));
 
 
 app.use(session({
@@ -50,7 +50,7 @@ app.get('/login', redirectHome, function (req, res) {
 });
 
 app.post('/login', function (req, res) {
-    const { username, password } = req.body;
+    const { email, displayName, password } = req.body;
     if( username && password) {
         const userUuid = userToUuid[username];
 
@@ -68,16 +68,20 @@ app.get('/register', redirectHome, function (req, res) {
 });
 
 app.post('/register', function (req, res) {
-    
+    const { email, displayName, password } = req.body;
+    if( email && password) {
+        console.log(email + " " + password);
+        res.sendStatus(200).redirect('/profile');
+    }
 });
 
 app.post('/logout', redirectLogin, function (req, res) {
-    req.session.destroy(err => {
-        if(err) {
-            return res.redirect('/login');
-        }
-        res.clearCookie('sid');
-    });
+    // req.session.destroy(err => {
+    //     if(err) {
+    //         return res.redirect('/login');
+    //     }
+    //     res.clearCookie('sid');
+    // });
 });
 
 app.get('/home', (req, res, next) => {
