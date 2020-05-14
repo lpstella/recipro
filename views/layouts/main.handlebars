@@ -17,9 +17,17 @@
         <div class="search-wrapper">
             <h2>Search</h2>
             <input type="search" />
-            <button onclick="location.href='./login';">
-                Login
-            </button> 
+            {{#if user}}
+                <h1>{{user}}</h1>
+                <form method="POST" action="/logout">
+                    <input type="submit" value="Logout" name="logout"/>
+                </form>
+            {{else}}
+                <form method="POST" action="">
+                    <input type="button" onclick="location.href='./login';" value="Login" />
+                </form>
+            {{/if}}
+            </form>
         </div>
     </div>
     {{{body}}}

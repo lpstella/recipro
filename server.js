@@ -51,14 +51,9 @@ app.get('/login', redirectHome, function (req, res) {
 
 app.post('/login', function (req, res) {
     const { email, displayName, password } = req.body;
-    if( username && password) {
-        const userUuid = userToUuid[username];
-
-        const user = userMap[userUuid] && userMap[userUuid].password == password ? userUuid : null;
-        if(user){
-            req.session.userId = userUuid;
-            return res.redirect('/profile');
-        }
+    if( email == "admin@gmail.com" && password == "password") {
+        req.session.userId = "admin";
+        return res.redirect('/home');
     }
     res.redirect('/login');
 });
@@ -76,16 +71,17 @@ app.post('/register', function (req, res) {
 });
 
 app.post('/logout', redirectLogin, function (req, res) {
-    // req.session.destroy(err => {
-    //     if(err) {
-    //         return res.redirect('/login');
-    //     }
-    //     res.clearCookie('sid');
-    // });
+    req.session.destroy(err => {
+        if(err) {
+            return res.redirect('/login');
+        }
+        res.clearCookie('sid').redirect('/login');
+    });
 });
 
 app.get('/home', (req, res, next) => {
-    res.render('home');
+    const { userId } = req.session;
+    res.render('home', {user: userId});
 });
 
 app.get('/', (req, res, next) => {

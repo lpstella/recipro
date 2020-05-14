@@ -48,7 +48,7 @@ body{
     border-bottom: 1px solid black;
 }
 
-.search-wrapper > button{
+.search-wrapper > form > input[type="button"], input[type="submit"]{
     font-size: 1.5em;
     font-weight: bold;
     cursor: pointer;
