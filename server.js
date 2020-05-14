@@ -24,7 +24,7 @@ app.use(session({
     cookie: {
         maxAge: 1000 * 60 * 60 * 2,
         sameSite: true,
-        secure: false, 
+        secure: false,
     }
   }));
 
@@ -68,7 +68,7 @@ app.get('/register', redirectHome, function (req, res) {
 });
 
 app.post('/register', function (req, res) {
-    
+
 });
 
 app.post('/logout', redirectLogin, function (req, res) {
@@ -86,6 +86,10 @@ app.get('/home', (req, res, next) => {
 
 app.get('/', (req, res, next) => {
     res.redirect('home');
+});
+
+app.get('*', function (req, res, next) {
+    res.status(404).render('404Page');
 });
 
 app.listen(3000);
