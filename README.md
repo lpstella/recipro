@@ -1,4 +1,4 @@
-#ReciPro
+# ReciPro
 
 
 > Our project is an all inclusive recipe tracking web application intended to streamline its user’s preparation and cooking endeavors. The site comes equipped with features such as creating your own recipes, searching for recipes that other users have created, saving your favorite recipes, and creating a grocery list from ingredients you still need. Notably, a user must create an account to create, favorite, and track their own recipes.
