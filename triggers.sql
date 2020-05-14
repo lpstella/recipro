@@ -8,6 +8,11 @@ DELETE FROM Has_recipes WHERE recipe_id=:delete_this;
 --  Remove the recipe
 DELETE FROM Recipes WHERE recipe_id=:delete_this;
 
+--| Create user & favorite list
+INSERT INTO Users (display_name, email, password_hash) VALUES (:uname, :email, :hash);
+INSERT INTO Recipe_Lists (list_name, privacy_status, user_id) VALUES 
+(:rname, 0, (SELECT user_id FROM Users WHERE display_name=:uname));
+
 --| Delete a user
 --  Set recipes user has authored to NULL author
 UPDATE Recipes SET user_id=NULL WHERE user_id=:delete_user;
