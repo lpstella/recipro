@@ -13,7 +13,7 @@ CREATE TABLE Recipe_Lists
   list_name VARCHAR(18) NOT NULL,
   list_id INT NOT NULL AUTO_INCREMENT,
   privacy_status INT NOT NULL,
-  user_id INT NOT NULL,
+  user_id INT,
   PRIMARY KEY (list_id),
   FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
@@ -25,7 +25,7 @@ CREATE TABLE Recipes
   recipe_id INT NOT NULL AUTO_INCREMENT,
   date_posted DATE NOT NULL,
   prep_time INT NOT NULL,
-  user_id INT NOT NULL,
+  user_id INT,
   PRIMARY KEY (recipe_id),
   FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
@@ -47,7 +47,7 @@ CREATE TABLE Comments
   comment_id INT NOT NULL AUTO_INCREMENT,
   post_date DATE NOT NULL,
   recipe_id INT NOT NULL,
-  user_id INT NOT NULL,
+  user_id INT,
   PRIMARY KEY (comment_id),
   FOREIGN KEY (recipe_id) REFERENCES Recipes(recipe_id),
   FOREIGN KEY (user_id) REFERENCES Users(user_id)
