@@ -11,7 +11,7 @@
 Use Coolors for color theme picking:
 https://coolors.co/b8d8ba-d9dbbc-fcddbc-ef959d-69585f
 
-####To Do
+#### To Do
 - [ ] Basic handlebar pages
 - [ ] Database connection implementation
 - [ ] CSS styling
