@@ -1,4 +1,8 @@
 #profile-container {
+<<<<<<< HEAD
+=======
+    background-color: #FFC99F;
+>>>>>>> Added basic skeleton for user profile
     display: inline-block;
 }
 
@@ -36,6 +40,10 @@
     width: 50%;
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> Added basic skeleton for user profile
 #profile-actions {
     display: inline-table;
     table-layout: fixed;
@@ -57,6 +65,7 @@
     text-align: center;
     vertical-align: top;
 }
+<<<<<<< HEAD
 
 .vert-list {
     width: 100%;
@@ -93,3 +102,5 @@
     vertical-align: text-top;
     text-decoration: none;
 }
+=======
+>>>>>>> Added basic skeleton for user profile
