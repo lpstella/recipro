@@ -6,8 +6,8 @@ body{
     flex-direction: column;
     align-items: center;
     overflow-x: hidden;
-    background: rgb(255,206,153);
-    background: linear-gradient(0deg, rgba(255,206,153,1) 0%, rgba(255,255,255,1) 100%);
+    background: rgb(241,145,67);
+    background: linear-gradient(0deg, rgba(241,145,67,1) 0%, rgba(255,255,255,1) 100%);
     background-repeat: no-repeat;
     background-size: contain;
     min-height: 100vh;
@@ -44,6 +44,7 @@ background: transparent;
     border-bottom: 1px solid black;
     padding-left: 5px;
     padding-top: 5px;
+    margin-top: 5px;
     padding-bottom: 15px;
     height: 6vh;
     box-shadow: 0px 4px 9px -4px rgba(13,13,13,1);
@@ -55,6 +56,19 @@ background: transparent;
 
 #logo{
     width: 240px;
+}
+
+.primary-button{
+    margin: 5px;
+    height: 2em;
+    font-size: 1em;
+    border-radius: 4px;
+    font-family: 'Fira Sans', sans-serif;
+    color: #e65c00;
+    background-color: white;
+    border: 2px solid #e65c00;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .search-wrapper{
@@ -74,17 +88,6 @@ background: transparent;
     outline: 0;
     background: transparent;
     border-bottom: 1px solid black;
-}
-
-.search-wrapper > button{
-    font-size: 1.5em;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 4px;
-    height: 3em;
-    width: 5em;
-    background-color: #e65c00;
-    color: white;
 }
 
 #login-wrapper{
