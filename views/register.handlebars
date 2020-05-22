@@ -1,11 +1,25 @@
+{{> header}}
+
 <div class="centered-wrapper">
-    <div id="login-wrapper">
-        <div><h1>Create Account</h1></div>
-        
-        <input placeholder="Email" type="email" />
-        <input placeholder="Display Name" type="text" />
-        <input placeholder="Password" type="password" />
-        <input placeholder="Repeat Password" type="password" />
-        <button>Register</button>
-    </div>
+     <div id="login-wrapper">
+          <div>
+               <h1>Create Account</h1>
+          </div>
+
+          {{!-- {{#if errors}}
+          {{#each errors}}
+          <div class="alert alert-danger">
+               {{this.msg}}
+          </div>
+          {{/each}}
+          {{/if}} --}}
+
+          <form id="login-wrapper" "login-form" action="/register" method="POST">
+               <input name="email" id="email-field" placeholder="Email" type="email" />
+               <input name="displayName" id="display-name-field" placeholder="Display Name" type="text" />
+               <input name="password" id="password-field" placeholder="Password" type="password" />
+               <input name="repeatPass" id="repeat-password-field" placeholder="Repeat Password" type="password" />
+               <button type="submit" id="register-btn">Register</button>
+          </form>
+     </div>
 </div>
