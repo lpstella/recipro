@@ -1,13 +1,21 @@
+{{> header}}
 <div class="centered-wrapper">
-    <div id="login-wrapper">
-        <div><h1>Login</h1></div>
-        
-        <input placeholder="Email" type="email" />
-        <input placeholder="Password" type="password" />
-        <button>Go</button>
-        <br />
-        <a href="./register">
-            Create an Account
-        </a>
-    </div>
+     <div id="login-wrapper">
+          <div>
+               <h1>Login</h1>
+          </div>
+
+          <form id="login-wrapper" "login-form" action="/login" method="POST">
+               <input name="username" id="email-field" placeholder="Email" type="email" />
+               <input name="password" id="password-field" placeholder="Password" type="password" />
+               <button>Login</button>
+          </form>
+
+          <br />
+          <b>
+            <a href="./register">
+                Create an Account
+            </a>
+          </b>
+     </div>
 </div>
