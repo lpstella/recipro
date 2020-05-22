@@ -29,6 +29,10 @@ router.get('/profile', authenticationMiddleware(), function (req, res) {        
      res.render('profile');                                                     // authenticated and listed in the db, otherwise it redirects to /login
 });
 
+router.get('/new-recipe', authenticationMiddleware(), function (req, res) {        // Profile page is only loaded if the authenticationMiddleware function determines the user is
+     res.render('new-recipe');                                                     // authenticated and listed in the db, otherwise it redirects to /login
+});
+
 router.get('/login', function (req, res) {
      //const { userId } = req.session;
      console.log(req.flash('error'));

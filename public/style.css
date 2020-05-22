@@ -36,8 +36,6 @@ background: transparent;
 
 #header{
     display: flex;
-    position: fixed;
-    z-index: 10;
     align-items: center;
     white-space: nowrap;
     justify-content: space-between;
@@ -139,7 +137,7 @@ background: transparent;
 
 .centered-wrapper{
     display: flex;
-    height: 100vh;
+    flex-grow: 1;
     width: 100%;
     justify-content: center;
     justify-items: center;
