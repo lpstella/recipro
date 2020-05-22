@@ -44,6 +44,11 @@ const redirectHome = (req, res, next) => {
     }
 };
 
+app.get('/new-recipe', redirectHome, function (req, res) {
+    const { userId } = req.session;
+    res.render('new-recipe');
+});
+
 app.get('/login', redirectHome, function (req, res) {
     const { userId } = req.session;
     res.render('login');

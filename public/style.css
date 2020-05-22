@@ -6,23 +6,53 @@ body{
     flex-direction: column;
     align-items: center;
     overflow-x: hidden;
+    background: rgb(255,206,153);
+    background: linear-gradient(0deg, rgba(255,206,153,1) 0%, rgba(255,255,255,1) 100%);
+    background-repeat: no-repeat;
+    background-size: contain;
+    min-height: 100vh;
 }
+
+/* ::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-button {
+}
+::-webkit-scrollbar-thumb {
+background: rgb(255, 120, 29);
+border: 0px none #ffffff;
+border-radius: 100px;
+}
+
+::-webkit-scrollbar-track {
+background: rgba(0, 0, 0, 0.171);
+border: 0px none #ffffff;
+border-radius: 0px;
+}
+
+::-webkit-scrollbar-corner {
+background: transparent;
+} */
 
 #header{
     display: flex;
     position: fixed;
+    z-index: 10;
     align-items: center;
     white-space: nowrap;
     justify-content: space-between;
     width: 100%;
     background-color: white;
     border-bottom: 1px solid black;
-    margin: 5px;
+    padding-left: 5px;
+    padding-top: 5px;
     padding-bottom: 15px;
+    height: 6vh;
+    box-shadow: 0px 4px 9px -4px rgba(13,13,13,1);
 }
 
 .header-padding{
-    margin-top: 12vh;
+    margin-top: 7vh;
 }
 
 #logo{
@@ -168,4 +198,8 @@ body{
     position: absolute;
     z-index: 10;
     transition: color 0.25s ease-in-out;
+}
+
+.recipe-direction{
+    
 }
