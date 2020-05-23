@@ -21,7 +21,7 @@ const db = require('../server/db');
       if (req.session.userId) {
            res.redirect('/profile');
       } else {
-           next(); 
+           next();
       }
  };
 
@@ -29,7 +29,7 @@ router.get('/profile', authenticationMiddleware(), function (req, res) {        
      res.render('profile');                                                     // authenticated and listed in the db, otherwise it redirects to /login
 });
 
-router.get('/new-recipe', authenticationMiddleware(), function (req, res) {        // Profile page is only loaded if the authenticationMiddleware function determines the user is
+router.get('/new-recipe', authenticationMiddleware(), function (req, res) {        // New Recipe page is only loaded if the authenticationMiddleware function determines the user is
      res.render('new-recipe');                                                     // authenticated and listed in the db, otherwise it redirects to /login
 });
 
@@ -51,7 +51,7 @@ router.post('/login', passport.authenticate('local', { failureRedirect: '/login'
 router.get('/logout', function (req, res) {
      req.logout();                           // Log the user out using passport's logout function
      req.session.destroy();                  // destroy the current user session by creating a clean, empty, unauthorized session
-     res.redirect('/');                   // Redirect user to home page 
+     res.redirect('/');                   // Redirect user to home page
 })
 
 

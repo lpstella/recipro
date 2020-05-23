@@ -1,4 +1,68 @@
 {{> header}}
-<div class="container">
-     <h2>Profile Page</h2>
-</div>
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="profile.css">
+<body onload="loadUserDetails()">
+    <div class="horizontal-center header-padding" id="profile-container">
+        <div class="horizontal-left" id="profile-details">
+            <img src="pasta.jpg" alt="Avatar" style="width:200px"></img>
+            <h1>Jon Doe</h1>
+            <a href="/profile">@username</a>
+        </div>
+        <!-- <div class="horizontal-right" id="profile-options">
+            give the user editable options here maybe
+        </div> -->
+
+        <br />
+
+        <!--Here I am adding manually inserted list options just to test css-->
+
+        <div id="profile-actions">
+            <div class="action-column">
+                <h3>Public Recipes</h3>
+                <div class="vert-list">
+                    <div class="vert-list-element">
+                        <img src="pasta.jpg" alt="Recipe-Img" style="width:40px"></img>
+                        <h4><a href="/view-recipe">Example Recipe Name</a></h4>
+                        <a href="/profile">@username</a>
+                    </div>
+                    <div class="vert-list-element">
+                        The element is empty
+                    </div>
+                    <div class="vert-list-element">
+                        The element is empty
+                    </div>
+                    <div class="vert-list-element">
+                        The element is empty
+                    </div>
+                    <div class="vert-list-element">
+                        The element is empty
+                    </div>
+                </div>
+            </div>
+            <div class="action-column">
+                <h3>Recipes Lists</h3>
+                <div class="vert-list">
+                    <div class="vert-list-element">
+                        The element is empty
+                    </div>
+                </div>
+            </div>
+            <div class="action-column">
+                <h3>User Comments and Ratings</h3>
+                <div class="vert-list">
+                    <div class="vert-list-element">
+                        The element is empty
+                    </div>
+                </div>
+            </div>
+            <div class="action-column">
+                <h3>My Ingredients</h3>
+                <div class="vert-list">
+                    <div class="vert-list-element">
+                        The element is empty
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

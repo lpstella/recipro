@@ -28,7 +28,7 @@ app.use(session({
     }
   }));
 
-  const redirectLogin = (req, res, next) => {
+const redirectLogin = (req, res, next) => {
     if(!req.session.userId){
         res.redirect('/login');
     } else {
@@ -48,6 +48,14 @@ app.get('/new-recipe', redirectHome, function (req, res) {
     const { userId } = req.session;
     res.render('new-recipe');
 });
+
+
+//temporarily added back to show user page
+app.get('/profile', redirectHome, function (req, res) {
+    const { userId } = req.session;
+    res.render('profile');
+});
+
 
 app.get('/login', redirectHome, function (req, res) {
     const { userId } = req.session;
@@ -94,7 +102,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.get('*', function (req, res, next) {
-    res.status(404).render('404Page');
+    res.status(404).render('404');
 });
 
 app.listen(3000);
