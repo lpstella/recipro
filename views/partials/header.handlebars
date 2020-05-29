@@ -5,14 +5,15 @@
      <div class="search-wrapper">
           <h2>Search</h2>
           <input type="search" />
-          {{#if isAuthenticated}}
-          <button class='primary-button' onclick="location.href='/profile';">Profile</button>
-          <button class='primary-button' onclick="location.href='/logout';">Logout</button>
-          {{else}}
-          <button class='primary-button' onclick="location.href='/login';">Log in</button>
-          {{/if}}
-
-
-
      </div>
+     
+     <div class="user-wrapper">
+            {{#if isAuthenticated}}
+            <button class='primary-button' onclick="location.href='/profile';">Profile</button>
+            <button class='primary-button' onclick="location.href='/logout';">Logout</button>
+            {{else}}
+            <button class='primary-button' onclick="location.href='/login';">Log in</button>
+            {{/if}}
+     </div>
+
 </div>
