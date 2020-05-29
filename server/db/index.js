@@ -107,6 +107,31 @@ db.loginValidation = (email, password, done) => {
      });
 }
 
+db.queryRecipeId = (id) => {
+     let sql = 'SELECT recipe_name, directions, date_posted, prep_time, user_id FROM Recipes WHERE recipe_id = ?';
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [id], (err, results, fields) => {
+               if(err){
+                    return done(err);
+               }
+               return resolve(results);
+          });
+     });
+}
+
+db.queryRecipeString = (nameQuery) => {
+     let sql = 'SELECT * FROM Recipes WHERE recipe_name LIKE "%?%"';
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [nameQuery], (err, results, fields) => {
+               if (err) {
+                    return done(err);
+               }
+               return resolve(results);
+          });
+     });
+}
+
 passport.serializeUser(function (user_id, done) {      // These two functions are used by passport to track user sessions
      done(null, user_id);                              // documentation can be found at: http://www.passportjs.org/docs/
 });

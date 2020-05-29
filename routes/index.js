@@ -156,5 +156,10 @@ function authenticationMiddleware() {
      }
 }
 
+router.get('/recipe/:recipeId', (req, res, next) => {
+  //Not implemented yet
+          console.log(`recipe: ${JSON.stringify(db.queryRecipeId(req.params.recipeId))}`);
+          res.render('home');
+});
 
 module.exports = router;
