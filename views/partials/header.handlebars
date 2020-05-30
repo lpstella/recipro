@@ -1,10 +1,15 @@
 <div id="header">
      <a href="/">
+<<<<<<< HEAD
           <img id="logo" src="/static/SVG/logo.svg" />
+=======
+          <img id="logo" src="./SVG/logo.svg" />
+>>>>>>> Updated some css for profile, Added a button to bottom of lists, and started work on profile fetching
      </a>
      <div class="search-wrapper">
           <h2>Search</h2>
           <input type="search" />
+<<<<<<< HEAD
      </div>
      
      <div class="user-wrapper">
@@ -17,3 +22,16 @@
      </div>
 
 </div>
+=======
+          {{#if isAuthenticated}}
+          <button class='primary-button' onclick="location.href='/profile';">Profile</button>
+          <button class='primary-button' onclick="location.href='/logout';">Logout</button>
+          {{else}}
+          <button class='primary-button' onclick="location.href='/login';">Log in</button>
+          {{/if}}
+
+
+
+     </div>
+</div>
+>>>>>>> Updated some css for profile, Added a button to bottom of lists, and started work on profile fetching

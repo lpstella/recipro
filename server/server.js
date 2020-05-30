@@ -25,7 +25,11 @@ app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
 app.use(cookieParser());
+<<<<<<< HEAD
 app.use('/static', express.static('public'));
+=======
+app.use(express.static('public'));
+>>>>>>> Updated some css for profile, Added a button to bottom of lists, and started work on profile fetching
 
 app.use(bodyParser.urlencoded({
      extended: true

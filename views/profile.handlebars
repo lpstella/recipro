@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {{> header}}
 <link rel="stylesheet" type="text/css" href="style.css">
 <link rel="stylesheet" type="text/css" href="profile.css">
@@ -7,7 +6,7 @@
         <div class="horizontal-left" id="profile-details">
             <img src="pasta.jpg" alt="Avatar" style="width:200px"></img>
             <h1>Jon Doe</h1>
-            <a href="/profile">@username</a>
+            <a id="usernamelink" href="/profile">@username</a>
         </div>
         <!-- <div class="horizontal-right" id="profile-options">
             give the user editable options here maybe
@@ -24,19 +23,12 @@
                     <div class="vert-list-element">
                         <img src="pasta.jpg" alt="Recipe-Img" style="width:40px"></img>
                         <h4><a href="/view-recipe">Example Recipe Name</a></h4>
-                        <a href="/profile">@username</a>
+                        <a id="usernamelink" href="/profile">@username</a>
                     </div>
-                    <div class="vert-list-element">
-                        The element is empty
-                    </div>
-                    <div class="vert-list-element">
-                        The element is empty
-                    </div>
-                    <div class="vert-list-element">
-                        The element is empty
-                    </div>
-                    <div class="vert-list-element">
-                        The element is empty
+
+                    <!--This button will stay at the bottom of the auto-filled list of recipes-->
+                    <div class="centered vert-list-element">
+                        <button onclick="location.href='/new-recipe';">Create a New Recipe</button>
                     </div>
                 </div>
             </div>
@@ -52,7 +44,7 @@
                 <h3>User Comments and Ratings</h3>
                 <div class="vert-list">
                     <div class="vert-list-element">
-                        The element is empty
+                        The user has not made any comments
                     </div>
                 </div>
             </div>
@@ -60,38 +52,10 @@
                 <h3>My Ingredients</h3>
                 <div class="vert-list">
                     <div class="vert-list-element">
-                        The element is empty
+                        The user has no Ingredients listed
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
-=======
-<link rel="stylesheet" type="text/css" href="profile.css">
-<div class="horizontal-center header-padding" id="profile-container">
-    <div class="horizontal-left" id="profile-details">
-        <img src="pasta.jpg" alt="Avatar" style="width:200px">
-        <h1>Jon Doe</h1>
-        <a href="/profile">@username</a>
-    </div>
-    <!-- <div class="horizontal-right" id="profile-options">
-        give the user editable options here maybe
-    </div> -->
-
-    <div id="profile-actions">
-        <div class="action-column">
-            <h3>Public Recipes</h3>
-        </div>
-        <div class="action-column">
-            <h3>Recipes Lists</h3>
-        </div>
-        <div class="action-column">
-            <h3>User Comments and Ratings</h3>
-        </div>
-        <div class="action-column">
-            <h3>My Ingredients</h3>
-        </div>
-    </div>
-</div>
->>>>>>> Added basic skeleton for user profile

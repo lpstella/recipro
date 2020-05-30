@@ -5,8 +5,13 @@ $(document).ready(function(){
             <li>
                 <div class='recipe-direction'>
                     <input type="text" class='recipe-instruction' placeholder="Next Step" />
+<<<<<<< HEAD
                     <img id="link-recipe" src="/static/SVG/link-icon.svg"/>
                     <img class='remove-button' src="/static/SVG/remove-icon.svg"/>
+=======
+                    <img id="link-recipe" src="./SVG/link-icon.svg"/>
+                    <img class='remove-button' src="./SVG/remove-icon.svg"/>
+>>>>>>> Updated some css for profile, Added a button to bottom of lists, and started work on profile fetching
                 </div>
             </li>`);
         }
@@ -29,7 +34,11 @@ $(document).ready(function(){
                         <option value='ounce'>oz</option>
                         <option value='g'>g</option>
                     </select>
+<<<<<<< HEAD
                     <img class='remove-button' src="/static/SVG/remove-icon.svg"/>
+=======
+                    <img class='remove-button' src="./SVG/remove-icon.svg"/>
+>>>>>>> Updated some css for profile, Added a button to bottom of lists, and started work on profile fetching
                 </div>
             </li>`);
         }
@@ -38,6 +47,7 @@ $(document).ready(function(){
     $(document).on("click", ".remove-button" , function() {
         $(this).parent().parent().remove();
     });
+<<<<<<< HEAD
     $(document).on("click", "#submitRecipe" , function(e) {
         e.preventDefault();
 
@@ -127,3 +137,6 @@ $(document).ready(function(){
 
     });
 });
+=======
+});
+>>>>>>> Updated some css for profile, Added a button to bottom of lists, and started work on profile fetching

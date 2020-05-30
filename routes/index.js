@@ -25,9 +25,9 @@ const db = require('../server/db');
       }
  };
 
-router.get('/profile', authenticationMiddleware(), function (req, res) {        // Profile page is only loaded if the authenticationMiddleware function determines the user is
-     res.render('profile');                                                     // authenticated and listed in the db, otherwise it redirects to /login
-});
+// router.get('/profile', authenticationMiddleware(), function (req, res) {        // Profile page is only loaded if the authenticationMiddleware function determines the user is
+//      res.render('profile');                                                     // authenticated and listed in the db, otherwise it redirects to /login
+// });
 
 router.get('/new-recipe', authenticationMiddleware(), function (req, res) {        // New Recipe page is only loaded if the authenticationMiddleware function determines the user is
      res.render('new-recipe');                                                     // authenticated and listed in the db, otherwise it redirects to /login
@@ -58,9 +58,9 @@ router.post('/submit', authenticationMiddleware(), function (req, res) {
                     "ingredient_name": null,
                     "recipe_id" : null
                };
-                    
+
                ing.ingredient_name = req.body.ingredient[i].ingredient_name.toLowerCase();
-          
+
                // This might be problem over multiple ingredients
                let cont = {
                     "amount": req.body.ingredient[i].amount+" "+req.body.ingredient[i].unit,
@@ -70,15 +70,15 @@ router.post('/submit', authenticationMiddleware(), function (req, res) {
                };
 
                db.insertIngredient(ing).then((val)=>{
-                              
-                    //Insert 
-                    //Contains     
+
+                    //Insert
+                    //Contains
                     cont.ingredient_id = val;
                     db.insertContains(cont);
 
                }, (SQLerror) => console.log(SQLerror));
           }
-                    
+
      /*   Tried this didn't work
           res.redirect('recipe/'+value);
      */
@@ -212,6 +212,7 @@ function authenticationMiddleware() {
      }
 }
 
+<<<<<<< HEAD
 router.get('/recipe/:recipeId', (req, res, next) => {
      db.queryRecipeId(req.params.recipeId).then((value) => {
           db.getIngredientsForRecipe(req.params.recipeId).then((ingredients) =>{
@@ -222,5 +223,7 @@ router.get('/recipe/:recipeId', (req, res, next) => {
           }
           )}, (SQLerror) => console.log(SQLerror));
 });
+=======
+>>>>>>> Updated some css for profile, Added a button to bottom of lists, and started work on profile fetching
 
 module.exports = router;

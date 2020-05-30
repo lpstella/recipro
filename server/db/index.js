@@ -107,6 +107,7 @@ db.loginValidation = (email, password, done) => {
      });
 }
 
+<<<<<<< HEAD
 db.queryRecipeId = (id) => {
      let sql = 'SELECT * FROM Recipes INNER JOIN Users ON Recipes.user_id=Users.user_id WHERE recipe_id = ?';
      return new Promise((resolve, reject) => {
@@ -210,6 +211,25 @@ db.insertContains = (ingredient) => {
 }
 
 
+=======
+db.retrieveProfile = (uid) => {
+    let sql = 'SELECT * FROM Users WHERE user_id = uid';
+
+    return new Promise((resolve, reject) => {
+        mysqlConnection.query(sql, (err, results, fields) => {
+            if (err) {
+                return done(err);
+            }
+            if (results.length == 0) {
+                return done(null, false);
+            } else {
+                return done(null, {display_name: results[0].display_name});
+            }
+        });
+    });
+}
+
+>>>>>>> Updated some css for profile, Added a button to bottom of lists, and started work on profile fetching
 passport.serializeUser(function (user_id, done) {      // These two functions are used by passport to track user sessions
      done(null, user_id);                              // documentation can be found at: http://www.passportjs.org/docs/
 });
