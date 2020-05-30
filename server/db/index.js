@@ -108,11 +108,23 @@ db.loginValidation = (email, password, done) => {
 }
 
 db.queryRecipeId = (id) => {
-     let sql = 'SELECT recipe_name, directions, date_posted, prep_time, user_id FROM Recipes WHERE recipe_id = ?';
+     let sql = 'SELECT * FROM Recipes INNER JOIN Users ON Recipes.user_id=Users.user_id WHERE recipe_id = ?';
      return new Promise((resolve, reject) => {
           mysqlConnection.query(sql, [id], (err, results, fields) => {
                if(err){
                     return done(err);
+               }
+               return resolve(results);
+          });
+     });
+}
+
+db.getIngredientsForRecipe = (recipe_id) => {
+     let sql = 'SELECT * FROM Contains INNER JOIN Ingredients ON Contains.ingredient_id=Ingredients.ingredient_id WHERE Contains.recipe_id = ?';
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [recipe_id], (err, results, fields) => {
+               if(err){
+                    return reject(err);
                }
                return resolve(results);
           });
