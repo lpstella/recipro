@@ -1,0 +1,11 @@
+{{> header}}
+
+<div class="horizontal-center header-padding">
+	<h1 style="text-align: center;">404 Error!</h1>
+	<h3 id="404H2" style="text-align: center;"></h3>
+
+	<h4 style="text-align: center;">Click <a href="/">here</a> to return home.</h4>
+</div>
+<script>
+	document.getElementById("404H2").innerHTML = "We were unable to find the specified page " + window.location.pathname + ".";
+</script>

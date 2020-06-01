@@ -5,23 +5,70 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-x: hidden;
+    background: rgb(241,145,67);
+    background: linear-gradient(0deg, rgba(241,145,67,1) 0%, rgba(255,255,255,1) 100%);
+    background-repeat: no-repeat;
+    background-size: contain;
+    min-height: 100vh;
 }
+
+/* ::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-button {
+}
+::-webkit-scrollbar-thumb {
+background: rgb(255, 120, 29);
+border: 0px none #ffffff;
+border-radius: 100px;
+}
+
+::-webkit-scrollbar-track {
+background: rgba(0, 0, 0, 0.171);
+border: 0px none #ffffff;
+border-radius: 0px;
+}
+
+::-webkit-scrollbar-corner {
+background: transparent;
+} */
 
 #header{
     display: flex;
-    position: fixed;
     align-items: center;
     white-space: nowrap;
     justify-content: space-between;
     width: 100%;
     background-color: white;
     border-bottom: 1px solid black;
-    margin: 5px;
+    padding-left: 5px;
+    padding-top: 5px;
+    margin-top: 5px;
     padding-bottom: 15px;
+    height: 6vh;
+    box-shadow: 0px 4px 9px -4px rgba(13,13,13,1);
+}
+
+.header-padding{
+    margin-top: 7vh;
 }
 
 #logo{
     width: 240px;
+}
+
+.primary-button{
+    margin: 5px;
+    height: 2em;
+    font-size: 1em;
+    border-radius: 4px;
+    font-family: 'Fira Sans', sans-serif;
+    color: #e65c00;
+    background-color: white;
+    border: 2px solid #e65c00;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .search-wrapper{
@@ -41,17 +88,6 @@ body{
     outline: 0;
     background: transparent;
     border-bottom: 1px solid black;
-}
-
-.search-wrapper > button{
-    font-size: 1.5em;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 4px;
-    height: 3em;
-    width: 5em;
-    background-color: #e65c00;
-    color: white;
 }
 
 #login-wrapper{
@@ -104,7 +140,7 @@ body{
 
 .centered-wrapper{
     display: flex;
-    height: 100vh;
+    flex-grow: 1;
     width: 100%;
     justify-content: center;
     justify-items: center;
@@ -114,8 +150,57 @@ body{
 
 .horizontal-center{
     align-content: center;
+    width: 100%;
+    padding-left: 5%;
 }
 
-#rotd-image{
-    width: 100%;
+.recipe-carousel{
+    display: flex;
+    width: 95%;
+    height: 35vh;
+}
+
+.recipe-carousel > div{
+    user-select: none;
+    overflow: hidden;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: transparent;
+    font-size: 2em;
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.recipe-carousel > div.browse-item{
+    color: white;
+    background-color: #F15923;
+    text-align: center;
+}
+
+.recipe-carousel > div:hover:not(.browse-item){
+    color: black;
+}
+
+.recipe-carousel > div > img{
+    height: 100%;
+    transition: all 0.20s ease-in-out;
+}
+
+.recipe-carousel > div:hover > img{
+    filter: blur(4px);
+    transform: translateZ(10.1px);
+}
+
+.recipe-carousel > div > a{
+    position: absolute;
+    z-index: 10;
+    transition: color 0.25s ease-in-out;
+}
+
+.recipe-direction{
+    
 }

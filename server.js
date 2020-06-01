@@ -24,11 +24,11 @@ app.use(session({
     cookie: {
         maxAge: 1000 * 60 * 60 * 2,
         sameSite: true,
-        secure: false, 
+        secure: false,
     }
   }));
 
-  const redirectLogin = (req, res, next) => {
+const redirectLogin = (req, res, next) => {
     if(!req.session.userId){
         res.redirect('/login');
     } else {
@@ -43,6 +43,19 @@ const redirectHome = (req, res, next) => {
         next();
     }
 };
+
+app.get('/new-recipe', redirectHome, function (req, res) {
+    const { userId } = req.session;
+    res.render('new-recipe');
+});
+
+
+//temporarily added back to show user page
+app.get('/profile', redirectHome, function (req, res) {
+    const { userId } = req.session;
+    res.render('profile');
+});
+
 
 app.get('/login', redirectHome, function (req, res) {
     const { userId } = req.session;
@@ -68,10 +81,8 @@ app.get('/register', redirectHome, function (req, res) {
 });
 
 app.post('/register', function (req, res) {
-    
+
 });
-
-
 
 app.post('/logout', redirectLogin, function (req, res) {
     req.session.destroy(err => {
@@ -88,6 +99,10 @@ app.get('/home', (req, res, next) => {
 
 app.get('/', (req, res, next) => {
     res.redirect('home');
+});
+
+app.get('*', function (req, res, next) {
+    res.status(404).render('404');
 });
 
 app.listen(3000);

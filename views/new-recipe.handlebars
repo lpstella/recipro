@@ -1,0 +1,44 @@
+<link rel="stylesheet" type="text/css" href="new-recipe.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="new-recipe.js"></script>
+{{> header}}
+<div class='horizontal-center form-wrapper'>
+        <form id='recipe-form'>
+            <div id='recipe-directions'>
+                <h1>Tell us about your recipe</h1>
+                <input type="text" id='recipe-title' placeholder="New Recipe"/>
+                <ol id='recipe-directions-container'>
+                    <li>
+                        <div class='recipe-direction'>
+                            <input type="text" class='recipe-instruction' placeholder="First Step" />
+                            <img id="link-recipe" src="./SVG/link-icon.svg"/>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+            <div id='recipe-ingredients'>
+                <h1>Ingredients</h1>
+                <ul id='recipe-ingredients-container'>
+                    <li>
+                        <div class='ingredient-info'>
+                            <input type="text" class='ingredient' placeholder="New Ingredient"/>
+                            <input type="number" class='ingredient-amount' placeholder="Amount"/>
+                            <select class='ingredient-unit'>
+                                <option value='tsp'>tsp</option>
+                                <option value='tbsp'>tbsp</option>
+                                <option value='floz'>fl oz</option>
+                                <option value='cup'>cup</option>
+                                <option value='pint'>pint</option>
+                                <option value='lb'>lb</option>
+                                <option value='ounce'>oz</option>
+                                <option value='g'>g</option>
+                            </select>
+                        </div>
+                    </li>
+                </ul>
+                
+                
+            </div>
+            <input type="submit" value='Done'/>
+        </form>
+</div>

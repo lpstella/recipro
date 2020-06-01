@@ -1,11 +1,11 @@
 CREATE TABLE Users
 (
-  display_name VARCHAR(18) NOT NULL,
+  display_name VARCHAR(18) NOT NULL UNIQUE,
   user_id INT NOT NULL AUTO_INCREMENT,
-  email VARCHAR(40) NOT NULL,
+  email VARCHAR(40) NOT NULL UNIQUE,
   password_hash BINARY(64) NOT NULL,
   PRIMARY KEY (user_id),
-  CONSTRAINT user_name UNIQUE (display_name)
+  CONSTRAINT user_name, UNIQUE (display_name)
 );
 
 CREATE TABLE Recipe_Lists
@@ -13,7 +13,7 @@ CREATE TABLE Recipe_Lists
   list_name VARCHAR(18) NOT NULL,
   list_id INT NOT NULL AUTO_INCREMENT,
   privacy_status INT NOT NULL,
-  user_id INT NOT NULL,
+  user_id INT,
   PRIMARY KEY (list_id),
   FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
@@ -25,7 +25,11 @@ CREATE TABLE Recipes
   recipe_id INT NOT NULL AUTO_INCREMENT,
   date_posted DATE NOT NULL,
   prep_time INT NOT NULL,
+<<<<<<< fccbd49cdcdf5f83c00d0c87eb6bedaa5aec5509
+  user_id INT,
+=======
   user_id INT NOT NULL,
+>>>>>>> updated mock
   PRIMARY KEY (recipe_id),
   FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
@@ -47,7 +51,7 @@ CREATE TABLE Comments
   comment_id INT NOT NULL AUTO_INCREMENT,
   post_date DATE NOT NULL,
   recipe_id INT NOT NULL,
-  user_id INT NOT NULL,
+  user_id INT,
   PRIMARY KEY (comment_id),
   FOREIGN KEY (recipe_id) REFERENCES Recipes(recipe_id),
   FOREIGN KEY (user_id) REFERENCES Users(user_id)
@@ -192,3 +196,7 @@ INSERT INTO Has_ingredient (amount, ingredient_id, user_id) VALUES
 ("1 Cup", 8, 3),
 ("1 Cup", 9, 10),
 ("1 Cup", 10, 10);
+<<<<<<< fccbd49cdcdf5f83c00d0c87eb6bedaa5aec5509
+=======
+
+>>>>>>> updated mock
