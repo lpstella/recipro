@@ -33,6 +33,62 @@ router.get('/new-recipe', authenticationMiddleware(), function (req, res) {     
      res.render('new-recipe');                                                     // authenticated and listed in the db, otherwise it redirects to /login
 });
 
+router.post('/submit', authenticationMiddleware(), function (req, res) {
+
+     // Need to add image once it is in the database
+     let recipe = {
+          "recipe_name": req.body.recipe_name,
+          "directions": req.body.directions,
+          "date_posted": req.body.date,
+          "recipe_id": null,
+          "prep_time": null,
+          "user_id": req.session.passport.user.user_id,
+     }
+
+     db.insertRecipe(recipe).then((value)=>{
+          recipe.recipe_id = value;
+          console.log("Created recipe #"+value);
+          res.status(200);
+
+          for(i = 0; i < req.body.ingredient.length; i++){
+               // Insert
+               // Ingredients
+               let ing = {
+                    "ingredient_id" : null,
+                    "ingredient_name": null,
+                    "recipe_id" : null
+               };
+                    
+               ing.ingredient_name = req.body.ingredient[i].ingredient_name.toLowerCase();
+          
+               // This might be problem over multiple ingredients
+               let cont = {
+                    "amount": req.body.ingredient[i].amount+" "+req.body.ingredient[i].unit,
+                    "recipe_id": value,
+                    "ingredient_id": null,
+                    "modifier": null,
+               };
+
+               db.insertIngredient(ing).then((val)=>{
+                              
+                    //Insert 
+                    //Contains     
+                    cont.ingredient_id = val;
+                    db.insertContains(cont);
+
+               }, (SQLerror) => console.log(SQLerror));
+          }
+                    
+     /*   Tried this didn't work
+          res.redirect('recipe/'+value);
+     */
+
+     }, (SQLerror) => console.log(SQLerror));
+
+     // This doesn't work either but recipes are getting added
+     res.sendStatus(200);
+});
+
 router.get('/login', function (req, res) {
      //const { userId } = req.session;
      console.log(req.flash('error'));
@@ -156,5 +212,15 @@ function authenticationMiddleware() {
      }
 }
 
+router.get('/recipe/:recipeId', (req, res, next) => {
+     db.queryRecipeId(req.params.recipeId).then((value) => {
+          db.getIngredientsForRecipe(req.params.recipeId).then((ingredients) =>{
+               const recipe_data = value[0];
+               recipe_data['ingredients'] = ingredients;
+               res.render('recipe', recipe_data);
+               console.log(recipe_data);
+          }
+          )}, (SQLerror) => console.log(SQLerror));
+});
 
 module.exports = router;
