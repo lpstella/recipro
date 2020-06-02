@@ -1,0 +1,17 @@
+.recipe-wrapper{
+    background-color: lightblue;
+    width: 100%;
+}
+
+.recipe-header{
+    display: flex;
+}
+
+#recipe-name{
+    font-size: 3em;
+    font-weight: bold;
+}
+
+#ingredients{
+    border: 1px solid black;
+}

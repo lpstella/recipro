@@ -88,7 +88,7 @@ db.loginValidation = (email, password, done) => {
                     return done(null, false);
                }
                else {
-                    //return resolve(results),         // If the email is found do the following: 
+                    //return resolve(results),         // If the email is found do the following:
 
                     const hash = results[0].password_hash.toString();      // Store password hash from db into hash var
                     console.log(hash);
@@ -108,11 +108,23 @@ db.loginValidation = (email, password, done) => {
 }
 
 db.queryRecipeId = (id) => {
-     let sql = 'SELECT recipe_name, directions, date_posted, prep_time, user_id FROM Recipes WHERE recipe_id = ?';
+     let sql = 'SELECT * FROM Recipes INNER JOIN Users ON Recipes.user_id=Users.user_id WHERE recipe_id = ?';
      return new Promise((resolve, reject) => {
           mysqlConnection.query(sql, [id], (err, results, fields) => {
                if(err){
                     return done(err);
+               }
+               return resolve(results);
+          });
+     });
+}
+
+db.getIngredientsForRecipe = (recipe_id) => {
+     let sql = 'SELECT * FROM Contains INNER JOIN Ingredients ON Contains.ingredient_id=Ingredients.ingredient_id WHERE Contains.recipe_id = ?';
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [recipe_id], (err, results, fields) => {
+               if(err){
+                    return reject(err);
                }
                return resolve(results);
           });
@@ -132,6 +144,72 @@ db.queryRecipeString = (nameQuery) => {
      });
 }
 
+// Inserts recipe into table, returns recipe_id
+db.insertRecipe = (recipe, req, res) => {
+     let sql = 'INSERT INTO Recipes SET ?';
+
+     return new Promise((resolve, reject) => {
+
+          mysqlConnection.query(sql, recipe, (err, results) => {
+               if (err) {
+                    return reject(err);
+               }
+               return resolve(results.insertId);
+          });
+     });
+};
+
+// Check if ingredient exists by searching name the insert,
+// Return ingredient_id of new or existing ingredient.
+db.insertIngredient = (ingredient) => {
+     let sql = 'INSERT INTO Ingredients SET ?';
+     let existanceCheck = 'SELECT ingredient_id FROM Ingredients WHERE ingredient_name = ?';
+     
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(existanceCheck, ingredient.ingredient_name, (err, results) => {
+               // Search for existing ingredient by the same name, if it exists return that id
+               if(results>null){
+                    return(results);
+               } 
+               // Else insert the ingredient and return the id
+               else {
+                    console.log("Creating table entry for "+ingredient.ingredient_name);
+                    mysqlConnection.query(sql, ingredient, (error, res) => {
+                         if (error) resolve(error);
+                         return resolve(res.insertId);
+                    });
+               }
+          });
+     });
+}
+
+db.queryIngredientIdByName = (ingredientName) => {
+     let sql = 'SELECT ingredient_id FROM Ingredients WHERE ingredient_name = ?';
+     
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, ingredientName, (err, results) => {
+               if(err){
+                    return null;
+               }
+               return results[0];
+          });
+     });
+}
+
+db.insertContains = (ingredient) => {
+     let sql = 'INSERT INTO Contains SET ?';
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, ingredient, (err, results) => {
+               if(err){
+                    return reject(err);
+               }
+               return resolve(results);
+          });
+     });
+}
+
+
 passport.serializeUser(function (user_id, done) {      // These two functions are used by passport to track user sessions
      done(null, user_id);                              // documentation can be found at: http://www.passportjs.org/docs/
 });
@@ -143,4 +221,3 @@ passport.deserializeUser(function (user_id, done) {
 
 
 module.exports = db;
-

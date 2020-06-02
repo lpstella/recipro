@@ -25,7 +25,7 @@ app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
 app.use(cookieParser());
-app.use(express.static('public'));
+app.use('/static', express.static('public'));
 
 app.use(bodyParser.urlencoded({
      extended: true
