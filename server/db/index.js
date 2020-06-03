@@ -108,15 +108,28 @@ db.loginValidation = (email, password, done) => {
 };
 
 db.getRecipes = (criteria) => {
-     let sql = 'SELECT * FROM Recipes';
+     let sql = 'SELECT * FROM Recipes LEFT JOIN Users on Recipes.user_id=Users.user_id';
 
      return new Promise((resolve, reject) => {
           mysqlConnection.query(sql, [], (err, results, fields) => {
                if (err) {
                     return done(err);
                }
-               const sorted = matchSorter(results, criteria.name, {keys: [item => item.recipe_name]})
+               const sorted = matchSorter(results, criteria.name, {keys: [item => [item.recipe_name, item.display_name]]})
                return resolve(sorted);
+          });
+     });
+}
+
+db.getUserRecipeLists = (userId) => {
+     let sql = 'SELECT * FROM Recipe_Lists WHERE user_id = ?';
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [userId], (err, results, fields) => {
+               if (err) {
+                    return reject(err);
+               }
+               return resolve(results);
           });
      });
 }

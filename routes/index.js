@@ -27,8 +27,11 @@ const db = require('../server/db');
 
 router.get('/browse', function (req, res) {
      db.getRecipes(req.query).then((results) => {
-          console.log(results);
-          res.render('browse', {recipes: results, criteria_name: req.query.name});
+          db.getUserRecipeLists(req.session.passport.user.user_id).then((userRecipeLists) => {
+               console.log(userRecipeLists)
+               res.render('browse', {recipes: results, criteria_name: req.query.name, recipelists: userRecipeLists});
+          })
+          
      })
 });
 

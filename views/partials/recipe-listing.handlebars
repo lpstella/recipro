@@ -6,7 +6,8 @@
         <h3>{{recipe_name}}</h3>
         <div>Prep Time: {{prep_time}} Difficulty: {{difficulty}}</div>
         <div>
-            {{author}}
+            <a href='./profile/{{user_id}}'>{{display_name}}</a>
         </div>
     </div>
+    <img class="list-add-button" src="/static/SVG/add-to-list-button.svg" />
 </div>
