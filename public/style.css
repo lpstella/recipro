@@ -100,6 +100,19 @@ background: transparent;
     margin-right: 10px;
 }
 
+.search-wrapper > form {
+    width: 100%;
+}
+
+.search-wrapper > form > input {
+    width: 70%;
+    margin-left: 80px;
+    font-size: 1em;
+    height: 1.5em;
+    border: 1px solid #E6E6E6;
+    outline: 0;
+}
+
 #login-wrapper{
     display: flex;
     flex-direction: column;

@@ -2,7 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-
+const matchSorter = require('match-sorter');
 // This file's purpose is to define all of the database queries in one place and then be able to call each function using the 'db' variable
 
 const mysqlConnection = mysql.createConnection({
@@ -103,6 +103,20 @@ db.loginValidation = (email, password, done) => {
                     });
                     //return done(null, false);
                }
+          });
+     });
+};
+
+db.getRecipes = (criteria) => {
+     let sql = 'SELECT * FROM Recipes';
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [], (err, results, fields) => {
+               if (err) {
+                    return done(err);
+               }
+               const sorted = matchSorter(results, criteria.name, {keys: [item => item.recipe_name]})
+               return resolve(sorted);
           });
      });
 }

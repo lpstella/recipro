@@ -33,6 +33,11 @@ function registerButtonClick() {
      }
 }
 
+submitSearch = (formData) => {
+     console.log(formData);
+     window.location.replace("./browse/name=" + formData.name);
+}
+
 window.addEventListener('DOMContentLoaded', function () {     // Add button event listeners inside of here to be loaded after all of the dom content
 
      let registerButton = document.getElementById('register-btn').addEventListener('click', registerButtonClick);

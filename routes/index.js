@@ -25,6 +25,13 @@ const db = require('../server/db');
       }
  };
 
+router.get('/browse', function (req, res) {
+     db.getRecipes(req.query).then((results) => {
+          console.log(results);
+          res.render('browse', {recipes: results, criteria_name: req.query.name});
+     })
+});
+
 router.get('/profile', authenticationMiddleware(), function (req, res) {        // Profile page is only loaded if the authenticationMiddleware function determines the user is
      res.render('profile');                                                     // authenticated and listed in the db, otherwise it redirects to /login
 });

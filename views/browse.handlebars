@@ -1,0 +1,20 @@
+<link rel="stylesheet" type="text/css" href="/browse.css">
+<script src="/browse.js"></script>
+{{> header}}
+
+<div class='browse-wrapper'>
+    <section id='search-criteria'>
+        <form action="/browse" method="get">
+            <h2>Filter</h2>
+            {{#if criteria_name}}
+                <h2>Name: {{criteria_name}}</h2>
+            {{/if}}
+            <h3>Difficulty</h3><input type="range"/>
+        </form>
+    </section>
+    <section class='grid-template'>
+        {{#each recipes}}
+            {{>recipe-listing this}}
+        {{/each}}
+    </section>
+</div>

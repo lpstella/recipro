@@ -1,0 +1,30 @@
+.browse-wrapper{
+    background-color: white;
+    height: 100%;
+}
+
+.recipe-listing-wrapper{
+    border: 1px solid grey;
+    margin: 4px;
+    width: 300px;
+    height: 450px;
+    cursor: pointer;
+}
+
+.recipe-data{
+    padding: 4px;
+}
+
+.grid-template{
+    display: grid;
+    grid-auto-flow: dense;
+    flex-wrap: wrap;
+    flex-direction: row;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+#search-criteria{
+    position: absolute;
+    left: 0;
+    margin-left: 5px;
+}

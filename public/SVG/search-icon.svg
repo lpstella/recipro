@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="52.37462" height="52.37462" viewBox="0 0 52.37462 52.37462">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f15a24;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #fff;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke-linecap: round;
+        stroke-width: 4px;
+      }
+    </style>
+  </defs>
+  <title>search-icon</title>
+  <g id="Layer_2" data-name="Layer 2">
+    <g id="Layer_1-2" data-name="Layer 1">
+      <rect class="cls-1" x="0.5" y="0.5" width="51.37462" height="51.37462" rx="14.5762"/>
+      <g>
+        <line class="cls-2" x1="22.6155" y1="29.94742" x2="11.9964" y2="40.56652"/>
+        <circle class="cls-2" cx="29.91871" cy="22.2676" r="10.45951"/>
+      </g>
+    </g>
+  </g>
+</svg>
