@@ -25,9 +25,9 @@ const db = require('../server/db');
       }
  };
 
-router.get('/profile', authenticationMiddleware(), function (req, res) {        // Profile page is only loaded if the authenticationMiddleware function determines the user is
-     res.render('profile');                                                     // authenticated and listed in the db, otherwise it redirects to /login
-});
+// router.get('/profile', authenticationMiddleware(), function (req, res) {        // Profile page is only loaded if the authenticationMiddleware function determines the user is
+//      res.render('profile');                                                     // authenticated and listed in the db, otherwise it redirects to /login
+// });
 
 router.get('/new-recipe', authenticationMiddleware(), function (req, res) {        // New Recipe page is only loaded if the authenticationMiddleware function determines the user is
      res.render('new-recipe');                                                     // authenticated and listed in the db, otherwise it redirects to /login
@@ -58,9 +58,9 @@ router.post('/submit', authenticationMiddleware(), function (req, res) {
                     "ingredient_name": null,
                     "recipe_id" : null
                };
-                    
+
                ing.ingredient_name = req.body.ingredient[i].ingredient_name.toLowerCase();
-          
+
                // This might be problem over multiple ingredients
                let cont = {
                     "amount": req.body.ingredient[i].amount+" "+req.body.ingredient[i].unit,
@@ -70,15 +70,15 @@ router.post('/submit', authenticationMiddleware(), function (req, res) {
                };
 
                db.insertIngredient(ing).then((val)=>{
-                              
-                    //Insert 
-                    //Contains     
+
+                    //Insert
+                    //Contains
                     cont.ingredient_id = val;
                     db.insertContains(cont);
 
                }, (SQLerror) => console.log(SQLerror));
           }
-                    
+
      /*   Tried this didn't work
           res.redirect('recipe/'+value);
      */
@@ -221,6 +221,25 @@ router.get('/recipe/:recipeId', (req, res, next) => {
                console.log(recipe_data);
           }
           )}, (SQLerror) => console.log(SQLerror));
+});
+
+router.get('/profile/:userId', (req, res, next) => {
+    db.queryUserProfile(req.params.userId).then((value) => {
+        db.queryUserRecipes(req.params.userId).then((recipes) => {
+            db.queryUserLists(req.params.userId).then((lists) => {
+                db.queryUserComments(req.params.userId).then((comments) => {
+                    db.queryUserIngredients(req.params.userId).then((ingredients) => {
+                        const profile_data = value[0];
+                        profile_data['recipes'] = recipes;
+                        profile_data['lists'] = lists;
+                        profile_data['comments'] = comments;
+                        profile_data['ingredients'] = ingredients;
+                        res.render('profile', profile_data);
+                    }
+                )}
+            )}
+        )}
+    )}, (SQLerror) => console.log(SQLerror));
 });
 
 module.exports = router;

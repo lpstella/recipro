@@ -111,7 +111,7 @@ db.queryRecipeId = (id) => {
      let sql = 'SELECT * FROM Recipes INNER JOIN Users ON Recipes.user_id=Users.user_id WHERE recipe_id = ?';
      return new Promise((resolve, reject) => {
           mysqlConnection.query(sql, [id], (err, results, fields) => {
-               if(err){
+               if (err) {
                     return done(err);
                }
                return resolve(results);
@@ -119,11 +119,77 @@ db.queryRecipeId = (id) => {
      });
 }
 
+db.queryUserProfile = (id) => {
+    let sql = 'SELECT * FROM Users WHERE user_id = ?';
+
+    return new Promise((resolve, reject) => {
+        mysqlConnection.query(sql, id, (err, results, fields) => {
+            if (err) {
+                return done(err);
+            }
+            return resolve(results);
+        });
+    });
+}
+
+db.queryUserRecipes = (id) => {
+    let sql = 'SELECT * FROM Recipes R WHERE R.user_id = ?';
+
+    return new Promise((resolve, reject) => {
+        mysqlConnection.query(sql, id, (err, results, fields) => {
+            if (err) {
+                return done(err);
+            }
+            return resolve(results);
+        });
+    });
+}
+
+db.queryUserLists = (id) => {
+    let sql = 'SELECT * FROM Recipe_Lists L WHERE L.user_id = ?';
+
+    return new Promise((resolve, reject) => {
+        mysqlConnection.query(sql, id, (err, results, fields) => {
+            if (err) {
+                return done(err);
+            }
+            return resolve(results);
+        });
+    });
+}
+
+db.queryUserComments = (id) => {
+    let sql = 'SELECT * FROM Comments C WHERE C.user_id = ?';
+
+    return new Promise((resolve, reject) => {
+        mysqlConnection.query(sql, id, (err, results, fields) => {
+            if (err) {
+                return done(err);
+            }
+            return resolve(results);
+        });
+    });
+}
+
+db.queryUserIngredients = (id) => {
+    let sql = 'SELECT * FROM Has_ingredient HI INNER JOIN Ingredients I ON I.ingredient_id=HI.ingredient_id WHERE HI.user_id = ?';
+    //let sql = 'SELECT * FROM Has_ingredient HI WHERE HI.user_id = ?';
+
+    return new Promise((resolve, reject) => {
+        mysqlConnection.query(sql, id, (err, results, fields) => {
+            if (err) {
+                return done(err);
+            }
+            return resolve(results);
+        });
+    });
+}
+
 db.getIngredientsForRecipe = (recipe_id) => {
      let sql = 'SELECT * FROM Contains INNER JOIN Ingredients ON Contains.ingredient_id=Ingredients.ingredient_id WHERE Contains.recipe_id = ?';
      return new Promise((resolve, reject) => {
           mysqlConnection.query(sql, [recipe_id], (err, results, fields) => {
-               if(err){
+               if (err) {
                     return reject(err);
                }
                return resolve(results);
@@ -164,13 +230,13 @@ db.insertRecipe = (recipe, req, res) => {
 db.insertIngredient = (ingredient) => {
      let sql = 'INSERT INTO Ingredients SET ?';
      let existanceCheck = 'SELECT ingredient_id FROM Ingredients WHERE ingredient_name = ?';
-     
+
      return new Promise((resolve, reject) => {
           mysqlConnection.query(existanceCheck, ingredient.ingredient_name, (err, results) => {
                // Search for existing ingredient by the same name, if it exists return that id
                if(results>null){
                     return(results);
-               } 
+               }
                // Else insert the ingredient and return the id
                else {
                     console.log("Creating table entry for "+ingredient.ingredient_name);
@@ -185,7 +251,7 @@ db.insertIngredient = (ingredient) => {
 
 db.queryIngredientIdByName = (ingredientName) => {
      let sql = 'SELECT ingredient_id FROM Ingredients WHERE ingredient_name = ?';
-     
+
      return new Promise((resolve, reject) => {
           mysqlConnection.query(sql, ingredientName, (err, results) => {
                if(err){
