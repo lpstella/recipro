@@ -1,5 +1,6 @@
 #profile-container {
     display: inline-block;
+    overflow: hidden
 }
 
 #profile-details {
@@ -18,10 +19,10 @@
     text-align: left;
 }
 
-#usernamelink {
+#profile-details > a {
     display: inline-grid;
     vertical-align: top;
-    margin-top: 33px;
+    margin-top: 10px;
 }
 
 #profile-details > img {
@@ -45,12 +46,36 @@
     margin-bottom: 20px;
 }
 
+#createNewButton {
+    padding: 4px;
+    display: inline-block;
+    text-align: center;
+    font-family: 'Fira Sans', sans-serif;
+    color: #e65c00;
+    background-color: white;
+    border: 2px solid #e65c00;
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: background-color 0.5s ease;
+    -webkit-transition: background-color 0.5s ease-out;
+    -moz-transition: background-color 0.5s ease-out;
+    -o-transition: background-color 0.5s ease-out;
+}
+
+#createNewButton:hover {
+    background-color: #e65c00;
+    color: white;
+}
+
 .action-column {
     margin: 10px;
     width: 25%;
+    max-height: 80%;
     display: table-cell;
     background-color: #FF8A44;
     border: 4px solid #FFFFFF;
+    overflow-y: scroll;
 }
 
 .action-column > h3 {
@@ -87,35 +112,6 @@
     width: 60px;
     border-radius: 50%;
     margin-right: 15px;
-}
-
-.centered {
-    vertical-align: middle;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-}
-
-.vert-list-element > button {
-    padding: 5px;
-    border-radius: 4px;
-    font-family: 'Fira Sans', sans-serif;
-    color: #e65c00;
-    background-color: white;
-    border: 2px solid #e65c00;
-    font-weight: bold;
-    cursor: pointer;
-
-    transition: background-color 0.5s ease;
-    -webkit-transition: background-color 0.5s ease-out;
-    -moz-transition: background-color 0.5s ease-out;
-    -o-transition: background-color 0.5s ease-out;
-}
-
-.vert-list-element > button:hover {
-    background-color: #e65c00;
-    color: white;
-    border: 2px solid white;
 }
 
 .vert-list-element > h4, a {

@@ -212,7 +212,6 @@ function authenticationMiddleware() {
      }
 }
 
-<<<<<<< HEAD
 router.get('/recipe/:recipeId', (req, res, next) => {
      db.queryRecipeId(req.params.recipeId).then((value) => {
           db.getIngredientsForRecipe(req.params.recipeId).then((ingredients) =>{
@@ -223,7 +222,24 @@ router.get('/recipe/:recipeId', (req, res, next) => {
           }
           )}, (SQLerror) => console.log(SQLerror));
 });
-=======
->>>>>>> Updated some css for profile, Added a button to bottom of lists, and started work on profile fetching
+
+router.get('/profile/:userId', (req, res, next) => {
+    db.queryUserProfile(req.params.userId).then((value) => {
+        db.queryUserRecipes(req.params.userId).then((recipes) => {
+            db.queryUserLists(req.params.userId).then((lists) => {
+                db.queryUserComments(req.params.userId).then((comments) => {
+                    db.queryUserIngredients(req.params.userId).then((ingredients) => {
+                        const profile_data = value[0];
+                        profile_data['recipes'] = recipes;
+                        profile_data['lists'] = lists;
+                        profile_data['comments'] = comments;
+                        profile_data['ingredients'] = ingredients;
+                        res.render('profile', profile_data);
+                    }
+                )}
+            )}
+        )}
+    )}, (SQLerror) => console.log(SQLerror));
+});
 
 module.exports = router;
