@@ -25,9 +25,26 @@ const db = require('../server/db');
       }
  };
 
-// router.get('/profile', authenticationMiddleware(), function (req, res) {        // Profile page is only loaded if the authenticationMiddleware function determines the user is
-//      res.render('profile');                                                     // authenticated and listed in the db, otherwise it redirects to /login
-// });
+router.get('/browse', function (req, res) {
+     const criteria = {
+          name: req.query.name ? req.query.name : '',
+     }
+     db.getRecipes(criteria).then((results) =>
+          db.getAllIngredients(criteria).then((ingredients) => {
+               if (req.session.passport){
+                    db.getUserRecipeLists(req.session.passport.user.user_id).then((userRecipeLists) => {
+                         res.render('browse', {recipes: results, criteria_name: criteria.name, recipelists: userRecipeLists, ingredients});
+                    })
+               } else{
+                    res.render('browse', {recipes: results, criteria_name: req.query.name || '', recipelists: null})
+               }
+          })
+     )
+});
+
+router.get('/profile', authenticationMiddleware(), function (req, res) {        // Profile page is only loaded if the authenticationMiddleware function determines the user is
+     res.render('profile');                                                     // authenticated and listed in the db, otherwise it redirects to /login
+});
 
 router.get('/new-recipe', authenticationMiddleware(), function (req, res) {        // New Recipe page is only loaded if the authenticationMiddleware function determines the user is
      res.render('new-recipe');                                                     // authenticated and listed in the db, otherwise it redirects to /login
@@ -110,28 +127,6 @@ router.get('/logout', function (req, res) {
      res.redirect('/');                   // Redirect user to home page
 })
 
-
-// router.get('/login', authenticationMiddleware(), redirectHome, function (req, res) {
-//      const { userId } = req.session;
-//      res.render('login');
-// });
-
-// router.post('/login', function (req, res) {
-//      const { username, password } = req.body;
-//      if (username && password) {
-//           const userUuid = userToUuid[username];
-
-//           const user = userMap[userUuid] && userMap[userUuid].password == password ? userUuid : null;
-//           if (user) {
-//                req.session.userId = userUuid;
-//                return res.redirect('/profile');
-//           }
-//      }
-//      res.redirect('/login');
-// });
-
-
-
 router.get('/register', redirectHome, function (req, res) {
      res.render('register');
 });
@@ -180,15 +175,6 @@ router.post('/register',
           }
      });
 
-// router.post('/logout', redirectLogin, function (req, res) {
-//      req.session.destroy(err => {
-//           if (err) {
-//                return res.redirect('/login');
-//           }
-//           res.clearCookie('sid');
-//      });
-// });
-
 router.get('/home', (req, res, next) => {
      res.render('home');
 });
@@ -214,12 +200,14 @@ function authenticationMiddleware() {
 
 router.get('/recipe/:recipeId', (req, res, next) => {
      db.queryRecipeId(req.params.recipeId).then((value) => {
-          db.getIngredientsForRecipe(req.params.recipeId).then((ingredients) =>{
-               const recipe_data = value[0];
+          db.getIngredientsForRecipe(req.params.recipeId).then((ingredients) =>
+               db.queryComments(req.params.recipeId).then((comments) => {
+                    const recipe_data = value[0];
                recipe_data['ingredients'] = ingredients;
+               recipe_data['comments'] = comments
                res.render('recipe', recipe_data);
                console.log(recipe_data);
-          }
+               })
           )}, (SQLerror) => console.log(SQLerror));
 });
 

@@ -2,7 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-
+const matchSorter = require('match-sorter');
 // This file's purpose is to define all of the database queries in one place and then be able to call each function using the 'db' variable
 
 const mysqlConnection = mysql.createConnection({
@@ -105,6 +105,48 @@ db.loginValidation = (email, password, done) => {
                }
           });
      });
+};
+
+db.getRecipes = (criteria) => {
+     let sql = 'SELECT * FROM Recipes LEFT JOIN Users on Recipes.user_id=Users.user_id';
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [], (err, results, fields) => {
+               if (err) {
+                    return done(err);
+               }
+               const sorted = matchSorter(results, criteria.name, {keys: [item => [item.recipe_name, item.display_name]]})
+               return resolve(sorted);
+          });
+     });
+}
+
+db.getUserRecipeLists = (userId) => {
+     let sql = 'SELECT * FROM Recipe_Lists WHERE user_id = ?';
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [userId], (err, results, fields) => {
+               if (err) {
+                    return reject(err);
+               }
+               return resolve(results);
+          });
+     });
+}
+
+db.getAllIngredients = (criteria) => {
+     let sql = `SELECT ingredient_name FROM (
+                    SELECT ingredient_id, count(ingredient_id) FROM Recipes LEFT JOIN Contains on Recipes.recipe_id=Contains.recipe_id WHERE ingredient_id IS NOT NULL GROUP BY ingredient_id ORDER BY count(ingredient_id) DESC
+               ) as Counts LEFT JOIN Ingredients on Counts.ingredient_id=Ingredients.ingredient_id`;
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [], (err, results, fields) => {
+               if (err) {
+                    return reject(err);
+               }
+               return resolve(results);
+          });
+     });
 }
 
 db.queryRecipeId = (id) => {
@@ -183,6 +225,18 @@ db.queryUserIngredients = (id) => {
             return resolve(results);
         });
     });
+};
+
+db.queryComments = (recipeId) => {
+     let sql = 'SELECT comment_body, recipe_rating, Comments.user_id, display_name, post_date FROM Comments INNER JOIN Users ON Comments.user_id=Users.user_id WHERE recipe_id = ?';
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [recipeId], (err, results, fields) => {
+               if(err){
+                    return reject(err);
+               }
+               return resolve(results);
+          });
+     });
 }
 
 db.getIngredientsForRecipe = (recipe_id) => {
@@ -274,7 +328,6 @@ db.insertContains = (ingredient) => {
           });
      });
 }
-
 
 passport.serializeUser(function (user_id, done) {      // These two functions are used by passport to track user sessions
      done(null, user_id);                              // documentation can be found at: http://www.passportjs.org/docs/

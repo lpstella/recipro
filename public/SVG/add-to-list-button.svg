@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="52.90953" height="52.90953" viewBox="0 0 52.90953 52.90953">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #f15a24;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2 {
+        stroke-width: 4px;
+      }
+    </style>
+  </defs>
+  <title>add-to-list-icon</title>
+  <g id="Layer_2" data-name="Layer 2">
+    <g id="Layer_1-2" data-name="Layer 1">
+      <g>
+        <circle class="cls-1" cx="26.45477" cy="26.45477" r="25.95477"/>
+        <line class="cls-2" x1="26.45477" y1="10.71092" x2="26.45477" y2="42.19861"/>
+        <line class="cls-2" x1="42.19861" y1="26.45477" x2="10.71092" y2="26.45477"/>
+      </g>
+    </g>
+  </g>
+</svg>

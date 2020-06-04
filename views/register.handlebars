@@ -14,10 +14,10 @@
           {{/if}} --}}
 
           <form id="login-wrapper" "login-form" action="/register" method="POST">
-               <input name="email" id="email-field" placeholder="Email" type="email" />
-               <input name="displayName" id="display-name-field" placeholder="Display Name" type="text" />
-               <input name="password" id="password-field" placeholder="Password" type="password" />
-               <input name="repeatPass" id="repeat-password-field" placeholder="Repeat Password" type="password" />
+               <input required name="email" id="email-field" placeholder="Email" type="email" />
+               <input required name="displayName" id="display-name-field" placeholder="Display Name" type="text" />
+               <input required name="password" id="password-field" placeholder="Password" type="password" minlength="" />
+               <input required name="repeatPass" id="repeat-password-field" placeholder="Repeat Password" type="password" />
                <button type="submit" id="register-btn">Register</button>
           </form>
      </div>
