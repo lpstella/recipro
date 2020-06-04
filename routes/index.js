@@ -43,7 +43,7 @@ router.get('/browse', function (req, res) {
 });
 
 router.get('/profile', authenticationMiddleware(), function (req, res) {        // Profile page is only loaded if the authenticationMiddleware function determines the user is
-     res.render('profile');                                                     // authenticated and listed in the db, otherwise it redirects to /login
+     res.redirect('/profile/' + req.session.passport.user.user_id);                                                     // authenticated and listed in the db, otherwise it redirects to /login
 });
 
 router.get('/new-recipe', authenticationMiddleware(), function (req, res) {        // New Recipe page is only loaded if the authenticationMiddleware function determines the user is
