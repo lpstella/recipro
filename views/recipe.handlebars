@@ -1,28 +1,34 @@
 {{> header}}
 <link rel="stylesheet" type="text/css" href="/static/recipe.css">
+<script src="/static/recipe.js"></script>
 <div class='recipe-wrapper'>
     <div class='recipe-header'>
         <div>
             <a id='recipe-name'>{{recipe_name}}</a>
+            <label>Prep time: {{prep_time}}</label>
+            <label>{{date_posted}}</label>
         </div>
-        <a>Prep time: {{prep_time}}</a>
-        
-
-        <a>{{date_posted}}</a>
-
-    </div>
+    <label>Submitted by: </label>
     <a href='/profile/{{user_id}}'>
         {{display_name}}
     </a>
+    </div>
     
     <div id='ingredients'>
-        Ingredients
+        <h2>Ingredients</h2>
         <ul>
         {{#each ingredients}}
             <li>{{this.amount}} {{this.ingredient_name}}</li>  
         {{/each}}
         </ul>
     </div>
-        Directions
+        <h2>Directions</h2>
         {{directions}}
+
+    <div id='comment-wrapper'>
+        <h2>Comments</h2>
+        {{#each comments}}
+            {{>comment this}}
+        {{/each}}
+    </div>
 </div>

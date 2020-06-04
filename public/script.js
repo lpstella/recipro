@@ -12,10 +12,6 @@ function registerButtonClick() {
      // Probably gonna want nicer ways of handling these errors on the front end
 
      if (password === repeatPass) {                                                          // Catching input errors on the frontside
-          if (email === '' || displayName === '' || password === '' || repeatPass === '') {
-               alert('Please fill out all fields.');                                           // Handles blank field errors
-          }
-
           if (email != '' && displayName != '' && password != '' && repeatPass != '') {     // Checking if all fields are filled out
                if (password.length < 4) {                                                 // Checking if password is at least 4 characters
                     alert('Password must be at least 4 characters.');      // Handles password length error
@@ -31,6 +27,11 @@ function registerButtonClick() {
      else {
           alert('Passwords do not match. Try again.');           // Handles passwords not matching error
      }
+}
+
+submitSearch = (formData) => {
+     console.log(formData);
+     window.location.replace("./browse/name=" + formData.name);
 }
 
 window.addEventListener('DOMContentLoaded', function () {     // Add button event listeners inside of here to be loaded after all of the dom content

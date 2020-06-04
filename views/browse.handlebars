@@ -1,0 +1,35 @@
+<link rel="stylesheet" type="text/css" href="/static/browse.css">
+<script src="/static/browse.js"></script>
+{{> header}}
+
+<div class='browse-wrapper'>
+    <section id='search-criteria'>
+        <form action="/browse" method="get">
+            <h2>Filter</h2>
+            {{#if criteria_name}}
+                <h3>Name</h3>
+                {{criteria_name}}
+            {{/if}}
+            <h3>Difficulty</h3><input type="range" step="1" min='0' max="5"/>
+            <div id='ingredient-criteria-wrapper'>
+                <h3>Ingredients</h3>
+                {{#each ingredients}}
+                <div>
+                    <input type="checkbox" id="ingredient-criteria" name="{{this.ingredient_name}}" value="{{this.ingredient_name}}">
+                    <label>{{this.ingredient_name}}</label>
+                </div>
+                {{/each}}
+            </div>
+        </form>
+    </section>
+    <section class='grid-template'>
+        {{#each recipes}}
+            {{>recipe-listing this}}
+        {{/each}}
+        <div id='recipe-list-dropdown'>
+            {{#each recipelists}}
+                <u>{{this.list_name}}</u>
+            {{/each}}
+        </div>
+    </section>
+</div>
