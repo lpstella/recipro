@@ -223,6 +223,10 @@ router.get('/recipe/:recipeId', (req, res, next) => {
           )}, (SQLerror) => console.log(SQLerror));
 });
 
+router.get('/profile', (req, res, next) => {
+     res.redirect('/profile/' + req.session.passport.user.user_id);
+});
+
 router.get('/profile/:userId', (req, res, next) => {
     db.queryUserProfile(req.params.userId).then((value) => {
         db.queryUserRecipes(req.params.userId).then((recipes) => {
