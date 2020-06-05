@@ -1,0 +1,34 @@
+.recipe-wrapper{
+    background-color: rgb(255, 255, 255);
+    width: 90%;
+    margin: 25px;
+}
+
+.recipe-header{
+    display: flex; flex-direction: column;
+    margin-bottom: 50px;
+}
+
+#recipe-name{
+    font-size: 3em;
+    font-weight: bold;
+}
+
+#ingredients{
+}
+
+#comment-wrapper > div{
+    border: 1px solid black;
+    margin-left: 25px;
+    padding: 15px;
+    border-bottom: none;
+}
+
+#comment-wrapper > div:last-child{
+    border-bottom: 1px solid black;
+}
+
+.difficulty-rating-wrapper{
+    display: flex;
+    flex-direction: row;
+}

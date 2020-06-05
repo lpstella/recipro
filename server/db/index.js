@@ -2,7 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-
+const matchSorter = require('match-sorter');
 // This file's purpose is to define all of the database queries in one place and then be able to call each function using the 'db' variable
 
 const mysqlConnection = mysql.createConnection({
@@ -88,7 +88,7 @@ db.loginValidation = (email, password, done) => {
                     return done(null, false);
                }
                else {
-                    //return resolve(results),         // If the email is found do the following: 
+                    //return resolve(results),         // If the email is found do the following:
 
                     const hash = results[0].password_hash.toString();      // Store password hash from db into hash var
                     console.log(hash);
@@ -105,6 +105,228 @@ db.loginValidation = (email, password, done) => {
                }
           });
      });
+};
+
+db.getRecipes = (criteria) => {
+     let sql = 'SELECT * FROM Recipes LEFT JOIN Users on Recipes.user_id=Users.user_id';
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [], (err, results, fields) => {
+               if (err) {
+                    return done(err);
+               }
+               const sorted = matchSorter(results, criteria.name, {keys: [item => [item.recipe_name, item.display_name]]})
+               return resolve(sorted);
+          });
+     });
+}
+
+db.getUserRecipeLists = (userId) => {
+     let sql = 'SELECT * FROM Recipe_Lists WHERE user_id = ?';
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [userId], (err, results, fields) => {
+               if (err) {
+                    return reject(err);
+               }
+               return resolve(results);
+          });
+     });
+}
+
+db.getAllIngredients = (criteria) => {
+     let sql = `SELECT ingredient_name FROM (
+                    SELECT ingredient_id, count(ingredient_id) FROM Recipes LEFT JOIN Contains on Recipes.recipe_id=Contains.recipe_id WHERE ingredient_id IS NOT NULL GROUP BY ingredient_id ORDER BY count(ingredient_id) DESC
+               ) as Counts LEFT JOIN Ingredients on Counts.ingredient_id=Ingredients.ingredient_id`;
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [], (err, results, fields) => {
+               if (err) {
+                    return reject(err);
+               }
+               return resolve(results);
+          });
+     });
+}
+
+db.queryRecipeId = (id) => {
+     let sql = 'SELECT * FROM Recipes INNER JOIN Users ON Recipes.user_id=Users.user_id WHERE recipe_id = ?';
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [id], (err, results, fields) => {
+               if (err) {
+                    return done(err);
+               }
+               return resolve(results);
+          });
+     });
+}
+
+db.queryUserProfile = (id) => {
+    let sql = 'SELECT * FROM Users WHERE user_id = ?';
+
+    return new Promise((resolve, reject) => {
+        mysqlConnection.query(sql, id, (err, results, fields) => {
+            if (err) {
+                return done(err);
+            }
+            return resolve(results);
+        });
+    });
+}
+
+db.queryUserRecipes = (id) => {
+    let sql = 'SELECT * FROM Recipes R WHERE R.user_id = ?';
+
+    return new Promise((resolve, reject) => {
+        mysqlConnection.query(sql, id, (err, results, fields) => {
+            if (err) {
+                return done(err);
+            }
+            return resolve(results);
+        });
+    });
+}
+
+db.queryUserLists = (id) => {
+    let sql = 'SELECT * FROM Recipe_Lists L WHERE L.user_id = ?';
+
+    return new Promise((resolve, reject) => {
+        mysqlConnection.query(sql, id, (err, results, fields) => {
+            if (err) {
+                return done(err);
+            }
+            return resolve(results);
+        });
+    });
+}
+
+db.queryUserComments = (id) => {
+    let sql = 'SELECT * FROM Comments C WHERE C.user_id = ?';
+
+    return new Promise((resolve, reject) => {
+        mysqlConnection.query(sql, id, (err, results, fields) => {
+            if (err) {
+                return done(err);
+            }
+            return resolve(results);
+        });
+    });
+}
+
+db.queryUserIngredients = (id) => {
+    let sql = 'SELECT * FROM Has_ingredient HI INNER JOIN Ingredients I ON I.ingredient_id=HI.ingredient_id WHERE HI.user_id = ?';
+    //let sql = 'SELECT * FROM Has_ingredient HI WHERE HI.user_id = ?';
+
+    return new Promise((resolve, reject) => {
+        mysqlConnection.query(sql, id, (err, results, fields) => {
+            if (err) {
+                return done(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+db.queryComments = (recipeId) => {
+     let sql = 'SELECT comment_body, recipe_rating, Comments.user_id, display_name, post_date FROM Comments INNER JOIN Users ON Comments.user_id=Users.user_id WHERE recipe_id = ?';
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [recipeId], (err, results, fields) => {
+               if(err){
+                    return reject(err);
+               }
+               return resolve(results);
+          });
+     });
+}
+
+db.getIngredientsForRecipe = (recipe_id) => {
+     let sql = 'SELECT * FROM Contains INNER JOIN Ingredients ON Contains.ingredient_id=Ingredients.ingredient_id WHERE Contains.recipe_id = ?';
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [recipe_id], (err, results, fields) => {
+               if (err) {
+                    return reject(err);
+               }
+               return resolve(results);
+          });
+     });
+}
+
+db.queryRecipeString = (nameQuery) => {
+     let sql = 'SELECT * FROM Recipes WHERE recipe_name LIKE "%?%"';
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [nameQuery], (err, results, fields) => {
+               if (err) {
+                    return done(err);
+               }
+               return resolve(results);
+          });
+     });
+}
+
+// Inserts recipe into table, returns recipe_id
+db.insertRecipe = (recipe, req, res) => {
+     let sql = 'INSERT INTO Recipes SET ?';
+
+     return new Promise((resolve, reject) => {
+
+          mysqlConnection.query(sql, recipe, (err, results) => {
+               if (err) {
+                    return reject(err);
+               }
+               return resolve(results.insertId);
+          });
+     });
+};
+
+// Check if ingredient exists by searching name the insert,
+// Return ingredient_id of new or existing ingredient.
+db.insertIngredient = (ingredient) => {
+     let sql = 'INSERT INTO Ingredients SET ?';
+     let existanceCheck = 'SELECT ingredient_id FROM Ingredients WHERE ingredient_name = ?';
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(existanceCheck, ingredient.ingredient_name, (err, results) => {
+               // Search for existing ingredient by the same name, if it exists return that id
+               if(results>null){
+                    return(results);
+               }
+               // Else insert the ingredient and return the id
+               else {
+                    console.log("Creating table entry for "+ingredient.ingredient_name);
+                    mysqlConnection.query(sql, ingredient, (error, res) => {
+                         if (error) resolve(error);
+                         return resolve(res.insertId);
+                    });
+               }
+          });
+     });
+}
+
+db.queryIngredientIdByName = (ingredientName) => {
+     let sql = 'SELECT ingredient_id FROM Ingredients WHERE ingredient_name = ?';
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, ingredientName, (err, results) => {
+               if(err){
+                    return null;
+               }
+               return results[0];
+          });
+     });
+}
+
+db.insertContains = (ingredient) => {
+     let sql = 'INSERT INTO Contains SET ?';
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, ingredient, (err, results) => {
+               if(err){
+                    return reject(err);
+               }
+               return resolve(results);
+          });
+     });
 }
 
 passport.serializeUser(function (user_id, done) {      // These two functions are used by passport to track user sessions
@@ -118,4 +340,3 @@ passport.deserializeUser(function (user_id, done) {
 
 
 module.exports = db;
-
