@@ -13,11 +13,21 @@ body{
     min-height: 100vh;
 }
 
+/* .home-content {
+     display: flex;
+     flex-direction: column;
+     background: rgb(241,145,67);
+    background: linear-gradient(0deg, rgba(241,145,67,1) 0%, rgba(255,255,255,1) 100%);
+    background-repeat: no-repeat;
+    background-size: contain;
+} */
+
 ::-webkit-scrollbar {
     width: 8px;
 }
 ::-webkit-scrollbar-button {
 }
+
 ::-webkit-scrollbar-thumb {
 background: rgb(255, 120, 29);
 border: 0px none #ffffff;
@@ -180,7 +190,7 @@ div#login-wrapper{
 .horizontal-center{
     align-content: center;
     width: 100%;
-    padding-left: 5%;
+    /* padding-left: 5%; */
 }
 
 .recipe-carousel{
@@ -272,4 +282,4 @@ div#login-wrapper{
 
 .recipe-direction {
 
-}x
+}

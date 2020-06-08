@@ -1,14 +1,32 @@
 
-
+.content {
+     display: flex;
+     /* flex-direction: row; */
+     background-color: white;
+}
 
 .browse-wrapper{
-     display: flex;
-     background-color: white;
+     /* display: flex; */
+     /* background-color: white; */
      /* height: 100%; */
 }
 
+.filters-container {
+     display: inline-block;
+     min-width: 200px;
+     max-width: 200px;
+     padding: 20px;
+     /* position: absolute; */
+     /* left: 0; */
+     margin: 10px 10px auto 10px;
+}
+
 .recipe-listing-wrapper{
-    position: relative;
+    /* position: relative; */
+     display: inline-block;
+     margin: 10px;
+     padding: 10px;
+     border-radius: 3px;
     border: 1px solid #E6E6E6;
     margin: 4px;
     width: 300px;
@@ -34,23 +52,25 @@
     padding: 4px;
 }
 
-.grid-template{
+/* .grid-template{
     /* display: grid;
     grid-auto-flow: dense;
     flex-wrap: wrap;
     flex-direction: row;
-    grid-template-columns: repeat(4, 1fr); */
-}
+    grid-template-columns: repeat(4, 1fr); 
+} */
 
-#search-criteria{
+
+
+/* #search-criteria{
      display: inline-block;
      min-width: 200px;
      max-width: 200px;
      padding: 20px;
      /* position: absolute; */
-     /* left: 0; */
+     /* left: 0; 
      margin: 10px 10px auto 10px;
-}
+} */
 
 .list-add-button{
     opacity: 0;
@@ -91,11 +111,4 @@
 #ingredient-criteria-wrapper{
     display: flex;
     flex-direction: column;
-}
-
-.recipe-listing-wrapper {
-     display: inline-block;
-     margin: 10px;
-     padding: 10px;
-     border-radius: 3px;
 }
