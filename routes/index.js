@@ -234,6 +234,12 @@ router.get('/profile/:userId', (req, res, next) => {
                         profile_data['lists'] = lists;
                         profile_data['comments'] = comments;
                         profile_data['ingredients'] = ingredients;
+
+                        if (req.session.passport.user.user_id == req.params.userId) {
+                            console.log("User is viewing their own profile");
+                            profile_data['own_profile'] = true;
+                        }
+
                         res.render('profile', profile_data);
                     }
                 )}

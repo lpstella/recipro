@@ -14,8 +14,6 @@
 
         <br />
 
-        <!--Here I am adding manually inserted list options just to test css-->
-
         <div id="profile-actions">
             <div class="action-column">
                 <h3>Public Recipes</h3>
@@ -25,14 +23,21 @@
                             <div id="recipe-element" class="vert-list-element">
                                 <img src="/static/pasta.jpg" alt="Recipe-Img" style="width:40px"></img>
                                 <h4><a href="/recipe/{{recipe_id}}">{{recipe_name}}</a></h4>
-                                <a href="/profile/{{user_id}}">{{display_name}}</a>
+                                <a href="/profile/{{../user_id}}">{{../display_name}}</a>
                                 <a>Prep: {{prep_time}} mins</a>
+
+                                {{#if ../own_profile}}
+                                    <button id="deleteButton" onclick="deleteRecipe({{recipe_id}})">X</button>
+                                {{/if}}
                             </div>
                         {{/each}}
                     {{else}}
                         <h5>User has no recipes yet</h5>
                     {{/if}}
-                    <button id="createNewButton" onclick="window.location.href='/new-recipe'">Create A New Recipe</button>
+
+                    {{#if own_profile}}
+                        <button id="createNewButton" onclick="window.location.href='/new-recipe'">Create A New Recipe</button>
+                    {{/if}}
                 </div>
             </div>
             <div class="action-column">
@@ -42,13 +47,20 @@
                         {{#each lists}}
                             <div id="recipe-list-element" class="vert-list-element">
                                 <h4><a href="/lists/{{list_id}}">{{list_name}}</a></h4>
-                                <a href="/profile/{{user_id}}">{{display_name}}</a>
+                                <a href="/profile/{{../user_id}}">{{../display_name}}</a>
+
+                                {{#if ../own_profile}}
+                                    <button id="deleteButton" onclick="deleteList({{list_id}})">X</button>
+                                {{/if}}
                             </div>
                         {{/each}}
                     {{else}}
                         <h5>User has no recipe lists yet</h5>
                     {{/if}}
-                    <button id="createNewButton" onclick="window.location.href='/new-list'">Create A New Recipe List</button>
+
+                    {{#if own_profile}}
+                        <button id="createNewButton" onclick="window.location.href='/new-list'">Create A New Recipe List</button>
+                    {{/if}}
                 </div>
             </div>
             <div class="action-column">
@@ -58,8 +70,12 @@
                         {{#each comments}}
                             <div id="comment-element" class="vert-list-element">
                                 <p id="comment-body">{{comment_body}}</p>
-                                <p>Commented by </p><a href="/profile/{{user_id}}">@{{user_id}}</a>
+                                <p>Commented by </p><a href="/profile/{{../user_id}}">{{../display_name}}</a>
                                 <a href="/recipe/{{recipe_id}}">View Recipe Thread</a>
+
+                                {{#if ../own_profile}}
+                                    <button id="deleteButton" onclick="deleteComment({{comment_id}})">X</button>
+                                {{/if}}
                             </div>
                         {{/each}}
                     {{else}}
@@ -75,13 +91,23 @@
                             <div id="ingredient-element" class="vert-list-element">
                                 <a id="ingredient-name">Ingredient: {{ingredient_name}}</a>
                                 <a id="ingredient-quantity">Quantity: {{amount}}</a>
+
+                                {{#if ../own_profile}}
+                                    <button id="deleteButton" onclick="deleteIngredient({{ingredient_id}})">X</button>
+                                {{/if}}
                             </div>
                         {{/each}}
                     {{else}}
                         <h5>User has no ingredients yet</h5>
+                    {{/if}}
+
+                    {{#if own_profile}}
+                        <button id="createNewButton" onclick="">Add an Ingredient</button>
                     {{/if}}
                 </div>
             </div>
         </div>
     </div>
 </body>
+
+{{> footer}}
