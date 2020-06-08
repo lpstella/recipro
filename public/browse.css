@@ -1,6 +1,10 @@
+
+
+
 .browse-wrapper{
-    background-color: white;
-    height: 100%;
+     display: flex;
+     background-color: white;
+     /* height: 100%; */
 }
 
 .recipe-listing-wrapper{
@@ -31,17 +35,21 @@
 }
 
 .grid-template{
-    display: grid;
+    /* display: grid;
     grid-auto-flow: dense;
     flex-wrap: wrap;
     flex-direction: row;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr); */
 }
 
 #search-criteria{
-    position: absolute;
-    left: 0;
-    margin-left: 5px;
+     display: inline-block;
+     min-width: 200px;
+     max-width: 200px;
+     padding: 20px;
+     /* position: absolute; */
+     /* left: 0; */
+     margin: 10px 10px auto 10px;
 }
 
 .list-add-button{
@@ -83,4 +91,11 @@
 #ingredient-criteria-wrapper{
     display: flex;
     flex-direction: column;
+}
+
+.recipe-listing-wrapper {
+     display: inline-block;
+     margin: 10px;
+     padding: 10px;
+     border-radius: 3px;
 }
