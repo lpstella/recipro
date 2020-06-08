@@ -3,42 +3,44 @@
 <script src="/static/new-recipe.js"></script>
 {{> header}}
 <div class='horizontal-center form-wrapper'>
-        <form id='recipe-form'>
-            <div id='recipe-directions'>
-                <h1>Tell us about your recipe</h1>
-                <input type="text" id='recipe-title' placeholder="New Recipe"/>
-                <ol id='recipe-directions-container'>
+     <form id='recipe-form'>
+          <div id='recipe-directions'>
+               <h1>Tell us about your recipe</h1>
+               <input type="text" id='recipe-title' placeholder="New Recipe" />
+               <ol id='recipe-directions-container'>
                     <li>
-                        <div class='recipe-direction'>
-                            <input type="text" class='recipe-instruction' placeholder="First Step" />
-                            <img id="link-recipe" src="/static/SVG/link-icon.svg"/>
-                        </div>
+                         <div class='recipe-direction'>
+                              <input type="text" class='recipe-instruction' placeholder="First Step" />
+                              <img id="link-recipe" src="/static/SVG/link-icon.svg" />
+                         </div>
                     </li>
-                </ol>
-            </div>
-            <div id='recipe-ingredients'>
-                <h1>Ingredients</h1>
-                <ul id='recipe-ingredients-container'>
+               </ol>
+          </div>
+          <div id='recipe-ingredients'>
+               <h1>Ingredients</h1>
+               <ul id='recipe-ingredients-container'>
                     <li>
-                        <div class='ingredient-info'>
-                            <input type="text" class='ingredient' placeholder="New Ingredient"/>
-                            <input type="number" class='ingredient-amount' placeholder="Amount"/>
-                            <select class='ingredient-unit'>
-                                <option value='tsp'>tsp</option>
-                                <option value='tbsp'>tbsp</option>
-                                <option value='floz'>fl oz</option>
-                                <option value='cup'>cup</option>
-                                <option value='pint'>pint</option>
-                                <option value='lb'>lb</option>
-                                <option value='ounce'>oz</option>
-                                <option value='g'>g</option>
-                            </select>
-                        </div>
+                         <div class='ingredient-info'>
+                              <input type="text" class='ingredient' placeholder="New Ingredient" />
+                              <input type="number" class='ingredient-amount' placeholder="Amount" />
+                              <select class='ingredient-unit'>
+                                   <option value='tsp'>tsp</option>
+                                   <option value='tbsp'>tbsp</option>
+                                   <option value='floz'>fl oz</option>
+                                   <option value='cup'>cup</option>
+                                   <option value='pint'>pint</option>
+                                   <option value='lb'>lb</option>
+                                   <option value='ounce'>oz</option>
+                                   <option value='g'>g</option>
+                              </select>
+                              <img class="remove-button" src="/static/SVG/remove-icon.svg">
+                         </div>
                     </li>
-                </ul>
+               </ul>
 
 
-            </div>
-            <input id="submitRecipe" type="submit" value='Done'/>
-        </form>
+          </div>
+          <input id="submitRecipe" type="submit" value='Done' />
+
+     </form>
 </div>
