@@ -25,9 +25,10 @@ const db = require('../server/db');
       }
  };
 
-// router.get('/profile', authenticationMiddleware(), function (req, res) {        // Profile page is only loaded if the authenticationMiddleware function determines the user is
-//      res.render('profile');                                                     // authenticated and listed in the db, otherwise it redirects to /login
-// });
+//redirect /profile to the logged-in user's profile instead of throwing a 404
+router.get('/profile', authenticationMiddleware(), function (req, res) {        // Profile page is only loaded if the authenticationMiddleware function determines the user is
+    res.redirect('/profile/' + req.session.passport.user.user_id);                  // authenticated and listed in the db, otherwise it redirects to /login
+});
 
 router.get('/new-recipe', authenticationMiddleware(), function (req, res) {        // New Recipe page is only loaded if the authenticationMiddleware function determines the user is
      res.render('new-recipe');                                                     // authenticated and listed in the db, otherwise it redirects to /login
@@ -236,7 +237,6 @@ router.get('/profile/:userId', (req, res, next) => {
                         profile_data['ingredients'] = ingredients;
 
                         if (req.session.passport.user.user_id == req.params.userId) {
-                            console.log("User is viewing their own profile");
                             profile_data['own_profile'] = true;
                         }
 

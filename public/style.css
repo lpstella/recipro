@@ -65,10 +65,10 @@ background: transparent;
 }
 
 #footer:hover {
-    height: 50px;
+    height: 80px;
 }
 
-.footer-wrapper > p {
+.footer-wrapper > h5 {
     color: black;
 }
 
