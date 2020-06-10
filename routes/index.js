@@ -268,15 +268,18 @@ function authenticationMiddleware() {
 
 router.get('/recipe/:recipeId', (req, res, next) => {
      db.queryRecipeId(req.params.recipeId).then((value) => {
-          db.getIngredientsForRecipe(req.params.recipeId).then((ingredients) =>
+          db.getIngredientsForRecipe(req.params.recipeId).then((ingredients) => {
                db.queryComments(req.params.recipeId).then((comments) => {
-                    const recipe_data = value[0];
-                    recipe_data['ingredients'] = ingredients;
-                    recipe_data['comments'] = comments.reverse();
-                    res.render('recipe', recipe_data);
-                    console.log(recipe_data);
-               })
-          )
+                    db.queryUserLists(req.session.passport.user.user_id).then((user_lists) => {
+                         const recipe_data = value[0];
+                         recipe_data['ingredients'] = ingredients;
+                         recipe_data['comments'] = comments.reverse();
+                         recipe_data['user_list'] = user_lists;
+                         res.render('recipe', recipe_data);
+                         console.log(recipe_data);
+                    });
+               });
+          });
      }, (SQLerror) => console.log(SQLerror));
 });
 
@@ -357,6 +360,19 @@ router.post('/list', (req, res, next) => {
     db.insertList(list).then(() => {
         res.sendStatus(200);
     }, (SQLerror) => console.log(SQLerror));
+});
+
+router.post('/list-addition', (req, res, next) => {
+     let list = req.body.list;
+     let recipe = req.body.recipe
+     let entry = {
+          "list_id": list,
+          "recipe_id": recipe
+     }
+     db.insertListEntry(entry).then((value) => {
+          res.sendStatus(200);
+     }, (SQLerror) => console.log(SQLerror));
+     // console.log(list, recipe);
 });
 
 //deleting content
