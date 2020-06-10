@@ -280,4 +280,8 @@ router.get('/profile/:userId', (req, res, next) => {
      }, (SQLerror) => console.log(SQLerror));
 });
 
+router.post('/comment', (req, res, next) => {
+
+});
+
 module.exports = router;

@@ -28,6 +28,10 @@
 
      <div id='comment-wrapper'>
           <h2>Comments</h2>
+          <div id='comment-interface'>
+               <textarea id='comment-box' placeholder='Leave a comment...'></textarea>
+               <button id='submit-comment'>Submit</button>
+          </div>
           {{#each comments}}
           {{>comment this}}
           {{/each}}

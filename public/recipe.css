@@ -23,9 +23,23 @@
     padding: 15px;
     border-bottom: none;
 }
-
+#comment-wrapper > div:first-child{
+    border-top: none;
+}
 #comment-wrapper > div:last-child{
     border-bottom: 1px solid black;
+}
+
+#comment-box{
+    width: 100%;
+}
+
+#comment-interface{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    margin-left: 25px;
+    padding: 15px;
 }
 
 .difficulty-rating-wrapper{
