@@ -20,6 +20,11 @@
         <div id="profile-actions">
             <div class="action-column">
                 <h3>Public Recipes</h3>
+                {{#if own_profile}}
+                    <div id="add-element">
+                        <button id="createNewButton" onclick="window.location.href='/new-recipe'">Create A New Recipe</button>
+                    </div>
+                {{/if}}
                 <div class="vert-list">
                     {{#if recipes}}
                         {{#each recipes}}
@@ -31,23 +36,21 @@
 
                                 {{#if ../own_profile}}
                                     <img id="delRecipe" class='remove-button' onclick='deleteRecipe({{recipe_id}});' src="/static/SVG/remove-icon.svg"/>
-                                    <!--<button class="deleteRecipeButton" onclick="deleteRecipe({{recipe_id}})">X</button>-->
                                 {{/if}}
                             </div>
                         {{/each}}
                     {{else}}
                         <h5>User has no recipes yet</h5>
                     {{/if}}
-
-                    {{#if own_profile}}
-                        <div id="add-element">
-                            <button id="createNewButton" onclick="window.location.href='/new-recipe'">Create A New Recipe</button>
-                        </div>
-                    {{/if}}
                 </div>
             </div>
             <div class="action-column">
                 <h3>Recipes Lists</h3>
+                {{#if own_profile}}
+                    <div id="add-element">
+                        <button id="createNewButton" onclick="window.location.href='/new-list'">Create A New Recipe List</button>
+                    </div>
+                {{/if}}
                 <div class="vert-list">
                     {{#if lists}}
                         {{#each lists}}
@@ -62,12 +65,6 @@
                         {{/each}}
                     {{else}}
                         <h5>User has no recipe lists yet</h5>
-                    {{/if}}
-
-                    {{#if own_profile}}
-                        <div id="add-element">
-                            <button id="createNewButton" onclick="window.location.href='/new-list'">Create A New Recipe List</button>
-                        </div>
                     {{/if}}
                 </div>
             </div>
@@ -93,13 +90,20 @@
             </div>
             <div class="action-column">
                 <h3>My Ingredients</h3>
+                {{#if own_profile}}
+                    <div id="add-element">
+                        <button id="createNewButton" onclick="">Add an Ingredient</button>
+                    </div>
+                {{/if}}
                 <div class="vert-list">
                     {{#if ingredients}}
                         {{#each ingredients}}
                             <div id="ingredient-element" class="vert-list-element">
-                                <a id="ingredient-name">Ingredient: {{ingredient_name}}</a>
-                                <a id="ingredient-quantity">Quantity: {{amount}}</a>
-
+                                <img src="/static/pasta.jpg" alt="Ingredient-Img" style="width:40px"></img>
+                                <div id="ingredient-details">
+                                    <h3 id="ingredient-name">{{ingredient_name}}</h3>
+                                    <a id="ingredient-quantity">Quantity: {{amount}}</a>
+                                </div>
                                 {{#if ../own_profile}}
                                     <img id="delIngredient" class='remove-button' src="/static/SVG/remove-icon.svg"/>
                                 {{/if}}
@@ -107,12 +111,6 @@
                         {{/each}}
                     {{else}}
                         <h5>User has no ingredients yet</h5>
-                    {{/if}}
-
-                    {{#if own_profile}}
-                        <div id="add-element">
-                            <button id="createNewButton" onclick="">Add an Ingredient</button>
-                        </div>
                     {{/if}}
                 </div>
             </div>

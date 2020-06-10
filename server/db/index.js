@@ -158,6 +158,7 @@ db.queryUserLists = (id) => {
     });
 }
 
+
 db.queryUserComments = (id) => {
     let sql = 'SELECT * FROM Comments C WHERE C.user_id = ?';
 
@@ -223,6 +224,19 @@ db.insertRecipe = (recipe, req, res) => {
                return resolve(results.insertId);
           });
      });
+};
+
+db.insertList = (list, req, res) => {
+    let sql = 'INSERT INTO Recipe_Lists SET ?';
+
+    return new Promise((resolve, reject) => {
+        mysqlConnection.query(sql, list, (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results.insertId);
+        })
+    });
 };
 
 db.deleteRecipe = (recipe, req, res) => {

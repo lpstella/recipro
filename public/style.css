@@ -9,7 +9,7 @@ body{
     background: rgb(241,145,67);
     background: linear-gradient(0deg, rgba(241,145,67,1) 0%, rgba(255,255,255,1) 100%);
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     min-height: 100vh;
 }
 
