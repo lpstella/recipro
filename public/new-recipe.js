@@ -110,8 +110,9 @@ $(document).ready(function(){
             let req = new XMLHttpRequest();
 
             req.onreadystatechange = () => {
-                if(this.status === 200 && this.readyState===4){
-                    this.value = "Submitted";
+                if (this.status === 200) {
+                    this.value = "Done";
+                    alert("Submitted "+ this.id);
                 }
             }
 

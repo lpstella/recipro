@@ -66,6 +66,8 @@ router.post('/submit', authenticationMiddleware(), function (req, res) {
           recipe.recipe_id = value;
           console.log("Created recipe #"+value);
           res.status(200);
+          res.send({ id: recipe.recipe_id });
+
 
           for(i = 0; i < req.body.ingredient.length; i++){
                // Insert
@@ -87,23 +89,23 @@ router.post('/submit', authenticationMiddleware(), function (req, res) {
                };
 
                db.insertIngredient(ing).then((val)=>{
-
                     //Insert
                     //Contains
-                    cont.ingredient_id = val;
-                    db.insertContains(cont);
+                    cont.ingredient_id = val.ingredient_id;
+                    console.log(`Ingredient ${cont.ingredient_id}`);
+                    db.insertContains(cont).catch(() => {
+                         console.log(`Failed inserting ingredient ${i}`);
+                    });
 
-               }, (SQLerror) => console.log(SQLerror));
+               }).catch(() => {
+                    console.log(`Failed inserting ingredient ${i}`);
+               });
           }
-
-     /*   Tried this didn't work
-          res.redirect('recipe/'+value);
-     */
+          return value;
 
      }, (SQLerror) => console.log(SQLerror));
 
-     // This doesn't work either but recipes are getting added
-     res.sendStatus(200);
+     console.log(recipe);
 });
 
 router.get('/login', function (req, res) {
