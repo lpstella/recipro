@@ -104,6 +104,8 @@ router.post('/new-recipe', upload.single('recipe-img'), function (req, res) {
           recipe.recipe_id = value;
           console.log("Created recipe #" + value);
           res.status(200);
+          res.send({ id: recipe.recipe_id });
+
 
           for (i = 0; i < recipeJSON.ingredient.length; i++) {
                // Insert
@@ -124,26 +126,24 @@ router.post('/new-recipe', upload.single('recipe-img'), function (req, res) {
                     "modifier": null,
                };
 
-               db.insertIngredient(ing).then((val) => {
-
+               db.insertIngredient(ing).then((val)=>{
                     //Insert
                     //Contains
-                    cont.ingredient_id = val;
-                    db.insertContains(cont);
+                    cont.ingredient_id = val.ingredient_id;
+                    console.log(`Ingredient ${cont.ingredient_id}`);
+                    db.insertContains(cont).catch(() => {
+                         console.log(`Failed inserting ingredient ${i}`);
+                    });
 
-               }, (SQLerror) => console.log(SQLerror));
+               }).catch(() => {
+                    console.log(`Failed inserting ingredient ${i}`);
+               });
           }
-
-          /*   Tried this didn't work
-               res.redirect('recipe/'+value);
-          */
-          res.redirect('browse');
+          return value;
 
      }, (SQLerror) => console.log(SQLerror));
 
-     // This doesn't work either but recipes are getting added
-     // res.sendStatus(200);
-
+     console.log(recipe);
 
 });
 

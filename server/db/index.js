@@ -279,27 +279,27 @@ db.insertRecipe = (recipe, req, res) => {
      });
 };
 
-// Check if ingredient exists by searching name the insert,
 // Return ingredient_id of new or existing ingredient.
 db.insertIngredient = (ingredient) => {
-     let sql = 'INSERT INTO Ingredients SET ?';
-     let existanceCheck = 'SELECT ingredient_id FROM Ingredients WHERE ingredient_name = ?';
+     let sqlInsert = 'INSERT IGNORE INTO Ingredients SET ?';
+     let sqlGet = 'SELECT ingredient_id FROM Ingredients WHERE ingredient_name = ?';
+
+     // console.log(`THIS IS THE INGREDIENT ${JSON.stringify(ingredient)}`)
 
      return new Promise((resolve, reject) => {
-          mysqlConnection.query(existanceCheck, ingredient.ingredient_name, (err, results) => {
-               // Search for existing ingredient by the same name, if it exists return that id
-               if (results > null) {
-                    return (results);
-               }
-               // Else insert the ingredient and return the id
-               else {
-                    console.log("Creating table entry for " + ingredient.ingredient_name);
-                    mysqlConnection.query(sql, ingredient, (error, res) => {
-                         if (error) reject(error);
-                         return resolve(res.insertId);
-                    });
-               }
+          mysqlConnection.query(sqlInsert, ingredient, (error, res) => {
+               mysqlConnection.query(sqlGet, ingredient.ingredient_name, (err, results) => {
+                    // console.log(`Got ${results.ingredient_id}`);
+                    if (err) {
+                         reject("Not inserted");
+                    }
+                    return resolve({ ingredient_id: results[0].ingredient_id});
+               });
           });
+
+
+
+          
      });
 }
 
