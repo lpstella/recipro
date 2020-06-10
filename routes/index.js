@@ -280,27 +280,23 @@ router.get('/recipe/:recipeId', (req, res, next) => {
      }, (SQLerror) => console.log(SQLerror));
 });
 
-router.get('/profile', (req, res, next) => {
-     res.redirect('/profile/' + req.session.passport.user.user_id);
-});
-
 router.get('/profile/:userId', (req, res, next) => {
      db.queryUserProfile(req.params.userId).then((value) => {
           db.queryUserRecipes(req.params.userId).then((recipes) => {
                db.queryUserLists(req.params.userId).then((lists) => {
                     db.queryUserComments(req.params.userId).then((comments) => {
                          db.queryUserIngredients(req.params.userId).then((ingredients) => {
-                              const profile_data = value[0];
-                              profile_data['recipes'] = recipes;
-                              profile_data['lists'] = lists;
-                              profile_data['comments'] = comments;
-                              profile_data['ingredients'] = ingredients;
+                            const profile_data = value[0];
+                            profile_data['recipes'] = recipes;
+                            profile_data['lists'] = lists;
+                            profile_data['comments'] = comments;
+                            profile_data['ingredients'] = ingredients;
 
-                              if (req.session.passport.user.user_id == req.params.userId) {
-                                   profile_data['own_profile'] = true;
-                              }
+                            if (req.session.passport.user.user_id == req.params.userId) {
+                                profile_data['own_profile'] = true;
+                            }
 
-                              res.render('profile', profile_data);
+                            res.render('profile', profile_data);
 
                          }
                          )
@@ -312,8 +308,29 @@ router.get('/profile/:userId', (req, res, next) => {
      });
 });
 
+router.get('/list/:listId', (req, res, next) => {
+    db.queryList(req.params.listId).then((listInfo) => {
+        var userid = listInfo[0].user_id;
+
+        db.queryUserProfile(userid).then((userInfo) => {
+            db.queryListRecipes(req.params.listId).then((listRecipes) => {
+                const listValues = listInfo[0];
+                listValues['recipes'] = listRecipes;
+                listValues['list_owner'] = userInfo;
+                //listValues['list_id'] = req.params.listId;
+
+                if (req.session.passport.user.user_id == userid) {
+                    listValues['own_profile'] = true;
+                }
+
+                res.render('list', listValues);
+            });
+        });
+    }, (SQLerror) => console.log(SQLerror));
+});
+
 router.post('/comment', (req, res, next) => {
-     
+
      let d = new Date();
      let comment = {
           "comment_body": req.body.comment_body,
@@ -328,6 +345,50 @@ router.post('/comment', (req, res, next) => {
      db.insertComment(comment).then(() => {
           res.sendStatus(200);
      });
+});
+
+router.post('/list', (req, res, next) => {
+    let list = {
+        "list_name" : req.body.list_name,
+        "privacy_status" : req.body.privacy_status,
+        "user_id" : req.session.passport.user.user_id
+    };
+
+    db.insertList(list).then(() => {
+        res.sendStatus(200);
+    }, (SQLerror) => console.log(SQLerror));
+});
+
+//deleting content
+
+router.delete('/recipe/:recipeId', (req, res, next) => {
+    db.deleteRecipe(req.params.recipeId).then((value) => {
+        res.sendStatus(200);
+    }, (SQLerror) => console.log(SQLerror));
+});
+
+router.delete('/comment/:commentId', (req, res, next) => {
+    db.deleteComment(req.params.commentId).then((value) => {
+        res.sendStatus(200);
+    }, (SQLerror) => console.log(SQLerror));
+});
+
+router.delete('/list/:listId', (req, res, next) => {
+    db.deleteList(req.params.listId).then((value) => {
+        res.sendStatus(200);
+    }, (SQLerror) => console.log(SQLerror));
+});
+
+router.delete('/ingredient/:ingredientId', (req, res, next) => {
+    db.deleteIngredient(req.params.ingredientId).then((value) => {
+        res.sendStatus(200);
+    }, (SQLerror) => console.log(SQLerror));
+});
+
+router.delete('/list/:listId/:recipeId', (req, res, next) => {
+    db.unlinkRecipe(req.params.listId, req.params.recipeId).then((value) => {
+        res.sendStatus(200);
+    }, (SQLerror) => console.log(SQLerror));
 });
 
 module.exports = router;

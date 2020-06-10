@@ -2,6 +2,13 @@
 <link rel="stylesheet" type="text/css" href="/static/profile.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="/static/profile.js"></script>
+<script type="text/javascript">
+    function simplifyDate(date) {
+        var original = new Date(date);
+        var test = original.toISOString().split("T")[0].toString();
+        document.write(test);
+    }
+</script>
 <body>
     <div class="horizontal-center header-padding" id="profile-container">
         <div class="horizontal-left" id="profile-details">
@@ -29,11 +36,10 @@
                     {{#if recipes}}
                         {{#each recipes}}
                             <div id="recipe-element" class="vert-list-element">
-                                <img class="thumbnail" src="/static/pasta.jpg" alt="Recipe-Img" style="width:40px"></img>
+                                <img id="recipe_pic" class="thumbnail" src="/static/pasta.jpg" alt="Recipe-Img" style="width:40px"></img>
                                 <h4><a href="/recipe/{{recipe_id}}">{{recipe_name}}</a></h4>
-                                <a href="/profile/{{../user_id}}">{{../display_name}}</a>
                                 <a>Prep: {{prep_time}} mins</a>
-
+                                <a id="date">Posted: <script>simplifyDate("{{date_posted}}")</script></a>
                                 {{#if ../own_profile}}
                                     <img id="delRecipe" class='remove-button' onclick='deleteRecipe({{recipe_id}});' src="/static/SVG/remove-icon.svg"/>
                                 {{/if}}
@@ -55,11 +61,11 @@
                     {{#if lists}}
                         {{#each lists}}
                             <div id="recipe-list-element" class="vert-list-element">
-                                <h4><a href="/lists/{{list_id}}">{{list_name}}</a></h4>
-                                <a href="/profile/{{../user_id}}">{{../display_name}}</a>
+                                <h4><a href="/list/{{list_id}}">{{list_name}}</a></h4>
+                                <a>{{list_count}} recipes</a>
 
                                 {{#if ../own_profile}}
-                                    <img id="delList" class='remove-button' src="/static/SVG/remove-icon.svg"/>
+                                    <img id="delList" class='remove-button' onclick='deleteList({{list_id}});' src="/static/SVG/remove-icon.svg"/>
                                 {{/if}}
                             </div>
                         {{/each}}
@@ -75,11 +81,12 @@
                         {{#each comments}}
                             <div id="comment-element" class="vert-list-element">
                                 <p id="comment-body">{{comment_body}}</p>
-                                <p>Commented by </p><a href="/profile/{{../user_id}}">{{../display_name}}</a>
-                                <a href="/recipe/{{recipe_id}}">View Recipe Thread</a>
-
+                                <p id="date">Posted: <script>simplifyDate("{{post_date}}")</script></p>
+                                <div id="view-thread">
+                                    <a href="/recipe/{{recipe_id}}">View Recipe Thread</a>
+                                </div>
                                 {{#if ../own_profile}}
-                                    <img id="delComment" class='remove-button' src="/static/SVG/remove-icon.svg"/>
+                                    <img id="delComment" class='remove-button' onclick='deleteComment({{comment_id}});' src="/static/SVG/remove-icon.svg"/>
                                 {{/if}}
                             </div>
                         {{/each}}

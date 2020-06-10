@@ -174,8 +174,47 @@ db.queryUserProfile = (id) => {
      });
 }
 
+db.queryUserProfileList = (id) => {
+    let sql = 'SELECT * FROM Users U INNER JOIN Recipe_Lists R ON R.user_id = U.user_id WHERE R.list_id = ?';
+
+    return new Promise((resolve, reject) => {
+         mysqlConnection.query(sql, id, (err, results, fields) => {
+              if (err) {
+                   return done(err);
+              }
+              return resolve(results);
+         });
+    });
+}
+
 db.queryUserRecipes = (id) => {
      let sql = 'SELECT * FROM Recipes R WHERE R.user_id = ?';
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, id, (err, results, fields) => {
+               if (err) {
+                    return done(err);
+               }
+               return resolve(results);
+          });
+     });
+}
+
+db.queryList = (id) => {
+    let sql = 'SELECT * FROM Recipe_Lists WHERE list_id = ?';
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, id, (err, results, fields) => {
+               if (err) {
+                    return done(err);
+               }
+               return resolve(results);
+          });
+     });
+}
+
+db.queryListRecipes = (id) => {
+    let sql = 'SELECT * FROM Recipes R INNER JOIN Has_recipes L ON R.recipe_id = L.recipe_id WHERE L.list_id = ?';
 
      return new Promise((resolve, reject) => {
           mysqlConnection.query(sql, id, (err, results, fields) => {
@@ -294,14 +333,49 @@ db.insertList = (list, req, res) => {
 };
 
 db.deleteRecipe = (recipe, req, res) => {
-    let sql = 'DELETE FROM Recipes WHERE recipe_id = ?';
+    let sql = 'DELETE FROM Recipes WHERE recipe_id = ?'; //delete the recipe entry
+    let delComments = 'DELETE FROM Comments WHERE recipe_id = ?'; //delete the comments on the recipe
+    let delListLink = 'DELETE FROM Has_recipes WHERE recipe_id = ?'; //remove recipe from lists
 
     return new Promise((resolve, reject) => {
-        mysqlConnection.query(sql, recipe, (err, results) => {
+        mysqlConnection.query(delComments, recipe, (err, results) => {
+            mysqlConnection.query(delListLink, recipe, (err, results) => {
+                mysqlConnection.query(sql, recipe, (err, results) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    return resolve(results);
+                });
+            });
+        });
+    });
+};
+
+db.deleteComment = (comment, req, res) => {
+    let sql = 'DELETE FROM Comments WHERE comment_id = ?'; //delete the recipe entry
+
+    return new Promise((resolve, reject) => {
+        mysqlConnection.query(sql, comment, (err, results) => {
             if (err) {
                 return reject(err);
             }
-            return resolve(results)
+            return resolve(results);
+        });
+    });
+};
+
+db.deleteList = (list, req, res) => {
+    let sql = 'DELETE FROM Recipe_Lists WHERE list_id = ?'; //delete the recipe list entry
+    let sql2 = 'DELETE FROM Has_recipes WHERE list_id = ?'; //delete the recipe links to the list
+
+    return new Promise((resolve, reject) => {
+        mysqlConnection.query(sql2, list, (err, results) => {
+            mysqlConnection.query(sql, list, (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results);
+            });
         });
     });
 };
@@ -368,6 +442,19 @@ db.insertComment = (comment) => {
                return resolve();
           });
      });
+}
+
+db.unlinkRecipe = (listId, recipeId) => {
+    let sql = 'DELETE FROM Has_recipes WHERE recipe_id = ? AND list_id = ?';
+
+    return new Promise((resolve, reject) => {
+         mysqlConnection.query(sql, [recipeId, listId], (err, results) => {
+              if (err) {
+                   return reject(err);
+              }
+              return resolve();
+         });
+    });
 }
 
 passport.serializeUser(function (user_id, done) {      // These two functions are used by passport to track user sessions

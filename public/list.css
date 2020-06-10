@@ -1,0 +1,79 @@
+#list-container {
+    margin: 10px;
+    height: auto;
+    text-align: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.vert-list {
+    display: block;
+    width: 100%;
+    height: auto;
+    text-align: center;
+    align-items: center;
+}
+
+.vert-list-element {
+    margin-top: -4px;
+    padding: 10px;
+    width: 200px;
+    height: 110px;
+    background-color: #FF8A44;
+    border-bottom: 4px solid #ff9c61;
+    border-top: 4px solid #ff9c61;
+
+    transition: background-color 0.5s ease;
+    -webkit-transition: background-color 0.5s ease-out;
+    -moz-transition: background-color 0.5s ease-out;
+    -o-transition: background-color 0.5s ease-out;
+}
+
+.vert-list-element:hover {
+    background-color: #FAA878;
+}
+
+.vert-list-element > .thumbnail {
+    float: left;
+    display: inline-block;
+    vertical-align: middle;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.vert-list-element > h4, a {
+    vertical-align: text-top;
+    text-decoration: none;
+}
+
+#recipe-element > #recipe_pic {
+    width: 40px;
+    height: 40px;
+    float: left;
+}
+
+.remove-button {
+    display: inline-block;
+    justify-content: right;
+    float: right;
+    height: 20px;
+    width: 20px;
+    border-radius: 4px;
+    background-color: lightcoral;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+
+    transition: width 0.5s ease, height 0.5s ease;
+    -webkit-transition: width 0.5s ease-out, height 0.5s ease-out;
+    -moz-transition: width 0.5s ease-out, height 0.5s ease-out;
+    -o-transition: width 0.5s ease-out, height 0.5s ease-out;
+}
+
+.remove-button:hover {
+    height: 25px;
+    width: 25px;
+    background-color: #e65c00;
+}
