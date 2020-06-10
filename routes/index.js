@@ -245,7 +245,7 @@ router.get('/recipe/:recipeId', (req, res, next) => {
                db.queryComments(req.params.recipeId).then((comments) => {
                     const recipe_data = value[0];
                     recipe_data['ingredients'] = ingredients;
-                    recipe_data['comments'] = comments
+                    recipe_data['comments'] = comments.reverse();
                     res.render('recipe', recipe_data);
                     console.log(recipe_data);
                })
@@ -281,7 +281,21 @@ router.get('/profile/:userId', (req, res, next) => {
 });
 
 router.post('/comment', (req, res, next) => {
-
+     
+     let d = new Date();
+     let comment = {
+          "comment_body": req.body.comment_body,
+          "recipe_rating": req.body.recipe_rating,
+          "recipe_difficulty": req.body.recipe_difficulty,
+          "comment_id": null,
+          "post_date": d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate(),
+          "recipe_id": req.body.recipe_id,
+          "user_id": req.session.passport.user.user_id,
+     };
+     console.log(comment);
+     db.insertComment(comment).then(() => {
+          res.sendStatus(200);
+     });
 });
 
 module.exports = router;

@@ -329,8 +329,17 @@ db.insertContains = (ingredient) => {
      });
 }
 
-db.insertComment = (comment, userId) => {
+db.insertComment = (comment) => {
      let sql = 'INSERT INTO Comments SET ?'
+
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, comment, (err, results) => {
+               if (err) {
+                    return reject(err);
+               }
+               return resolve();
+          });
+     });
 }
 
 passport.serializeUser(function (user_id, done) {      // These two functions are used by passport to track user sessions
