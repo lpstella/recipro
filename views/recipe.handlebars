@@ -4,16 +4,25 @@
 
 <div class='recipe-wrapper'>
      <div class='recipe-header'>
-          <div>
-               <a id='recipe-name'>{{recipe_name}}</a>
-               <label>Prep time: {{prep_time}}</label>
-               <label>{{date_posted}}</label>
+          <div id='header-row'>
+               <div id='header-info'>
+                    <a id='recipe-name'>{{recipe_name}}</a>
+                    <label>Prep time: {{prep_time}}</label>
+                    <label>{{date_posted}}</label>
+               </div>
+               <select name="My Lists" id="user-lists">
+                    {{#each user_list}}
+                         <option value={{list_id}}>{{list_name}}</option>
+                    {{/each}}
+               </select>
+               <button id="list-add">Add to my list</button>
           </div>
           <label>Submitted by: </label>
           <a href='/profile/{{user_id}}'>
                {{display_name}}
           </a>
      </div>
+
 
      <div id='ingredients'>
           <h2>Ingredients</h2>

@@ -2,6 +2,7 @@
     background-color: rgb(255, 255, 255);
     width: 90%;
     margin: 25px;
+    padding: 15px;
 }
 
 .recipe-header{
@@ -52,4 +53,13 @@
 .difficulty-rating-wrapper{
     display: flex;
     flex-direction: row;
+}
+
+#header-row{
+    margin-bottom: 1em;
+}
+#header-info{
+    display: inline-flex;
+    flex-direction: column;
+    width: 75%;
 }

@@ -332,6 +332,19 @@ db.insertList = (list, req, res) => {
     });
 };
 
+db.insertListEntry = (entry, req, res) => {
+     let sql = 'INSERT INTO Has_recipes SET ?';
+     return new Promise((resolve, reject) => {
+
+          mysqlConnection.query(sql, entry, (err, results) => {
+               if (err) {
+                    return reject(err);
+               }
+               return resolve(results);
+          });
+     });
+}
+
 db.deleteRecipe = (recipe, req, res) => {
     let sql = 'DELETE FROM Recipes WHERE recipe_id = ?'; //delete the recipe entry
     let delComments = 'DELETE FROM Comments WHERE recipe_id = ?'; //delete the comments on the recipe
