@@ -50,6 +50,10 @@ router.get('/new-recipe', authenticationMiddleware(), function (req, res) {     
      res.render('new-recipe');                                                     // authenticated and listed in the db, otherwise it redirects to /login
 });
 
+router.get('/new-list', authenticationMiddleware(), function (req, res) {
+    res.render('new-list');
+});
+
 router.post('/submit', authenticationMiddleware(), function (req, res) {
 
      // Need to add image once it is in the database
@@ -107,6 +111,30 @@ router.post('/submit', authenticationMiddleware(), function (req, res) {
 
      console.log(recipe);
 });
+
+
+router.post('/submit-list', authenticationMiddleware(), function (req, res) {
+     let list = {
+          "list_name": req.body.list_name,
+          "privacy_status": req.body.privacy_status,
+          "user_id": req.session.passport.user.user_id,
+     }
+
+     db.insertList(list).then((value) => {
+          list.list_id = value;
+          console.log("Created recipe list #" + value);
+          res.status(200);
+
+     /*   Tried this didn't work
+          res.redirect('list/'+ list_id);
+     */
+
+     }, (SQLerror) => console.log(SQLerror));
+
+     // This doesn't work either but recipes are getting added
+     res.sendStatus(200);
+});
+
 
 router.get('/login', function (req, res) {
      //const { userId } = req.session;
@@ -228,7 +256,12 @@ router.get('/profile/:userId', (req, res, next) => {
                         profile_data['lists'] = lists;
                         profile_data['comments'] = comments;
                         profile_data['ingredients'] = ingredients;
-                        res.render('profile', profile_data);
+
+                        if (req.session.passport.user.user_id == req.params.userId) {
+                            profile_data['own_profile'] = true;
+                        }
+
+                    res.render('profile', profile_data);
                     }
                 )}
             )}

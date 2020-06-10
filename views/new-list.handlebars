@@ -1,0 +1,18 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="/static/new-list.js"></script>
+
+{{> header}}
+
+<div id="new-list">
+    <h2>Create A New Recipe List</h2>
+    <div id="list-details">
+        <label for="list-name">Recipe List Name</label>
+        <input id="list-name" maxlength="20">
+        <br>
+        <label for="private-list">Private List</label>
+        <input type="checkbox" id="private-list" name="SetPrivate">
+        <input id="submitList" type="submit" value="Create List"></input>
+    </div>
+</div>
+
+{{> footer}}

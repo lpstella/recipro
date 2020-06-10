@@ -200,6 +200,7 @@ db.queryUserLists = (id) => {
     });
 }
 
+
 db.queryUserComments = (id) => {
     let sql = 'SELECT * FROM Comments C WHERE C.user_id = ?';
 
@@ -279,6 +280,33 @@ db.insertRecipe = (recipe, req, res) => {
      });
 };
 
+db.insertList = (list, req, res) => {
+    let sql = 'INSERT INTO Recipe_Lists SET ?';
+
+    return new Promise((resolve, reject) => {
+        mysqlConnection.query(sql, list, (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results.insertId);
+        })
+    });
+};
+
+db.deleteRecipe = (recipe, req, res) => {
+    let sql = 'DELETE FROM Recipes WHERE recipe_id = ?';
+
+    return new Promise((resolve, reject) => {
+        mysqlConnection.query(sql, recipe, (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results)
+        });
+    });
+};
+
+// Check if ingredient exists by searching name the insert,
 // Return ingredient_id of new or existing ingredient.
 db.insertIngredient = (ingredient) => {
      let sqlInsert = 'INSERT IGNORE INTO Ingredients SET ?';
@@ -300,7 +328,7 @@ db.insertIngredient = (ingredient) => {
 
 
 
-          
+
      });
 }
 

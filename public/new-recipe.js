@@ -38,7 +38,7 @@ $(document).ready(function(){
     $(document).on("click", ".remove-button" , function() {
         $(this).parent().parent().remove();
     });
-    
+
     $(document).on("click", "#submitRecipe" , function(e) {
         e.preventDefault();
 
@@ -54,7 +54,7 @@ $(document).ready(function(){
         createJson.recipe_name = document.getElementById("recipe-title").value;
         console.log(createJson.recipe_name);
 
-        let elements = document.getElementsByClassName("recipe-instruction")    
+        let elements = document.getElementsByClassName("recipe-instruction")
 
         // For each direction not counting the empty
         for(i = 0; i < elements.length-1; i++){
@@ -63,17 +63,17 @@ $(document).ready(function(){
             } else{
                 createJson.directions += elements[i].value;
             }
-        
+
             // Terminate each new line with a '\0'
             if(i != elements.length-2){
                 createJson.directions += '\0'
             }
         }
-        console.log("Directons "+createJson.directions);            
+        console.log("Directons "+createJson.directions);
 
 
         elements = document.getElementsByClassName("ingredient");
-        
+
         let amount = document.getElementsByClassName("ingredient-amount");
         let units = document.getElementsByClassName("ingredient-unit");
 
@@ -88,13 +88,13 @@ $(document).ready(function(){
                 "amount" : amount[i].value,
                 "unit" : units[i].options[units[i].selectedIndex].value
             }
-            
+
             // Printing ingredients to console
             console.log("Ingredient #"+(i+1)+":\n"+
                 "Name:\t"+createJson.ingredient[i].name+"\n"+
                 "Amount:\t"+createJson.ingredient[i].amount+"\n"+
                 "Unit:\t"+createJson.ingredient[i].unit
-            );            
+            );
         }
         let d = new Date();
         createJson.date = d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate();
