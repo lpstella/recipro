@@ -3,14 +3,36 @@
     overflow: hidden
 }
 
-#profile-details {
+#profile-header {
+    display: flex;
     margin-top: 20px;
-    margin-left: 10px;
     margin-bottom: 20px;
-    width: 50%;
+}
+
+.horizontal-left {
+    flex: 0 0 50%;
+}
+
+.horizontal-right {
+    flex: 1;
+}
+
+#profile-details {
+    width: inherit;
     height: 155px;
     padding: 10px;
     border: 1px solid #111111;
+}
+
+#profile-edit {
+    width: inherit;
+    height: 155px;
+    padding: 10px;
+    border: 1px solid #111111;
+}
+
+#disp_name_edit {
+    width: 100px;
 }
 
 #name-box {
@@ -127,6 +149,32 @@
     height: 25px;
     width: 25px;
     background-color: #e65c00;
+}
+
+.update-button {
+    justify-content: right;
+    float: right;
+    height: 20px;
+    width: 20px;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+
+    transition: width 0.5s ease, height 0.5s ease;
+    -webkit-transition: width 0.5s ease-out, height 0.5s ease-out;
+    -moz-transition: width 0.5s ease-out, height 0.5s ease-out;
+    -o-transition: width 0.5s ease-out, height 0.5s ease-out;
+}
+
+.update-button:hover {
+    height: 25px;
+    width: 25px;
+    background-color: #e65c00;
+}
+
+#push-changes {
+    text-align: center;
 }
 
 .action-column {

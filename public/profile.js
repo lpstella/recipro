@@ -50,6 +50,28 @@ function deleteIngredient(ingredient_id) {
     req.send(null);
 }
 
+function updateProfile(userId) {
+    var newDN = document.getElementById("disp_name_edit").value;
+    var newI = document.getElementById("recipe-img-upload").value;
+
+    var req = new XMLHttpRequest();
+
+    req.open("POST", "/profileupdate/" + userId, true);
+
+    req.onreadystatechange = () => {
+        if (this.status === 200 && this.readyState === 4) {
+            console.log(req.responseText);
+            // window.location.replace('/profile/' + req.responseText);
+        }
+    }
+
+    req.send(null);
+
+
+    //hide the edit pane again
+    document.getElementById("profile-edit").style.visibility = "hidden";
+}
+
 function getChildCount(element) {
     var childCount = -1;
     if ('childElementCount' in element) {

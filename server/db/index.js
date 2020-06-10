@@ -190,40 +190,40 @@ db.queryUserProfileList = (id) => {
 db.queryUserRecipes = (id) => {
      let sql = 'SELECT * FROM Recipes R WHERE R.user_id = ?';
 
-    return new Promise((resolve, reject) => {
-        mysqlConnection.query(sql, id, (err, results, fields) => {
-            if (err) {
-                return done(err);
-            }
-            return resolve(results);
-        });
-    });
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, id, (err, results, fields) => {
+               if (err) {
+                    return done(err);
+               }
+               return resolve(results);
+          });
+     });
 }
 
 db.queryList = (id) => {
     let sql = 'SELECT * FROM Recipe_Lists WHERE list_id = ?';
 
-    return new Promise((resolve, reject) => {
-        mysqlConnection.query(sql, id, (err, results, fields) => {
-            if (err) {
-                return done(err);
-            }
-            return resolve(results);
-        });
-    });
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, id, (err, results, fields) => {
+               if (err) {
+                    return done(err);
+               }
+               return resolve(results);
+          });
+     });
 }
 
 db.queryListRecipes = (id) => {
     let sql = 'SELECT * FROM Recipes R INNER JOIN Has_recipes L ON R.recipe_id = L.recipe_id WHERE L.list_id = ?';
 
-    return new Promise((resolve, reject) => {
-        mysqlConnection.query(sql, id, (err, results, fields) => {
-            if (err) {
-                return done(err);
-            }
-            return resolve(results);
-        });
-    });
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, id, (err, results, fields) => {
+               if (err) {
+                    return done(err);
+               }
+               return resolve(results);
+          });
+     });
 }
 
 db.queryUserLists = (id) => {

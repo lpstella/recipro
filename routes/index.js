@@ -354,7 +354,7 @@ router.post('/list', (req, res, next) => {
         "user_id" : req.session.passport.user.user_id
     };
 
-    db.insertList(list).then(() => {
+    db.insertList(list).then((value) => {
         res.sendStatus(200);
     }, (SQLerror) => console.log(SQLerror));
 });

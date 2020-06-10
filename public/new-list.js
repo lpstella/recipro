@@ -4,9 +4,9 @@ function submitList() {
         "privacy_status" : null,
         "user_id" : null
     };
-    createJson.list_name = document.getElementById("list-name").value;
+    createJson.list_name = document.getElementById("list_name").value;
     createJson.privacy_status = 0;
-    if (document.getElementById("private-list").checked == true) {
+    if (document.getElementById("private_list").checked == true) {
         createJson.privacy_status = 1;
     }
 
@@ -23,9 +23,7 @@ function submitList() {
         req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
         req.send(JSON.stringify(createJson));
 
-        // Prevent resubmitting
-        this.disabled = true;
-        this.value = "Working..."
+        window.location.assign("/profile");
     } else {
         alert("Missing required fields!");
     }

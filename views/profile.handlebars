@@ -11,17 +11,35 @@
 </script>
 <body>
     <div class="horizontal-center header-padding" id="profile-container">
-        <div class="horizontal-left" id="profile-details">
-            <img src="/static/pasta.jpg" alt="Avatar" style="width:200px"></img>
-            <div id="name-box">
-                <h1 id="Display_Name">{{display_name}}</h1>
-                <span>User ID: </span><a id="User_ID" href="/profile/{{user_id}}">@{{user_id}}</a>
+        <div id="profile-header">
+            <div class="horizontal-left" id="profile-details">
+                <img src="/static/pasta.jpg" alt="Avatar" style="width:200px"></img>
+                <div id="name-box" class="horizontal-left">
+                    <h1 id="Display_Name">{{display_name}}</h1>
+                    <span>User ID: </span><a id="User_ID" href="/profile/{{user_id}}">@{{user_id}}</a>
+                </div>
+                {{#if own_profile}}
+                    <div id="edit-box" class="horizontal-right">
+                        <img class="update-button" onclick="document.getElementById('profile-edit').style.visibility = 'visible'"; src="/static/SVG/edit-icon.svg"/>
+                    </div>
+                {{/if}}
             </div>
-        </div>
-        <!-- <div class="horizontal-right" id="profile-options">
-            give the user editable options here maybe
-        </div> -->
+            {{#if own_profile}}
+                <div class="horizontal-right" id="profile-edit" style="visibility: hidden;">
+                    <div id="name-box">
+                        <label for="disp_name_edit">Display Name</label>
+                        <input id="disp_name_edit"></input>
+                        <br>
+                        <label for="recipe-img-upload">Update Profile Picture</label>
+                        <input id="recipe-img-upload" type="file" name="recipe-img" accept="image/jpeg, image/png" />
 
+                        <div id="push-changes">
+                            <button id="pushChanges" onclick="updateProfile({{user_id}})">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+        </div>
         <br />
 
         <div id="profile-actions">
