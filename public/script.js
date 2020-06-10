@@ -38,4 +38,5 @@ window.addEventListener('DOMContentLoaded', function () {     // Add button even
 
      let registerButton = document.getElementById('register-btn').addEventListener('click', registerButtonClick);
 
+
 });
