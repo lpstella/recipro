@@ -138,9 +138,9 @@ $(document).ready(function () {
                // req.setRequestHeader("Content-Type", "multipart/form-data; ");
                // req.send(JSON.stringify(createJson));
 
-               // // Prevent resubmitting
-               // this.disabled = true;
-               // this.value = "Working..."
+               // Prevent resubmitting
+               this.disabled = true;
+               this.value = "Working..."
 
 
                sendFile(createJson.recipe_img, createJson);

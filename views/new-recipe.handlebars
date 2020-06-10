@@ -1,6 +1,6 @@
-<link rel="stylesheet" type="text/css" href="/static/new-recipe.css">
+<link rel="stylesheet" type="text/css" href="/public/new-recipe.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<script src="/static/new-recipe.js"></script>
+<script src="/public/new-recipe.js"></script>
 
 {{> header}}
 
@@ -50,7 +50,7 @@
                     </li>
                </ul>
           </div>
-          <input id="submitRecipe" type="submit" value='Done' />
+          <input onclick="window.location.href='/browse';" id="submitRecipe" type="submit" value='Done' />
 
      </form>
 </div>

@@ -1,87 +1,90 @@
 {{> header}}
-<link rel="stylesheet" type="text/css" href="/static/style.css">
-<link rel="stylesheet" type="text/css" href="/static/profile.css">
+<link rel="stylesheet" type="text/css" href="/public/style.css">
+<link rel="stylesheet" type="text/css" href="/public/profile.css">
+
 <body>
-    <div class="horizontal-center header-padding" id="profile-container">
-        <div class="horizontal-left" id="profile-details">
-            <!--<img src="/static/pasta.jpg" alt="Avatar" style="width:200px"></img>-->
-            <h1 id="Display_Name">{{display_name}}</h1>
-            <a id="User_ID" href="/profile/{{user_id}}">@{{display_name}}</a>
-        </div>
-        <!-- <div class="horizontal-right" id="profile-options">
+     <div class="horizontal-center header-padding" id="profile-container">
+          <div class="horizontal-left" id="profile-details">
+               <!--<img src={{recipe_img}} alt="Avatar" style="width:200px"></img>-->
+               <h1 id="Display_Name">{{display_name}}</h1>
+               <a id="User_ID" href="/profile/{{user_id}}">@{{display_name}}</a>
+          </div>
+          <!-- <div class="horizontal-right" id="profile-options">
             give the user editable options here maybe
         </div> -->
 
-        <br />
+          <br />
 
-        <!--Here I am adding manually inserted list options just to test css-->
+          <!--Here I am adding manually inserted list options just to test css-->
 
-        <div id="profile-actions">
-            <div class="action-column">
-                <h3>Public Recipes</h3>
-                <div class="vert-list">
-                    {{#if recipes}}
-                        {{#each recipes}}
-                            <div id="recipe-element" class="vert-list-element">
-                                <img src="/static/pasta.jpg" alt="Recipe-Img" style="width:40px"></img>
-                                <h4><a href="/recipe/{{recipe_id}}">{{recipe_name}}</a></h4>
-                                <a href="/profile/{{user_id}}">{{display_name}}</a>
-                                <a>Prep: {{prep_time}} mins</a>
-                            </div>
-                        {{/each}}
-                    {{else}}
-                        <h5>User has no recipes yet</h5>
-                    {{/if}}
-                    <button id="createNewButton" onclick="window.location.href='/new-recipe'">Create A New Recipe</button>
-                </div>
-            </div>
-            <div class="action-column">
-                <h3>Recipes Lists</h3>
-                <div class="vert-list">
-                    {{#if lists}}
-                        {{#each lists}}
-                            <div id="recipe-list-element" class="vert-list-element">
-                                <h4><a href="/lists/{{list_id}}">{{list_name}}</a></h4>
-                                <a href="/profile/{{user_id}}">{{display_name}}</a>
-                            </div>
-                        {{/each}}
-                    {{else}}
-                        <h5>User has no recipe lists yet</h5>
-                    {{/if}}
-                    <button id="createNewButton" onclick="window.location.href='/new-list'">Create A New Recipe List</button>
-                </div>
-            </div>
-            <div class="action-column">
-                <h3>User Comments and Ratings</h3>
-                <div class="vert-list">
-                    {{#if comments}}
-                        {{#each comments}}
-                            <div id="comment-element" class="vert-list-element">
-                                <p id="comment-body">{{comment_body}}</p>
-                                <p>Commented by </p><a href="/profile/{{user_id}}">@{{user_id}}</a>
-                                <a href="/recipe/{{recipe_id}}">View Recipe Thread</a>
-                            </div>
-                        {{/each}}
-                    {{else}}
-                        <h5>User has no comments or ratings yet</h5>
-                    {{/if}}
-                </div>
-            </div>
-            <div class="action-column">
-                <h3>My Ingredients</h3>
-                <div class="vert-list">
-                    {{#if ingredients}}
-                        {{#each ingredients}}
-                            <div id="ingredient-element" class="vert-list-element">
-                                <a id="ingredient-name">Ingredient: {{ingredient_name}}</a>
-                                <a id="ingredient-quantity">Quantity: {{amount}}</a>
-                            </div>
-                        {{/each}}
-                    {{else}}
-                        <h5>User has no ingredients yet</h5>
-                    {{/if}}
-                </div>
-            </div>
-        </div>
-    </div>
+          <div id="profile-actions">
+               <div class="action-column">
+                    <h3>Public Recipes</h3>
+                    <div class="vert-list">
+                         {{#if recipes}}
+                         {{#each recipes}}
+                         <div id="recipe-element" class="vert-list-element">
+                              <img src="../{{recipe_img}}" alt="Recipe-Img"></img>
+                              <h4><a href="/recipe/{{recipe_id}}">{{recipe_name}}</a></h4>
+                              <a href="/profile/{{user_id}}">{{display_name}}</a>
+                              <a>Prep: {{prep_time}} mins</a>
+                         </div>
+                         {{/each}}
+                         {{else}}
+                         <h5>User has no recipes yet</h5>
+                         {{/if}}
+                         <button id="createNewButton" onclick="window.location.href='/new-recipe'">Create A New
+                              Recipe</button>
+                    </div>
+               </div>
+               <div class="action-column">
+                    <h3>Recipes Lists</h3>
+                    <div class="vert-list">
+                         {{#if lists}}
+                         {{#each lists}}
+                         <div id="recipe-list-element" class="vert-list-element">
+                              <h4><a href="/lists/{{list_id}}">{{list_name}}</a></h4>
+                              <a href="/profile/{{user_id}}">{{display_name}}</a>
+                         </div>
+                         {{/each}}
+                         {{else}}
+                         <h5>User has no recipe lists yet</h5>
+                         {{/if}}
+                         <button id="createNewButton" onclick="window.location.href='/new-list'">Create A New Recipe
+                              List</button>
+                    </div>
+               </div>
+               <div class="action-column">
+                    <h3>User Comments and Ratings</h3>
+                    <div class="vert-list">
+                         {{#if comments}}
+                         {{#each comments}}
+                         <div id="comment-element" class="vert-list-element">
+                              <p id="comment-body">{{comment_body}}</p>
+                              <p>Commented by </p><a href="/profile/{{user_id}}">@{{user_id}}</a>
+                              <a href="/recipe/{{recipe_id}}">View Recipe Thread</a>
+                         </div>
+                         {{/each}}
+                         {{else}}
+                         <h5>User has no comments or ratings yet</h5>
+                         {{/if}}
+                    </div>
+               </div>
+               <div class="action-column">
+                    <h3>My Ingredients</h3>
+                    <div class="vert-list">
+                         {{#if ingredients}}
+                         {{#each ingredients}}
+                         <div id="ingredient-element" class="vert-list-element">
+                              <a id="ingredient-name">Ingredient: {{ingredient_name}}</a>
+                              <a id="ingredient-quantity">Quantity: {{amount}}</a>
+                         </div>
+                         {{/each}}
+                         {{else}}
+                         <h5>User has no ingredients yet</h5>
+                         {{/if}}
+                    </div>
+               </div>
+          </div>
+     </div>
 </body>
