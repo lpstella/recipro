@@ -1,28 +1,43 @@
 {{> header}}
 <link rel="stylesheet" type="text/css" href="/static/recipe.css">
+<script src="/static/recipe.js"></script>
+
 <div class='recipe-wrapper'>
-    <div class='recipe-header'>
-        <div>
-            <a id='recipe-name'>{{recipe_name}}</a>
-        </div>
-        <a>Prep time: {{prep_time}}</a>
-        
+     <div class='recipe-header'>
+          <div>
+               <a id='recipe-name'>{{recipe_name}}</a>
+               <label>Prep time: {{prep_time}}</label>
+               <label>{{date_posted}}</label>
+          </div>
+          <label>Submitted by: </label>
+          <a href='/profile/{{user_id}}'>
+               {{display_name}}
+          </a>
+     </div>
 
-        <a>{{date_posted}}</a>
+     <div id='ingredients'>
+          <h2>Ingredients</h2>
+          <ul>
+               {{#each ingredients}}
+               <li>{{this.amount}} {{this.ingredient_name}}</li>
+               {{/each}}
+          </ul>
+     </div>
+     <h2>Directions</h2>
+     {{directions}}
 
-    </div>
-    <a href='/profile/{{user_id}}'>
-        {{display_name}}
-    </a>
-    
-    <div id='ingredients'>
-        Ingredients
-        <ul>
-        {{#each ingredients}}
-            <li>{{this.amount}} {{this.ingredient_name}}</li>  
-        {{/each}}
-        </ul>
-    </div>
-        Directions
-        {{directions}}
+     <div id='comment-wrapper'>
+          <h2>Comments</h2>
+          {{#if isAuthenticated}}
+          <div id='comment-interface'>
+               <textarea id='comment-box' placeholder='Leave a comment...'></textarea>
+               <input type="number" class='comment-ratings' placeholder="Difficulty" min="1" max="5"/>
+               <input type="number" class='comment-ratings' placeholder="Rating" min="1" max="5" />
+               <button id='submit-comment'>Submit</button>
+          </div>
+          {{/if}}
+          {{#each comments}}
+          {{>comment this}}
+          {{/each}}
+     </div>
 </div>

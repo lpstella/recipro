@@ -3,10 +3,11 @@
           <img id="logo" src="/static/SVG/logo.svg" />
      </a>
      <div class="search-wrapper">
-          <h2>Search</h2>
-          <input type="search" />
+          <form action="/browse" method="get">
+               <input name="name" type="search" placeholder="Find a Recipe"/>
+               <button type="submit">Search</button>
+          </form>
      </div>
-
      <div class="user-wrapper">
             {{#if isAuthenticated}}
             <button class='primary-button' onclick="location.href='/profile';">Profile</button>

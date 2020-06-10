@@ -1,11 +1,41 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path');
+
 
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const passport = require('passport');
 
+let multer = require('multer');
+
+let storage = multer.diskStorage({
+     destination: (req, file, cb) => {
+          cb(null, 'public/uploads');
+     },
+     filename: (req, file, cb) => {
+          cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+     }
+});
+
+const fileFilter = (req, file, cb) => {
+     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+          cb(null, true);
+     } else {
+          cb(null, false);
+     }
+
+
+};
+
+let upload = multer({
+     storage: storage,
+     limits: {
+          fileSize: 1024 * 1024 * 5
+     },
+     fileFilter: fileFilter
+});
 
 const db = require('../server/db');
 
@@ -17,17 +47,33 @@ const db = require('../server/db');
 //      }
 // };
 
- const redirectHome = (req, res, next) => {
-      if (req.session.userId) {
-           res.redirect('/profile');
-      } else {
-           next();
-      }
- };
+const redirectHome = (req, res, next) => {
+     if (req.session.userId) {
+          res.redirect('/profile');
+     } else {
+          next();
+     }
+};
 
-//redirect /profile to the logged-in user's profile instead of throwing a 404
+router.get('/browse', function (req, res) {
+     const criteria = {
+          name: req.query.name ? req.query.name : '',
+     }
+     db.getRecipes(criteria).then((results) =>
+          db.getAllIngredients(criteria).then((ingredients) => {
+               if (req.session.passport) {
+                    db.getUserRecipeLists(req.session.passport.user.user_id).then((userRecipeLists) => {
+                         res.render('browse', { recipes: results, criteria_name: criteria.name, recipelists: userRecipeLists, ingredients });
+                    })
+               } else {
+                    res.render('browse', { recipes: results, criteria_name: req.query.name || '', recipelists: null })
+               }
+          })
+     )
+});
+
 router.get('/profile', authenticationMiddleware(), function (req, res) {        // Profile page is only loaded if the authenticationMiddleware function determines the user is
-    res.redirect('/profile/' + req.session.passport.user.user_id);                  // authenticated and listed in the db, otherwise it redirects to /login
+     res.redirect('/profile/' + req.session.passport.user.user_id);                                                     // authenticated and listed in the db, otherwise it redirects to /login
 });
 
 router.get('/new-recipe', authenticationMiddleware(), function (req, res) {        // New Recipe page is only loaded if the authenticationMiddleware function determines the user is
@@ -38,60 +84,70 @@ router.get('/new-list', authenticationMiddleware(), function (req, res) {
     res.render('new-list');
 });
 
-router.post('/submit', authenticationMiddleware(), function (req, res) {
+router.post('/new-recipe', upload.single('recipe-img'), function (req, res) {
+     console.log('File should have been uploaded...');
+     // console.log('req.body: ', req.body);
+     console.log("req.file: ", req.file);
+
+     let recipeJSON = JSON.parse(req.body.recipeJSON);
+
+     console.log(recipeJSON);
 
      // Need to add image once it is in the database
      let recipe = {
-          "recipe_name": req.body.recipe_name,
-          "directions": req.body.directions,
-          "date_posted": req.body.date,
+          "recipe_name": recipeJSON.recipe_name,
+          "directions": recipeJSON.directions,
+          "date_posted": new Date(),
           "recipe_id": null,
           "prep_time": null,
           "user_id": req.session.passport.user.user_id,
+          "recipe_img": req.file.path
      }
 
-     db.insertRecipe(recipe).then((value)=>{
+     db.insertRecipe(recipe, recipeJSON, res).then((value) => {
           recipe.recipe_id = value;
-          console.log("Created recipe #"+value);
-          res.status(200);
+          console.log("Created recipe #" + value);
+          res.status(200).send({ id: recipe.user_id });
 
-          for(i = 0; i < req.body.ingredient.length; i++){
+
+          for (i = 0; i < recipeJSON.ingredient.length; i++) {
                // Insert
                // Ingredients
                let ing = {
-                    "ingredient_id" : null,
+                    "ingredient_id": null,
                     "ingredient_name": null,
-                    "recipe_id" : null
+                    "recipe_id": null
                };
 
-               ing.ingredient_name = req.body.ingredient[i].ingredient_name.toLowerCase();
+               ing.ingredient_name = recipeJSON.ingredient[i].ingredient_name.toLowerCase();
 
                // This might be problem over multiple ingredients
                let cont = {
-                    "amount": req.body.ingredient[i].amount+" "+req.body.ingredient[i].unit,
+                    "amount": recipeJSON.ingredient[i].amount + " " + recipeJSON.ingredient[i].unit,
                     "recipe_id": value,
                     "ingredient_id": null,
                     "modifier": null,
                };
 
                db.insertIngredient(ing).then((val)=>{
-
                     //Insert
                     //Contains
-                    cont.ingredient_id = val;
-                    db.insertContains(cont);
+                    cont.ingredient_id = val.ingredient_id;
+                    console.log(`Ingredient ${cont.ingredient_id}`);
+                    db.insertContains(cont).catch(() => {
+                         console.log(`Failed inserting ingredient ${i}`);
+                    });
 
-               }, (SQLerror) => console.log(SQLerror));
+               }).catch(() => {
+                    console.log(`Failed inserting ingredient ${i}`);
+               });
           }
-
-     /*   Tried this didn't work
-          res.redirect('recipe/'+value);
-     */
+          return value;
 
      }, (SQLerror) => console.log(SQLerror));
 
-     // This doesn't work either but recipes are getting added
-     res.sendStatus(200);
+     console.log(recipe);
+
 });
 
 
@@ -138,28 +194,6 @@ router.get('/logout', function (req, res) {
      req.session.destroy();                  // destroy the current user session by creating a clean, empty, unauthorized session
      res.redirect('/');                   // Redirect user to home page
 })
-
-
-// router.get('/login', authenticationMiddleware(), redirectHome, function (req, res) {
-//      const { userId } = req.session;
-//      res.render('login');
-// });
-
-// router.post('/login', function (req, res) {
-//      const { username, password } = req.body;
-//      if (username && password) {
-//           const userUuid = userToUuid[username];
-
-//           const user = userMap[userUuid] && userMap[userUuid].password == password ? userUuid : null;
-//           if (user) {
-//                req.session.userId = userUuid;
-//                return res.redirect('/profile');
-//           }
-//      }
-//      res.redirect('/login');
-// });
-
-
 
 router.get('/register', redirectHome, function (req, res) {
      res.render('register');
@@ -209,15 +243,6 @@ router.post('/register',
           }
      });
 
-// router.post('/logout', redirectLogin, function (req, res) {
-//      req.session.destroy(err => {
-//           if (err) {
-//                return res.redirect('/login');
-//           }
-//           res.clearCookie('sid');
-//      });
-// });
-
 router.get('/home', (req, res, next) => {
      res.render('home');
 });
@@ -243,37 +268,127 @@ function authenticationMiddleware() {
 
 router.get('/recipe/:recipeId', (req, res, next) => {
      db.queryRecipeId(req.params.recipeId).then((value) => {
-          db.getIngredientsForRecipe(req.params.recipeId).then((ingredients) =>{
-               const recipe_data = value[0];
-               recipe_data['ingredients'] = ingredients;
-               res.render('recipe', recipe_data);
-               console.log(recipe_data);
-          }
-          )}, (SQLerror) => console.log(SQLerror));
+          db.getIngredientsForRecipe(req.params.recipeId).then((ingredients) =>
+               db.queryComments(req.params.recipeId).then((comments) => {
+                    const recipe_data = value[0];
+                    recipe_data['ingredients'] = ingredients;
+                    recipe_data['comments'] = comments.reverse();
+                    res.render('recipe', recipe_data);
+                    console.log(recipe_data);
+               })
+          )
+     }, (SQLerror) => console.log(SQLerror));
 });
 
 router.get('/profile/:userId', (req, res, next) => {
-    db.queryUserProfile(req.params.userId).then((value) => {
-        db.queryUserRecipes(req.params.userId).then((recipes) => {
-            db.queryUserLists(req.params.userId).then((lists) => {
-                db.queryUserComments(req.params.userId).then((comments) => {
-                    db.queryUserIngredients(req.params.userId).then((ingredients) => {
-                        const profile_data = value[0];
-                        profile_data['recipes'] = recipes;
-                        profile_data['lists'] = lists;
-                        profile_data['comments'] = comments;
-                        profile_data['ingredients'] = ingredients;
+     db.queryUserProfile(req.params.userId).then((value) => {
+          db.queryUserRecipes(req.params.userId).then((recipes) => {
+               db.queryUserLists(req.params.userId).then((lists) => {
+                    db.queryUserComments(req.params.userId).then((comments) => {
+                         db.queryUserIngredients(req.params.userId).then((ingredients) => {
+                            const profile_data = value[0];
+                            profile_data['recipes'] = recipes;
+                            profile_data['lists'] = lists;
+                            profile_data['comments'] = comments;
+                            profile_data['ingredients'] = ingredients;
 
-                        if (req.session.passport.user.user_id == req.params.userId) {
-                            profile_data['own_profile'] = true;
-                        }
+                            if (req.session.passport.user.user_id == req.params.userId) {
+                                profile_data['own_profile'] = true;
+                            }
 
-                    res.render('profile', profile_data);
+                            res.render('profile', profile_data);
+
+                         }
+                         )
                     }
-                )}
-            )}
-        )}
-    )}, (SQLerror) => console.log(SQLerror));
+                    )
+               }
+               )
+          }, (SQLerror) => console.log(SQLerror));
+     });
+});
+
+router.get('/list/:listId', (req, res, next) => {
+    db.queryList(req.params.listId).then((listInfo) => {
+        var userid = listInfo[0].user_id;
+
+        db.queryUserProfile(userid).then((userInfo) => {
+            db.queryListRecipes(req.params.listId).then((listRecipes) => {
+                const listValues = listInfo[0];
+                listValues['recipes'] = listRecipes;
+                listValues['list_owner'] = userInfo;
+                //listValues['list_id'] = req.params.listId;
+
+                if (req.session.passport.user.user_id == userid) {
+                    listValues['own_profile'] = true;
+                }
+
+                res.render('list', listValues);
+            });
+        });
+    }, (SQLerror) => console.log(SQLerror));
+});
+
+router.post('/comment', (req, res, next) => {
+
+     let d = new Date();
+     let comment = {
+          "comment_body": req.body.comment_body,
+          "recipe_rating": req.body.recipe_rating,
+          "recipe_difficulty": req.body.recipe_difficulty,
+          "comment_id": null,
+          "post_date": d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate(),
+          "recipe_id": req.body.recipe_id,
+          "user_id": req.session.passport.user.user_id,
+     };
+     console.log(comment);
+     db.insertComment(comment).then(() => {
+          res.sendStatus(200);
+     });
+});
+
+router.post('/list', (req, res, next) => {
+    let list = {
+        "list_name" : req.body.list_name,
+        "privacy_status" : req.body.privacy_status,
+        "user_id" : req.session.passport.user.user_id
+    };
+
+    db.insertList(list).then(() => {
+        res.sendStatus(200);
+    }, (SQLerror) => console.log(SQLerror));
+});
+
+//deleting content
+
+router.delete('/recipe/:recipeId', (req, res, next) => {
+    db.deleteRecipe(req.params.recipeId).then((value) => {
+        res.sendStatus(200);
+    }, (SQLerror) => console.log(SQLerror));
+});
+
+router.delete('/comment/:commentId', (req, res, next) => {
+    db.deleteComment(req.params.commentId).then((value) => {
+        res.sendStatus(200);
+    }, (SQLerror) => console.log(SQLerror));
+});
+
+router.delete('/list/:listId', (req, res, next) => {
+    db.deleteList(req.params.listId).then((value) => {
+        res.sendStatus(200);
+    }, (SQLerror) => console.log(SQLerror));
+});
+
+router.delete('/ingredient/:ingredientId', (req, res, next) => {
+    db.deleteIngredient(req.params.ingredientId).then((value) => {
+        res.sendStatus(200);
+    }, (SQLerror) => console.log(SQLerror));
+});
+
+router.delete('/list/:listId/:recipeId', (req, res, next) => {
+    db.unlinkRecipe(req.params.listId, req.params.recipeId).then((value) => {
+        res.sendStatus(200);
+    }, (SQLerror) => console.log(SQLerror));
 });
 
 module.exports = router;

@@ -1,0 +1,41 @@
+{{> header}}
+<link rel="stylesheet" type="text/css" href="/static/list.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="/static/list.js"></script>
+<script type="text/javascript">
+    function simplifyDate(date) {
+        var original = new Date(date);
+        var test = original.toISOString().split("T")[0].toString();
+        document.write(test);
+    }
+</script>
+<body>
+    <div class="horizontal-center header-padding" id="list-container">
+        <div class="action-column">
+            <h3>{{list_name}}</h3>
+            <a href="/profile/{{user_id}}">List By: {{display_name}}</a>
+            <div class="vert-list">
+                {{#if recipes}}
+                    {{#each recipes}}
+                        <div id="recipe-element" class="vert-list-element">
+                            <img id="recipe_pic" class="thumbnail" src="/static/pasta.jpg" alt="Recipe-Img" style="width:40px"></img>
+                            <h4><a href="/recipe/{{recipe_id}}">{{recipe_name}}</a></h4>
+                            <a>Prep: {{prep_time}} mins</a>
+                            <br>
+                            <a id="date">Posted: <script>simplifyDate("{{date_posted}}")</script></a>
+                            <br>
+                            <a href="/profile/{{user_id}}">by @{{user_id}}</a>
+                            {{#if ../own_profile}}
+                                <img id="delRecipe" class='remove-button' onclick='removeRecipe({{../list_id}}, {{recipe_id}});' src="/static/SVG/remove-icon.svg"/>
+                            {{/if}}
+                        </div>
+                    {{/each}}
+                {{else}}
+                    <h5>{{list_name}} has no recipes yet!</h5>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</body>
+
+{{> footer}}

@@ -1,0 +1,114 @@
+
+.content {
+     display: flex;
+     /* flex-direction: row; */
+     background-color: white;
+}
+
+.browse-wrapper{
+     /* display: flex; */
+     /* background-color: white; */
+     /* height: 100%; */
+}
+
+.filters-container {
+     display: inline-block;
+     min-width: 200px;
+     max-width: 200px;
+     padding: 20px;
+     /* position: absolute; */
+     /* left: 0; */
+     margin: 10px 10px auto 10px;
+}
+
+.recipe-listing-wrapper{
+    /* position: relative; */
+     display: inline-block;
+     margin: 10px;
+     padding: 10px;
+     border-radius: 3px;
+    border: 1px solid #E6E6E6;
+    margin: 4px;
+    width: 300px;
+    height: 450px;
+    cursor: pointer;
+}
+
+.image-card{
+    overflow: hidden;
+    height: 300px;
+    background-color: lightsalmon;
+}
+.image-card>img{
+    width: 100%;
+}
+
+.recipe-listing-wrapper:hover > .list-add-button {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.recipe-data{
+    padding: 4px;
+}
+
+/* .grid-template{
+    /* display: grid;
+    grid-auto-flow: dense;
+    flex-wrap: wrap;
+    flex-direction: row;
+    grid-template-columns: repeat(4, 1fr); 
+} */
+
+
+
+/* #search-criteria{
+     display: inline-block;
+     min-width: 200px;
+     max-width: 200px;
+     padding: 20px;
+     /* position: absolute; */
+     /* left: 0; 
+     margin: 10px 10px auto 10px;
+} */
+
+.list-add-button{
+    opacity: 0;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    transform: scale(0);
+    transition: all 0.25s ease-in-out;
+}
+
+#recipe-list-dropdown{
+    top: 100%;
+    left: 0;
+    user-select: none;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    max-height: 0;
+    z-index: 10;
+    background-color: white;
+    font-weight: bold;
+    overflow: hidden;
+    transition: max-height 0.25s ease-out, border-width 0.25s linear;
+    border: 0px solid black;
+}
+
+#recipe-list-dropdown>u:hover{
+    background-color: #FADAC0;
+}
+
+#recipe-list-dropdown.visible{
+    max-height: 500px;
+    transition: max-height 0.25s ease-in;
+    border: 1px solid black;
+}
+
+#ingredient-criteria-wrapper{
+    display: flex;
+    flex-direction: column;
+}

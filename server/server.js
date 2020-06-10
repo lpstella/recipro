@@ -1,12 +1,17 @@
 const express = require('express');
 var exphbs = require('express-handlebars');
 var session = require('express-session');
+// const fileUpload = require('express-fileupload');
 var MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+
+const multer = require('multer');
+
+
 
 const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
@@ -27,11 +32,13 @@ app.set('view engine', 'handlebars');
 app.use(cookieParser());
 app.use('/static', express.static('public'));
 
+
 app.use(bodyParser.urlencoded({
      extended: true
 }));
 
 app.use(bodyParser.json());
+// app.use(fileUpload());
 
 const options = {
      host: 'classmysql.engr.oregonstate.edu',
