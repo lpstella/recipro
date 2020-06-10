@@ -6,7 +6,7 @@ $(document).ready(function () {
                 <div class='recipe-direction'>
                     <input type="text" class='recipe-instruction' placeholder="Next Step" />
                     <img id="link-recipe" src="/static/SVG/link-icon.svg"/>
-                    <img class='remove-button' src="/static/SVG/remove-icon.svg"/>
+                    <img class='remove-button' src="/public/SVG/remove-icon.svg"/>
                 </div>
             </li>`);
           }
@@ -29,7 +29,7 @@ $(document).ready(function () {
                         <option value='ounce'>oz</option>
                         <option value='g'>g</option>
                     </select>
-                    <img class='remove-button' src="/static/SVG/remove-icon.svg"/>
+                    <img class='remove-button' src="/public/SVG/remove-icon.svg"/>
                 </div>
             </li>`);
           }
