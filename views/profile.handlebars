@@ -1,7 +1,7 @@
 {{> header}}
-<link rel="stylesheet" type="text/css" href="/static/profile.css">
+<link rel="stylesheet" type="text/css" href="/public/profile.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<script src="/static/profile.js"></script>
+<script src="/public/profile.js"></script>
 <script type="text/javascript">
      function simplifyDate(date) {
           var original = new Date(date);
@@ -13,7 +13,7 @@
 <body>
      <div class="horizontal-center header-padding" id="profile-container">
           <div class="horizontal-left" id="profile-details">
-               <img src="/static/pasta.jpg" alt="Avatar" style="width:200px"></img>
+               <img src="/public/pasta.jpg" alt="Avatar" style="width:200px"></img>
                <div id="name-box">
                     <h1 id="Display_Name">{{display_name}}</h1>
                     <span>User ID: </span><a id="User_ID" href="/profile/{{user_id}}">@{{user_id}}</a>
@@ -38,7 +38,7 @@
                          {{#if recipes}}
                          {{#each recipes}}
                          <div id="recipe-element" class="vert-list-element">
-                              <img id="recipe_pic" class="thumbnail" src="/static/pasta.jpg" alt="Recipe-Img"
+                              <img id="recipe_pic" class="thumbnail" src="../{{recipe_img}}"" alt=" Recipe-Img"
                                    style="width:40px"></img>
                               <h4><a href="/recipe/{{recipe_id}}">{{recipe_name}}</a></h4>
                               <a>Prep: {{prep_time}} mins</a>
@@ -46,7 +46,7 @@
                                    <script>simplifyDate("{{date_posted}}")</script></a>
                               {{#if ../own_profile}}
                               <img id="delRecipe" class='remove-button' onclick='deleteRecipe({{recipe_id}});'
-                                   src="/static/SVG/remove-icon.svg" />
+                                   src="/public/SVG/remove-icon.svg" />
                               {{/if}}
                          </div>
                          {{/each}}
@@ -72,7 +72,7 @@
 
                               {{#if ../own_profile}}
                               <img id="delList" class='remove-button' onclick='deleteList({{list_id}});'
-                                   src="/static/SVG/remove-icon.svg" />
+                                   src="/public/SVG/remove-icon.svg" />
                               {{/if}}
                          </div>
                          {{/each}}
@@ -96,7 +96,7 @@
                               </div>
                               {{#if ../own_profile}}
                               <img id="delComment" class='remove-button' onclick='deleteComment({{comment_id}});'
-                                   src="/static/SVG/remove-icon.svg" />
+                                   src="/public/SVG/remove-icon.svg" />
                               {{/if}}
                          </div>
                          {{/each}}
@@ -116,13 +116,13 @@
                          {{#if ingredients}}
                          {{#each ingredients}}
                          <div id="ingredient-element" class="vert-list-element">
-                              <img src="/static/pasta.jpg" alt="Ingredient-Img" style="width:40px"></img>
+                              <img src="/public/pasta.jpg" alt="Ingredient-Img" style="width:40px"></img>
                               <div id="ingredient-details">
                                    <h3 id="ingredient-name">{{ingredient_name}}</h3>
                                    <a id="ingredient-quantity">Quantity: {{amount}}</a>
                               </div>
                               {{#if ../own_profile}}
-                              <img id="delIngredient" class='remove-button' src="/static/SVG/remove-icon.svg" />
+                              <img id="delIngredient" class='remove-button' src="/public/SVG/remove-icon.svg" />
                               {{/if}}
                          </div>
                          {{/each}}
