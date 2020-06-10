@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const path = require('path');
 
 
 const { check, validationResult } = require('express-validator');
@@ -15,7 +15,7 @@ let storage = multer.diskStorage({
           cb(null, 'public/uploads');
      },
      filename: (req, file, cb) => {
-          cb(null, file.originalname + '-' + Date.now());
+          cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
      }
 });
 
