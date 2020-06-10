@@ -1,46 +1,49 @@
 {{> header}}
-<div class="horizontal-center">
-    <h1>Check out the latest recipes!</h1>
-    <div class="recipe-carousel">
-        <div>
-            <a>PASTA</a>
-            <img src="static/pasta.jpg"/>
-        </div>
-        <div>
-            <a>PASTA</a>
-            <img src="static/pasta.jpg"/>
-        </div>
-        <div>
-            <a>PASTA</a>
-            <img src="static/pasta.jpg"/>
-        </div>
-        <div>
-            <a>PASTA</a>
-            <img src="static/pasta.jpg"/>
-        </div>
-        <div>
-            <a>PASTA</a>
-            <img src="static/pasta.jpg"/>
-        </div>
-        <div>
-            <a>PASTA</a>
-            <img src="static/pasta.jpg"/>
-        </div>
-        <div>
-            <a>PASTA</a>
-            <img src="static/pasta.jpg"/>
-        </div>
-        <div>
-            <a>PASTA</a>
-            <img src="static/pasta.jpg"/>
-        </div>
-        <div class="browse-item" onclick="window.location.href='/browse'">
-            <a>Browse all recipes</a>
-        </div>
-    </div>
 
-    <div>
-        <h2>Update My Ingredients</h2>
-        <button class='primary-button' onclick="window.location.href='/new-recipe'">Upload a Recipe</button>
-    </div>
-</div>
+<main class='home-content'>
+     {{!-- <div class="horizontal-center"> --}}
+     <h1>Check out the latest recipes!</h1>
+     <div class="recipe-carousel">
+          <div>
+               <a>PASTA</a>
+               <img src="static/pasta.jpg" />
+          </div>
+          <div>
+               <a>PASTA</a>
+               <img src="static/pasta.jpg" />
+          </div>
+          <div>
+               <a>PASTA</a>
+               <img src="static/pasta.jpg" />
+          </div>
+          <div>
+               <a>PASTA</a>
+               <img src="static/pasta.jpg" />
+          </div>
+          <div>
+               <a>PASTA</a>
+               <img src="static/pasta.jpg" />
+          </div>
+          <div>
+               <a>PASTA</a>
+               <img src="static/pasta.jpg" />
+          </div>
+          <div>
+               <a>PASTA</a>
+               <img src="static/pasta.jpg" />
+          </div>
+          <div>
+               <a>PASTA</a>
+               <img src="static/pasta.jpg" />
+          </div>
+          <div class="browse-item" onclick="window.location.href='/browse'">
+               <a>Browse all recipes</a>
+          </div>
+     </div>
+
+     <div class='update-ingredients-wrapper'>
+          <h2>Update My Ingredients</h2>
+          <button class='primary-button' onclick="window.location.href='/new-recipe'">Upload a Recipe</button>
+     </div>
+     {{!-- </div> --}}
+</main>

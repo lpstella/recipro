@@ -17,13 +17,13 @@ const db = require('../server/db');
 //      }
 // };
 
- const redirectHome = (req, res, next) => {
-      if (req.session.userId) {
-           res.redirect('/profile');
-      } else {
-           next();
-      }
- };
+const redirectHome = (req, res, next) => {
+     if (req.session.userId) {
+          res.redirect('/profile');
+     } else {
+          next();
+     }
+};
 
 router.get('/browse', function (req, res) {
      const criteria = {
