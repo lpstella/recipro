@@ -1,7 +1,7 @@
 
 .content {
      display: flex;
-     /* flex-direction: row; */
+     flex-direction: row;
      background-color: white;
 }
 
@@ -22,11 +22,11 @@
 }
 
 .recipe-listing-wrapper{
-    /* position: relative; */
-     display: inline-block;
-     margin: 10px;
-     padding: 10px;
-     border-radius: 3px;
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 3px;
     border: 1px solid #E6E6E6;
     margin: 4px;
     width: 300px;

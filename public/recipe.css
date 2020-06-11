@@ -63,3 +63,27 @@
     flex-direction: column;
     width: 75%;
 }
+
+.recipe-img-wrapper{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    height: 400px;
+    overflow-y: hidden;
+}
+
+#recipe-img{
+    height: 100%;
+    z-index: 1;
+    border-width: 0px 4px;
+    border-style: solid;
+    border-color:white;
+}
+
+#recipe-img-background{
+    position: absolute;
+    width: 100%;
+    z-index: 0;
+    margin: -25% 0 0 0;
+    filter: blur(8px);
+}
