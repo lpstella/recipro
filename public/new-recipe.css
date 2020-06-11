@@ -34,6 +34,7 @@ body{
      flex: 1;
      padding: 5%;
      overflow-y: scroll;
+     background-color: white;
      /* flex-basis: 100%; */
  }
  
@@ -64,7 +65,7 @@ body{
      padding-left: 5%;
      height: 100vh;
      width: 50%;
-     background-color: #ff944d5e;
+     background-color: white;
  }
  
  .ingredient-info{

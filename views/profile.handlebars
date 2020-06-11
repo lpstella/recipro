@@ -1,146 +1,162 @@
 {{> header}}
-<link rel="stylesheet" type="text/css" href="/static/profile.css">
+<link rel="stylesheet" type="text/css" href="/public/profile.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<script src="/static/profile.js"></script>
+<script src="/public/profile.js"></script>
 <script type="text/javascript">
-    function simplifyDate(date) {
-        var original = new Date(date);
-        var test = original.toISOString().split("T")[0].toString();
-        document.write(test);
-    }
+     function simplifyDate(date) {
+          var original = new Date(date);
+          var test = original.toISOString().split("T")[0].toString();
+          document.write(test);
+     }
 </script>
+
 <body>
-    <div class="horizontal-center header-padding" id="profile-container">
-        <div id="profile-header">
-            <div class="horizontal-left" id="profile-details">
-                <img src="/static/pasta.jpg" alt="Avatar" style="width:200px"></img>
-                <div id="name-box" class="horizontal-left">
-                    <h1 id="Display_Name">{{display_name}}</h1>
-                    <span>User ID: </span><a id="User_ID" href="/profile/{{user_id}}">@{{user_id}}</a>
-                </div>
-                {{#if own_profile}}
-                    <div id="edit-box" class="horizontal-right">
-                        <img class="update-button" onclick="document.getElementById('profile-edit').style.visibility = 'visible'"; src="/static/SVG/edit-icon.svg"/>
-                    </div>
-                {{/if}}
-            </div>
-            {{#if own_profile}}
-                <div class="horizontal-right" id="profile-edit" style="visibility: hidden;">
-                    <div id="name-box">
-                        <label for="disp_name_edit">Display Name</label>
-                        <input id="disp_name_edit"></input>
-                        <br>
-                        <label for="recipe-img-upload">Update Profile Picture</label>
-                        <input id="recipe-img-upload" type="file" name="recipe-img" accept="image/jpeg, image/png" />
+     <div class="horizontal-center header-padding" id="profile-container">
+         <div id="profile-header">
+             <div class="horizontal-left" id="profile-details">
+                 {{#if user_img}}
+                     <img src="/public/{{user_img}}" alt="Avatar" style="width:200px"></img>
+                 {{else}}
+                     <img src="/public/SVG/default-user.svg" alt="Avatar" style="width:200px"></img>
+                 {{/if}}
+                 <div id="name-box" class="horizontal-left">
+                     <h1 id="Display_Name">{{display_name}}</h1>
+                     <span>User ID: </span><a id="User_ID" href="/profile/{{user_id}}">@{{user_id}}</a>
+                 </div>
+                 {{#if own_profile}}
+                     <div id="edit-box" class="horizontal-right">
+                         <img class="update-button" onclick="document.getElementById('profile-edit').style.visibility = 'visible'"; src="/public/SVG/edit-icon.svg"/>
+                     </div>
+                 {{/if}}
+             </div>
+             {{#if own_profile}}
+                 <div class="horizontal-right" id="profile-edit" style="visibility: hidden;">
+                     <div id="name-box">
+                         <label for="disp_name_edit">Display Name</label>
+                         <input id="disp_name_edit"></input>
+                         <br>
+                         <label for="recipe-img-upload">Update Profile Picture</label>
+                         <input id="recipe-img-upload" type="file" name="recipe-img" accept="image/jpeg, image/png" />
 
-                        <div id="push-changes">
-                            <button id="pushChanges" onclick="updateProfile({{user_id}})">Save Changes</button>
-                        </div>
-                    </div>
-                </div>
-            {{/if}}
-        </div>
-        <br />
+                         <div id="push-changes">
+                             <button id="pushChanges" onclick="updateProfile({{user_id}})">Save Changes</button>
+                             <button id="cancelChanges" onclick="document.getElementById('profile-edit').style.visibility = 'hidden'">Cancel</button>
+                         </div>
+                     </div>
+                 </div>
+             {{/if}}
+         </div>
 
-        <div id="profile-actions">
-            <div class="action-column">
-                <h3>Public Recipes</h3>
-                {{#if own_profile}}
-                    <div id="add-element">
-                        <button id="createNewButton" onclick="window.location.href='/new-recipe'">Create A New Recipe</button>
-                    </div>
-                {{/if}}
-                <div class="vert-list">
-                    {{#if recipes}}
-                        {{#each recipes}}
-                            <div id="recipe-element" class="vert-list-element">
-                                <img id="recipe_pic" class="thumbnail" src="/static/pasta.jpg" alt="Recipe-Img" style="width:40px"></img>
-                                <h4><a href="/recipe/{{recipe_id}}">{{recipe_name}}</a></h4>
-                                <a>Prep: {{prep_time}} mins</a>
-                                <a id="date">Posted: <script>simplifyDate("{{date_posted}}")</script></a>
-                                {{#if ../own_profile}}
-                                    <img id="delRecipe" class='remove-button' onclick='deleteRecipe({{recipe_id}});' src="/static/SVG/remove-icon.svg"/>
-                                {{/if}}
-                            </div>
-                        {{/each}}
-                    {{else}}
-                        <h5>User has no recipes yet</h5>
-                    {{/if}}
-                </div>
-            </div>
-            <div class="action-column">
-                <h3>Recipes Lists</h3>
-                {{#if own_profile}}
-                    <div id="add-element">
-                        <button id="createNewButton" onclick="window.location.href='/new-list'">Create A New Recipe List</button>
-                    </div>
-                {{/if}}
-                <div class="vert-list">
-                    {{#if lists}}
-                        {{#each lists}}
-                            <div id="recipe-list-element" class="vert-list-element">
-                                <h4><a href="/list/{{list_id}}">{{list_name}}</a></h4>
-                                <a>{{list_count}} recipes</a>
+          <br />
 
-                                {{#if ../own_profile}}
-                                    <img id="delList" class='remove-button' onclick='deleteList({{list_id}});' src="/static/SVG/remove-icon.svg"/>
-                                {{/if}}
-                            </div>
-                        {{/each}}
-                    {{else}}
-                        <h5>User has no recipe lists yet</h5>
-                    {{/if}}
-                </div>
-            </div>
-            <div class="action-column">
-                <h3>User Comments and Ratings</h3>
-                <div class="vert-list">
-                    {{#if comments}}
-                        {{#each comments}}
-                            <div id="comment-element" class="vert-list-element">
-                                <p id="comment-body">{{comment_body}}</p>
-                                <p id="date">Posted: <script>simplifyDate("{{post_date}}")</script></p>
-                                <div id="view-thread">
-                                    <a href="/recipe/{{recipe_id}}">View Recipe Thread</a>
-                                </div>
-                                {{#if ../own_profile}}
-                                    <img id="delComment" class='remove-button' onclick='deleteComment({{comment_id}});' src="/static/SVG/remove-icon.svg"/>
-                                {{/if}}
-                            </div>
-                        {{/each}}
-                    {{else}}
-                        <h5>User has no comments or ratings yet</h5>
-                    {{/if}}
-                </div>
-            </div>
-            <div class="action-column">
-                <h3>My Ingredients</h3>
-                {{#if own_profile}}
+          <div id="profile-actions">
+               <div class="action-column">
+                    <h3>Public Recipes</h3>
+                    {{#if own_profile}}
                     <div id="add-element">
-                        <button id="createNewButton" onclick="">Add an Ingredient</button>
+                         <button id="createNewButton" onclick="window.location.href='/new-recipe'">Create A New
+                              Recipe</button>
                     </div>
-                {{/if}}
-                <div class="vert-list">
-                    {{#if ingredients}}
-                        {{#each ingredients}}
-                            <div id="ingredient-element" class="vert-list-element">
-                                <img src="/static/pasta.jpg" alt="Ingredient-Img" style="width:40px"></img>
-                                <div id="ingredient-details">
-                                    <h3 id="ingredient-name">{{ingredient_name}}</h3>
-                                    <a id="ingredient-quantity">Quantity: {{amount}}</a>
-                                </div>
-                                {{#if ../own_profile}}
-                                    <img id="delIngredient" class='remove-button' src="/static/SVG/remove-icon.svg"/>
-                                {{/if}}
-                            </div>
-                        {{/each}}
-                    {{else}}
-                        <h5>User has no ingredients yet</h5>
                     {{/if}}
-                </div>
-            </div>
-        </div>
-    </div>
+                    <div class="vert-list">
+                         {{#if recipes}}
+                         {{#each recipes}}
+                         <div id="recipe-element" class="vert-list-element">
+                              <img id="recipe_pic" class="thumbnail" src="../{{recipe_img}}" alt=" Recipe-Img"
+                                   style="width:40px"></img>
+                              <h4><a href="/recipe/{{recipe_id}}">{{recipe_name}}</a></h4>
+                              <a>Prep: {{prep_time}} mins</a>
+                              <a id="date">Posted:
+                                   <script>simplifyDate("{{date_posted}}")</script></a>
+                              {{#if ../own_profile}}
+                              <img id="delRecipe" class='remove-button' onclick='deleteRecipe({{recipe_id}});'
+                                   src="/public/SVG/remove-icon.svg" />
+                              {{/if}}
+                         </div>
+                         {{/each}}
+                         {{else}}
+                         <h5>User has no recipes yet</h5>
+                         {{/if}}
+                    </div>
+               </div>
+               <div class="action-column">
+                    <h3>Recipes Lists</h3>
+                    {{#if own_profile}}
+                    <div id="add-element">
+                         <button id="createNewButton" onclick="window.location.href='/new-list'">Create A New Recipe
+                              List</button>
+                    </div>
+                    {{/if}}
+                    <div class="vert-list">
+                         {{#if lists}}
+                         {{#each lists}}
+                         <div id="recipe-list-element" class="vert-list-element">
+                              <h4><a href="/list/{{list_id}}">{{list_name}}</a></h4>
+                              <a>{{list_count}} recipes</a>
+
+                              {{#if ../own_profile}}
+                              <img id="delList" class='remove-button' onclick='deleteList({{list_id}});'
+                                   src="/public/SVG/remove-icon.svg" />
+                              {{/if}}
+                         </div>
+                         {{/each}}
+                         {{else}}
+                         <h5>User has no recipe lists yet</h5>
+                         {{/if}}
+                    </div>
+               </div>
+               <div class="action-column">
+                    <h3>User Comments and Ratings</h3>
+                    <div class="vert-list">
+                         {{#if comments}}
+                         {{#each comments}}
+                         <div id="comment-element" class="vert-list-element">
+                              <p id="comment-body">{{comment_body}}</p>
+                              <p id="date">Posted:
+                                   <script>simplifyDate("{{post_date}}")</script>
+                              </p>
+                              <div id="view-thread">
+                                   <a href="/recipe/{{recipe_id}}">View Recipe Thread</a>
+                              </div>
+                              {{#if ../own_profile}}
+                              <img id="delComment" class='remove-button' onclick='deleteComment({{comment_id}});'
+                                   src="/public/SVG/remove-icon.svg" />
+                              {{/if}}
+                         </div>
+                         {{/each}}
+                         {{else}}
+                         <h5>User has no comments or ratings yet</h5>
+                         {{/if}}
+                    </div>
+               </div>
+               <div class="action-column">
+                    <h3>My Ingredients</h3>
+                    {{#if own_profile}}
+                    <div id="add-element">
+                         <button id="createNewButton" onclick="">Add an Ingredient</button>
+                    </div>
+                    {{/if}}
+                    <div class="vert-list">
+                         {{#if ingredients}}
+                         {{#each ingredients}}
+                         <div id="ingredient-element" class="vert-list-element">
+                              <img src="/public/pasta.jpg" alt="Ingredient-Img" style="width:40px"></img>
+                              <div id="ingredient-details">
+                                   <h3 id="ingredient-name">{{ingredient_name}}</h3>
+                                   <a id="ingredient-quantity">Quantity: {{amount}}</a>
+                              </div>
+                              {{#if ../own_profile}}
+                              <img id="delIngredient" class='remove-button' src="/public/SVG/remove-icon.svg" />
+                              {{/if}}
+                         </div>
+                         {{/each}}
+                         {{else}}
+                         <h5>User has no ingredients yet</h5>
+                         {{/if}}
+                    </div>
+               </div>
+          </div>
+     </div>
 </body>
 
 {{> footer}}

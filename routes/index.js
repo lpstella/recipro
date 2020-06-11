@@ -25,8 +25,6 @@ const fileFilter = (req, file, cb) => {
      } else {
           cb(null, false);
      }
-
-
 };
 
 let upload = multer({
@@ -38,14 +36,6 @@ let upload = multer({
 });
 
 const db = require('../server/db');
-
-// const redirectLogin = (req, res, next) => {
-//      if (!req.session.userId) {
-//           res.redirect('/login');
-//      } else {
-//           next();
-//      }
-// };
 
 const redirectHome = (req, res, next) => {
      if (req.session.userId) {
@@ -244,13 +234,17 @@ router.post('/register',
      });
 
 router.get('/home', (req, res, next) => {
-     res.render('home');
+     res.redirect('/');
 });
 
 router.get('/', (req, res, next) => {
      console.log(req.user);
      console.log('isAuthenticated: ', req.isAuthenticated());         // Logs every user id and whether or not that user is authenticated in the server console
-     res.render('home');
+
+     db.getRecipes({name: ''}).then((results) =>
+     {
+          res.render('home', {recipes: results.slice(0, 8)});
+     }, () => res.render('home', {}));
 });
 
 // This is the authentication middleware that checks whether or not the user sending the post request
@@ -266,17 +260,20 @@ function authenticationMiddleware() {
      }
 }
 
-router.get('/recipe/:recipeId', (req, res, next) => {
+router.get('/recipe/:recipeId', authenticationMiddleware(), (req, res, next) => {
      db.queryRecipeId(req.params.recipeId).then((value) => {
-          db.getIngredientsForRecipe(req.params.recipeId).then((ingredients) =>
+          db.getIngredientsForRecipe(req.params.recipeId).then((ingredients) => {
                db.queryComments(req.params.recipeId).then((comments) => {
-                    const recipe_data = value[0];
-                    recipe_data['ingredients'] = ingredients;
-                    recipe_data['comments'] = comments.reverse();
-                    res.render('recipe', recipe_data);
-                    console.log(recipe_data);
-               })
-          )
+                    db.queryUserLists(req.session.passport.user.user_id).then((user_lists) => {
+                         const recipe_data = value[0];
+                         recipe_data['ingredients'] = ingredients;
+                         recipe_data['comments'] = comments.reverse();
+                         recipe_data['user_list'] = user_lists;
+                         res.render('recipe', recipe_data);
+                         console.log(recipe_data.recipe_img);
+                    });
+               });
+          });
      }, (SQLerror) => console.log(SQLerror));
 });
 
@@ -291,7 +288,11 @@ router.get('/profile/:userId', (req, res, next) => {
                             profile_data['lists'] = lists;
                             profile_data['comments'] = comments;
                             profile_data['ingredients'] = ingredients;
-
+                            if (value[0].profile_img != null) {
+                                profile_data['user_img'] = value[0].profile_img;
+                            } else {
+                                profile_data['user_img'] = null;
+                            }
                             if (req.session.passport.user.user_id == req.params.userId) {
                                 profile_data['own_profile'] = true;
                             }
@@ -354,7 +355,38 @@ router.post('/list', (req, res, next) => {
         "user_id" : req.session.passport.user.user_id
     };
 
-    db.insertList(list).then((value) => {
+    db.insertList(list).then(() => {
+        res.sendStatus(200);
+    }, (SQLerror) => console.log(SQLerror));
+});
+
+router.post('/list-addition', (req, res, next) => {
+     let list = req.body.list;
+     let recipe = req.body.recipe
+     let entry = {
+          "list_id": list,
+          "recipe_id": recipe
+     }
+     db.insertListEntry(entry).then((value) => {
+          res.sendStatus(200);
+     }, (SQLerror) => console.log(SQLerror));
+     // console.log(list, recipe);
+});
+
+//update user profile
+router.put('/updateProfileName/:userId/:newDN', (req, res, next) => {
+    db.updateUserName(req.params.userId, req.params.newDN).then((value) => {
+        res.sendStatus(200);
+    }, (SQLerror) => console.log(SQLerror));
+});
+
+//update user profile
+router.put('/updateProfileImage', upload.single('user-img'), (req, res, next) => {
+    console.log("user id: " + req.params.userId);
+    console.log("req.file: ", req.file);
+    console.log("new image: " + req.file.path);
+
+    db.updateUserImage(req.params.userId, req.file.path).then((value) => {
         res.sendStatus(200);
     }, (SQLerror) => console.log(SQLerror));
 });

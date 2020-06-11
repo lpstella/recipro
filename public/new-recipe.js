@@ -5,8 +5,8 @@ $(document).ready(function () {
             <li>
                 <div class='recipe-direction'>
                     <input type="text" class='recipe-instruction' placeholder="Next Step" />
-                    <img id="link-recipe" src="/static/SVG/link-icon.svg"/>
-                    <img class='remove-button' src="/static/SVG/remove-icon.svg"/>
+                    <img id="link-recipe" src="/public/SVG/link-icon.svg"/>
+                    <img class='remove-button' src="/public/SVG/remove-icon.svg"/>
                 </div>
             </li>`);
           }
@@ -29,7 +29,7 @@ $(document).ready(function () {
                         <option value='ounce'>oz</option>
                         <option value='g'>g</option>
                     </select>
-                    <img class='remove-button' src="/static/SVG/remove-icon.svg"/>
+                    <img class='remove-button' src="/public/SVG/remove-icon.svg"/>
                 </div>
             </li>`);
           }
@@ -138,9 +138,9 @@ $(document).ready(function () {
                // req.setRequestHeader("Content-Type", "multipart/form-data; ");
                // req.send(JSON.stringify(createJson));
 
-               // // Prevent resubmitting
-               // this.disabled = true;
-               // this.value = "Working..."
+               // Prevent resubmitting
+               this.disabled = true;
+               this.value = "Working..."
 
 
                sendFile(createJson.recipe_img, createJson);
@@ -175,9 +175,11 @@ function sendFile(file, recipe) {
      // };
 
      req.onreadystatechange = () => {
-          if (this.status === 200 && this.readyState === 4) {
-               console.log(req.responseText);
-               // window.location.replace('/profile/' + req.responseText);
+          if (req.status === 200 && req.readyState === 4) {
+               //console.log(req.responseText);
+               alert("Successful Submission...");
+               // await new Promise(r=>setTimeout(r, 2000));
+               // window.location.replace('/browse/');
           }
      }
 

@@ -54,19 +54,28 @@ function updateProfile(userId) {
     var newDN = document.getElementById("disp_name_edit").value;
     var newI = document.getElementById("recipe-img-upload").value;
 
-    var req = new XMLHttpRequest();
+    if (newDN.length != 0) {
+        var req = new XMLHttpRequest();
+        req.open("PUT", "/updateProfileName/" + userId + "/" + newDN, true);
 
-    req.open("POST", "/profileupdate/" + userId, true);
-
-    req.onreadystatechange = () => {
-        if (this.status === 200 && this.readyState === 4) {
-            console.log(req.responseText);
-            // window.location.replace('/profile/' + req.responseText);
+        req.onreadystatechange = () => {
+            if (this.status === 200 && this.readyState === 4) {
+                window.location.reload();
+            }
         }
+        req.send(null);
+    } else {
+        console.log("note: no display name was provided, keeping original");
     }
 
-    req.send(null);
 
+    if (newI.length != 0) {
+
+        sendFile(document.getElementById('recipe-img-upload').files[0]);
+
+    } else {
+        console.log("note: no image was provided, keeping original");
+    }
 
     //hide the edit pane again
     document.getElementById("profile-edit").style.visibility = "hidden";
@@ -106,3 +115,24 @@ $(document).ready(function() {
         // }
     });
 });
+
+
+
+function sendFile(file) {
+     var formData = new FormData();
+     var req = new XMLHttpRequest();
+
+     formData.append("user-img", file, file.name);
+     req.open("PUT", "/updateProfileImage", true);
+
+     req.onreadystatechange = () => {
+          if (req.status === 200 && req.readyState === 4) {
+               //console.log(req.responseText);
+               alert("Successful Submission...");
+               // await new Promise(r=>setTimeout(r, 2000));
+               // window.location.replace('/browse/');
+          }
+     }
+
+     req.send(formData);
+}
