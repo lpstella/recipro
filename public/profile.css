@@ -17,13 +17,21 @@
     display: grid;
 }
 
+#profile-display-name{
+    font-weight: bold;
+    font-size: 24pt;
+    background-color: transparent;
+    border-width: 0px 0px 2px 0px;
+    width: 25%;
+}
+
 #name-box > #Display_Name {
     margin-left: 10px;
     vertical-align: top;
     text-align: left;
 }
 
-#name-box > #User_ID, span {
+#name-box > #User_ID{
     display: inline;
     margin-left: 10px;
     vertical-align: top;

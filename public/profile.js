@@ -50,6 +50,19 @@ function deleteIngredient(ingredient_id) {
     req.send(null);
 }
 
+function changeDisplayName(newName) {
+    var req = new XMLHttpRequest();
+    
+    req.open("POST", "/update-name", true);
+    req.onreadystatechange = () => {
+        if (req.status === 200 && req.readyState === 4) {
+            window.location.reload();
+        }
+    }
+    req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+    req.send(JSON.stringify({ "newName": newName}));
+}
+
 function getChildCount(element) {
     var childCount = -1;
     if ('childElementCount' in element) {
@@ -83,4 +96,7 @@ $(document).ready(function() {
         //     document.body.insertAdjacentHTML('afterbegin', temp);
         // }
     });
+    $(document).on("blur", '#profile-display-name', () => {
+        changeDisplayName($('#profile-display-name').val());
+    })
 });

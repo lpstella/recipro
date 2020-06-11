@@ -467,7 +467,19 @@ db.unlinkRecipe = (listId, recipeId) => {
               return resolve();
          });
     });
-}
+};
+
+db.updateDisplayName = (user_id, newName) => {
+     let sql = 'UPDATE Users SET Users.display_name = ? WHERE Users.user_id = ?';
+     return new Promise((resolve, reject) => {
+          mysqlConnection.query(sql, [newName, user_id], (err, results) => {
+               if (err) {
+                    return reject(err);
+               }
+               return resolve();
+          });
+     });
+};
 
 passport.serializeUser(function (user_id, done) {      // These two functions are used by passport to track user sessions
      done(null, user_id);                              // documentation can be found at: http://www.passportjs.org/docs/

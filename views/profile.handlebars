@@ -15,13 +15,14 @@
           <div class="horizontal-left" id="profile-details">
                <img src="/public/pasta.jpg" alt="Avatar" style="width:200px"></img>
                <div id="name-box">
-                    <h1 id="Display_Name">{{display_name}}</h1>
-                    <span>User ID: </span><a id="User_ID" href="/profile/{{user_id}}">@{{user_id}}</a>
+                    {{#if own_profile}}
+                    <input id='profile-display-name' type="text" value="{{display_name}}">
+                    <h4 id='User_ID'>Select display name to change</h4>
+                    {{else}}
+                    <a id="Display_Name">{{display_name}}</a>
+                    {{/if}}
                </div>
           </div>
-          <!-- <div class="horizontal-right" id="profile-options">
-            give the user editable options here maybe
-        </div> -->
 
           <br />
 
