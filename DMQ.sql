@@ -90,3 +90,6 @@ INSERT INTO Comments SET :comment;
 
 -- Unlink a recipe from a list
 DELETE FROM Has_recipes WHERE recipe_id = ?\:recipeId AND list_id = :listId;
+
+-- Update a user's display name
+UPDATE Users SET Users.display_name = :newName WHERE Users.user_id = :user_Id
