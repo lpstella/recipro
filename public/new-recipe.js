@@ -5,7 +5,7 @@ $(document).ready(function () {
             <li>
                 <div class='recipe-direction'>
                     <input type="text" class='recipe-instruction' placeholder="Next Step" />
-                    <img id="link-recipe" src="/static/SVG/link-icon.svg"/>
+                    <img id="link-recipe" src="/public/SVG/link-icon.svg"/>
                     <img class='remove-button' src="/public/SVG/remove-icon.svg"/>
                 </div>
             </li>`);

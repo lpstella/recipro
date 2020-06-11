@@ -1,13 +1,13 @@
-<div class='recipe-listing-wrapper' onmouseleave="toggleDropDown(event, this, false)">
+<div class='recipe-listing-wrapper' onmouseleave="toggleDropDown(event, this, false, null)">
      <img class="list-add-button" src="/public/SVG/add-to-list-button.svg"
-          onclick="toggleDropDown(event, this, true)" />
+          onclick="toggleDropDown(event, this, true, {{recipe_id}})" />
      <div onclick="window.location='./recipe/{{recipe_id}}';">
           <div class='image-card'>
                <img src={{recipe_img}} />
           </div>
           <div class='recipe-data'>
                <h3>{{recipe_name}}</h3>
-               <div>Prep Time: {{prep_time}} Difficulty: {{difficulty}}</div>
+               <div>Prep Time: {{prep_time}}hrs Difficulty: {{difficulty}}</div>
                <div>
                     </u><a href='./profile/{{user_id}}'>{{display_name}}</a>
                </div>
