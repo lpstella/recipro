@@ -3,22 +3,23 @@ body{
     all: unset;
     font-family: 'Fira Sans', sans-serif;
     background: rgb(241,145,67);
-    
+    background: linear-gradient(0deg, rgba(241,145,67,1) 0%, rgba(255,255,255,1) 100%);
+    background-repeat: no-repeat;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
 }
 
 #background-gradient{
     position: absolute;
     display: block;
     z-index: 0;
-    background: linear-gradient(0deg, rgba(241,145,67,1) 0%, rgba(255,255,255,1) 100%);
-    background-repeat: no-repeat;
+    
     height: 100vh;
     width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow-x: hidden;
+
 }
 
 ::-webkit-scrollbar {
