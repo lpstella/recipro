@@ -29,6 +29,8 @@
     margin-left: 10px;
     vertical-align: top;
     text-align: left;
+    font-size: 24pt;
+    font-weight: bold;
 }
 
 #name-box > #User_ID{
