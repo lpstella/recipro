@@ -175,9 +175,11 @@ function sendFile(file, recipe) {
      // };
 
      req.onreadystatechange = () => {
-          if (this.status === 200 && this.readyState === 4) {
-               console.log(req.responseText);
-               // window.location.replace('/profile/' + req.responseText);
+          if (req.status === 200 && req.readyState === 4) {
+               //console.log(req.responseText);
+               alert("Successful Submission...");
+               // await new Promise(r=>setTimeout(r, 2000));
+               // window.location.replace('/browse/');
           }
      }
 
