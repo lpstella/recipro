@@ -3,11 +3,7 @@
 {{> header}}
 
 <main class='content'>
-     {{!-- <div class='browse-wrapper'> --}}
-
      <aside class='filters-container'>
-
-          {{!-- <div id='search-criteria'> --}}
           <form action="/browse" method="get">
                <h2>Filter</h2>
                {{#if criteria_name}}
@@ -26,24 +22,22 @@
                     {{/each}}
                </div>
           </form>
-          {{!-- </div> --}}
 
      </aside>
 
      <section id='recipes'>
-
-          {{!-- <div class='grid-template'> --}}
+          {{#if recipes}}
           {{#each recipes}}
           {{>recipe-listing this}}
           {{/each}}
+          {{else}}
+               <h1>No Results</h1>
+          {{/if}}
           <div id='recipe-list-dropdown'>
                {{#each recipelists}}
-               <u onclick="">{{this.list_name}}</u>
+               <u onclick="addToList({{this.list_id}})">{{this.list_name}}</u>
                {{/each}}
           </div>
-          {{!-- </div> --}}
 
      </section>
-
-     {{!-- </div> --}}
 </main>

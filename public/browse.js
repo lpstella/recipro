@@ -1,5 +1,7 @@
-const toggleDropDown = (e, parent, toggleStatus) => {
-    console.log('hover');
+let lastId= null;
+
+const toggleDropDown = (e, parent, toggleStatus, id = null) => {
+    lastId = id;
     let recipeListDropDown = document.getElementById('recipe-list-dropdown');
     toggleStatus ? recipeListDropDown.classList.add('visible') : recipeListDropDown.classList.remove('visible');
     toggleStatus && parent.parentElement.appendChild(recipeListDropDown);
@@ -8,20 +10,18 @@ const toggleDropDown = (e, parent, toggleStatus) => {
         window.location.replace("./login");
 }
 
-addToList = () => {
-    let listSelector = document.getElementById('user-lists');
-    let selected = listSelector.selectedIndex;
-    let listId = listSelector.children[selected].value;
-
+addToList = (list_id) => {
     var req = new XMLHttpRequest();
     req.open("POST", "/list-addition");
     req.onreadystatechange = () => {
         if (req.status === 200 && req.readyState === 4) {
-            window.location.reload();
+            alert('Recipe Added!');
+        } else {
+            alert('Already added!');
         }
     }
     req.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-    req.send(JSON.stringify({ "list": listId, "recipe": window.location.pathname.replace('/recipe/', '')}));
+    req.send(JSON.stringify({ "list": list_id, "recipe": lastId}));
 }
 
 window.addEventListener('DOMContentLoaded', function () {     // Add button event listeners inside of here to be loaded after all of the dom content

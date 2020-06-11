@@ -260,7 +260,7 @@ function authenticationMiddleware() {
      }
 }
 
-router.get('/recipe/:recipeId', (req, res, next) => {
+router.get('/recipe/:recipeId', authenticationMiddleware(), (req, res, next) => {
      db.queryRecipeId(req.params.recipeId).then((value) => {
           db.getIngredientsForRecipe(req.params.recipeId).then((ingredients) => {
                db.queryComments(req.params.recipeId).then((comments) => {

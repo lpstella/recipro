@@ -1,14 +1,16 @@
 
 .content {
-     display: flex;
-     flex-direction: row;
-     background-color: white;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
 }
 
-.browse-wrapper{
-     /* display: flex; */
-     /* background-color: white; */
-     /* height: 100%; */
+#recipes{
+    width: 80vw;
+    background-color: white;
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(322px, 1fr) );
 }
 
 .filters-container {
@@ -16,8 +18,7 @@
      min-width: 200px;
      max-width: 200px;
      padding: 20px;
-     /* position: absolute; */
-     /* left: 0; */
+     background-color: white;
      margin: 10px 10px auto 10px;
 }
 

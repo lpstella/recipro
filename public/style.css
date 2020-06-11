@@ -2,25 +2,24 @@
 body{
     all: unset;
     font-family: 'Fira Sans', sans-serif;
+    background: rgb(241,145,67);
+    
+    min-height: 100vh;
+}
+
+#background-gradient{
+    position: absolute;
+    display: block;
+    z-index: 0;
+    background: linear-gradient(0deg, rgba(241,145,67,1) 0%, rgba(255,255,255,1) 100%);
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow-x: hidden;
-    background: rgb(241,145,67);
-    background: linear-gradient(0deg, rgba(241,145,67,1) 0%, rgba(255,255,255,1) 100%);
-    background-repeat: no-repeat;
-    background-size: cover;
-    min-height: 100vh;
 }
-
-/* .home-content {
-     display: flex;
-     flex-direction: column;
-     background: rgb(241,145,67);
-    background: linear-gradient(0deg, rgba(241,145,67,1) 0%, rgba(255,255,255,1) 100%);
-    background-repeat: no-repeat;
-    background-size: contain;
-} */
 
 ::-webkit-scrollbar {
     width: 8px;
@@ -29,13 +28,13 @@ body{
 }
 
 ::-webkit-scrollbar-thumb {
-background: rgb(255, 120, 29);
+background: white;
 border: 0px none #ffffff;
 border-radius: 100px;
 }
 
 ::-webkit-scrollbar-track {
-background: rgba(0, 0, 0, 0.171);
+background: rgba(0, 0, 0, 0.0);
 border: 0px none #ffffff;
 border-radius: 0px;
 }
