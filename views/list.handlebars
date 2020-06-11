@@ -1,7 +1,7 @@
 {{> header}}
-<link rel="stylesheet" type="text/css" href="/static/list.css">
+<link rel="stylesheet" type="text/css" href="/public/list.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<script src="/static/list.js"></script>
+<script src="/public/list.js"></script>
 <script type="text/javascript">
     function simplifyDate(date) {
         var original = new Date(date);
@@ -18,7 +18,7 @@
                 {{#if recipes}}
                     {{#each recipes}}
                         <div id="recipe-element" class="vert-list-element">
-                            <img id="recipe_pic" class="thumbnail" src="/static/pasta.jpg" alt="Recipe-Img" style="width:40px"></img>
+                            <img id="recipe_pic" class="thumbnail" src="/{{recipe_img}}" alt="Recipe-Img" style="width:40px"></img>
                             <h4><a href="/recipe/{{recipe_id}}">{{recipe_name}}</a></h4>
                             <a>Prep: {{prep_time}} mins</a>
                             <br>
@@ -26,7 +26,7 @@
                             <br>
                             <a href="/profile/{{user_id}}">by @{{user_id}}</a>
                             {{#if ../own_profile}}
-                                <img id="delRecipe" class='remove-button' onclick='removeRecipe({{../list_id}}, {{recipe_id}});' src="/static/SVG/remove-icon.svg"/>
+                                <img id="delRecipe" class='remove-button' onclick='removeRecipe({{../list_id}}, {{recipe_id}});' src="/public/SVG/remove-icon.svg"/>
                             {{/if}}
                         </div>
                     {{/each}}
