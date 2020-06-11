@@ -230,7 +230,7 @@ div#login-wrapper{
 .recipe-carousel > div{
     user-select: none;
     overflow: hidden;
-    width: 20%;
+    width: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -240,6 +240,10 @@ div#login-wrapper{
     font-family: 'Fira Sans', sans-serif;
     font-weight: bold;
     cursor: pointer;
+}
+
+.recipe-carousel > div>a{
+    text-align: center;
 }
 
 @keyframes slideUp {
@@ -265,6 +269,7 @@ div#login-wrapper{
 .recipe-carousel > div >img{
     transform: translateY(100%);
     animation: 0.5s ease-out 0s 1 slideUp forwards, 1.5s ease-out 0s 1 fadeIn forwards;
+    background-color: white;
 }
 
 .recipe-carousel > div:nth-child(1) >img { animation-delay: 0s }

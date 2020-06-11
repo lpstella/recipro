@@ -107,13 +107,12 @@ db.loginValidation = (email, password, done) => {
      });
 };
 
-db.getRecipes = (criteria) => {
-     let sql = 'SELECT * FROM Recipes LEFT JOIN Users on Recipes.user_id=Users.user_id';
-
+db.getRecipes = (criteria, sortByLatest=false) => {
+     let sql = 'SELECT * FROM Recipes LEFT JOIN Users on Recipes.user_id=Users.user_id ORDER BY Recipes.recipe_id DESC';
      return new Promise((resolve, reject) => {
-          mysqlConnection.query(sql, [], (err, results, fields) => {
+          mysqlConnection.query(sql, [criteria.name], (err, results, fields) => {
                if (err) {
-                    return done(err);
+                    return reject(err);
                }
                const sorted = matchSorter(results, criteria.name, { keys: [item => [item.recipe_name, item.display_name]] })
                return resolve(sorted);

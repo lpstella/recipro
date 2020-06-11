@@ -4,38 +4,13 @@
      {{!-- <div class="horizontal-center"> --}}
      <h1>Check out the latest recipes!</h1>
      <div class="recipe-carousel">
-          <div>
-               <a>PASTA</a>
-               <img src="public/pasta.jpg" />
+          {{#each recipes}}
+          <div onclick="window.location='./recipe/{{this.recipe_id}}';">
+               <a>{{this.recipe_name}}</a>
+               <img src={{this.recipe_img}} />
           </div>
-          <div>
-               <a>PASTA</a>
-               <img src="public/pasta.jpg" />
-          </div>
-          <div>
-               <a>PASTA</a>
-               <img src="public/pasta.jpg" />
-          </div>
-          <div>
-               <a>PASTA</a>
-               <img src="public/pasta.jpg" />
-          </div>
-          <div>
-               <a>PASTA</a>
-               <img src="public/pasta.jpg" />
-          </div>
-          <div>
-               <a>PASTA</a>
-               <img src="public/pasta.jpg" />
-          </div>
-          <div>
-               <a>PASTA</a>
-               <img src="public/pasta.jpg" />
-          </div>
-          <div>
-               <a>PASTA</a>
-               <img src="public/pasta.jpg" />
-          </div>
+          {{/each}}
+          
           <div class="browse-item" onclick="window.location.href='/browse'">
                <a>Browse all recipes</a>
           </div>

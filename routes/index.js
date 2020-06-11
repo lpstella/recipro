@@ -25,8 +25,6 @@ const fileFilter = (req, file, cb) => {
      } else {
           cb(null, false);
      }
-
-
 };
 
 let upload = multer({
@@ -38,14 +36,6 @@ let upload = multer({
 });
 
 const db = require('../server/db');
-
-// const redirectLogin = (req, res, next) => {
-//      if (!req.session.userId) {
-//           res.redirect('/login');
-//      } else {
-//           next();
-//      }
-// };
 
 const redirectHome = (req, res, next) => {
      if (req.session.userId) {
@@ -244,13 +234,17 @@ router.post('/register',
      });
 
 router.get('/home', (req, res, next) => {
-     res.render('home');
+     res.redirect('/');
 });
 
 router.get('/', (req, res, next) => {
      console.log(req.user);
      console.log('isAuthenticated: ', req.isAuthenticated());         // Logs every user id and whether or not that user is authenticated in the server console
-     res.render('home');
+     
+     db.getRecipes({name: ''}).then((results) => 
+     {
+          res.render('home', {recipes: results.slice(0, 8)});
+     }, () => res.render('home', {}));
 });
 
 // This is the authentication middleware that checks whether or not the user sending the post request
@@ -276,7 +270,7 @@ router.get('/recipe/:recipeId', (req, res, next) => {
                          recipe_data['comments'] = comments.reverse();
                          recipe_data['user_list'] = user_lists;
                          res.render('recipe', recipe_data);
-                         console.log(recipe_data);
+                         console.log(recipe_data.recipe_img);
                     });
                });
           });
