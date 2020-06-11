@@ -369,6 +369,11 @@ router.post('/list-addition', (req, res, next) => {
      // console.log(list, recipe);
 });
 
+router.post('/update-name', (req, res, next) => {
+     db.updateDisplayName(req.session.passport.user.user_id, req.body.newName).then(() => {
+          res.sendStatus(200);
+     }, (SQLerror) => console.log(SQLerror));
+});
 //deleting content
 
 router.delete('/recipe/:recipeId', (req, res, next) => {
